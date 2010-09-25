@@ -1,0 +1,3 @@
+module BasicGem
+  # Your code goes here...
+end
