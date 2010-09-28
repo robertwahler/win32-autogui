@@ -1,3 +1,5 @@
+require 'basic_gem/version'
 module BasicGem
-  # Your code goes here...
+
 end
+

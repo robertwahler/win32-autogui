@@ -1,3 +1,10 @@
 pkg/*
 *.gem
 .bundle
+coverage
+rdoc
+rerun.txt
+tags
+tmp/fixtures
+tmp/aruba
+Gemfile.lock
