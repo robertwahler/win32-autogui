@@ -3,6 +3,7 @@ pkg/*
 .bundle
 coverage
 rdoc
+.yardoc
 rerun.txt
 tags
 tmp/fixtures

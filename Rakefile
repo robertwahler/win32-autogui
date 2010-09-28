@@ -29,7 +29,7 @@ end
 
 
 namespace :doc do
-  project_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+  project_root = File.expand_path(File.dirname(__FILE__))
   doc_destination = File.join(project_root, 'rdoc')
 
   begin
@@ -41,6 +41,9 @@ namespace :doc do
       yt.files   = Dir.glob(File.join(project_root, 'lib', '**', '*.rb')) + 
                    [ File.join(project_root, 'README.markdown') ]
       yt.options = ['--output-dir', doc_destination, '--readme', 'README.markdown']
+      p yt.files
+      p "*********"
+      p yt.options
     end
   rescue LoadError
     desc "Generate YARD Documentation [*LoadError*]"
