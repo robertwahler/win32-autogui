@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
 
   s.has_rdoc = 'yard'
   s.rdoc_options     = [ 
-                         '--title', 'BasicGem', 
+                         '--title', 'BasicGem Documentation', 
                          '--main', 'README.markdown', 
                          '--inline-source' 
                        ]

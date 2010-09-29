@@ -41,12 +41,8 @@ namespace :doc do
     yt.files   = Dir.glob(File.join(project_root, 'lib', '**', '*.rb')) + 
                  ["-"] +
                  gemspec.extra_rdoc_files +
-                 Dir.glob(File.join(project_root, 'features', '**', '*.feature'))
     yt.options = ['--markup-provider', 'rdiscount', '--output-dir', doc_destination] +
                  gemspec.rdoc_options
-    p yt.files
-    p "*********"
-    p yt.options
   end
 
   desc "Remove generated documenation"
