@@ -1,23 +1,18 @@
 # encoding: utf-8
 
+# bundler/setup is managing $LOAD_PATH, any gem needed by this Rakefile must 
+# be listed as a development dependency in the gemspec
+
 require 'rubygems'
-require 'bundler'
+require 'bundler/setup' 
+
 Bundler::GemHelper.install_tasks
 
-begin
-  require 'spec'
-  require 'spec/rake/spectask'
-
-  Spec::Rake::SpecTask.new(:spec) do |spec|
-    spec.libs << 'lib' << 'spec'
-    spec.spec_files = FileList['spec/**/*_spec.rb']
-  end
-
-rescue LoadError
-  desc "Run specs [*LoadError*]"
-  task :spec do
-    abort "Please install the Rspec gem to run specs"
-  end
+require 'spec'
+require 'spec/rake/spectask'
+Spec::Rake::SpecTask.new(:spec) do |spec|
+  spec.libs << 'lib' << 'spec'
+  spec.spec_files = FileList['spec/**/*_spec.rb']
 end
 
 
@@ -32,24 +27,19 @@ namespace :doc do
   project_root = File.expand_path(File.dirname(__FILE__))
   doc_destination = File.join(project_root, 'rdoc')
 
-  begin
-    require 'yard'
-    require 'yard/rake/yardoc_task'
+  require 'yard'
+  require 'yard/rake/yardoc_task'
 
-    YARD::Rake::YardocTask.new(:generate) do |yt|
-      # todo: pull files from gemspec
-      yt.files   = Dir.glob(File.join(project_root, 'lib', '**', '*.rb')) + 
-                   [ File.join(project_root, 'README.markdown') ]
-      yt.options = ['--output-dir', doc_destination, '--readme', 'README.markdown']
-      p yt.files
-      p "*********"
-      p yt.options
-    end
-  rescue LoadError
-    desc "Generate YARD Documentation [*LoadError*]"
-    task :generate do
-      abort "Please install the YARD gem to generate rdoc"
-    end
+  YARD::Rake::YardocTask.new(:generate) do |yt|
+    # todo: pull files from gemspec
+    yt.files   = Dir.glob(File.join(project_root, 'lib', '**', '*.rb')) + 
+                 Dir.glob(File.join(project_root, 'features', '**', '*.feature')) + 
+                 [ File.join(project_root, 'README.markdown') ] +
+                 [ File.join(project_root, 'CLONING.markdown') ]
+    yt.options = ['--output-dir', doc_destination, '--readme', 'README.markdown']
+    p yt.files
+    p "*********"
+    p yt.options
   end
 
   desc "Remove generated documenation"

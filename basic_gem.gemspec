@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", ">= 1.2.9"
   s.add_development_dependency "cucumber", ">= 0.6"
   s.add_development_dependency "aruba", ">= 0.2.0"
+  s.add_development_dependency "rake", ">= 0.8.7"
+  s.add_development_dependency "yard", ">= 0.6.1"
 
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
@@ -25,8 +27,11 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
 
   s.has_rdoc = 'yard'
+  s.rdoc_options     = [ '--main', 'README.markdown' ]
   s.extra_rdoc_files = [
     "LICENSE",
-     "README.markdown"
+    "README.markdown",
+    "CLONING.markdown",
+    "HISTORY.markdown"
   ]
 end
