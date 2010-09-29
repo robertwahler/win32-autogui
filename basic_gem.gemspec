@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "aruba", ">= 0.2.0"
   s.add_development_dependency "rake", ">= 0.8.7"
   s.add_development_dependency "yard", ">= 0.6.1"
+  s.add_development_dependency "rdiscount", ">= 1.6.5"
 
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
@@ -27,11 +28,15 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
 
   s.has_rdoc = 'yard'
-  s.rdoc_options     = [ '--main', 'README.markdown' ]
+  s.rdoc_options     = [ 
+                         '--title', 'BasicGem', 
+                         '--main', 'README.markdown', 
+                         '--inline-source' 
+                       ]
   s.extra_rdoc_files = [
-    "LICENSE",
-    "README.markdown",
-    "CLONING.markdown",
-    "HISTORY.markdown"
-  ]
+                         'LICENSE',
+                         'README.markdown',
+                         'CLONING.markdown',
+                         'HISTORY.markdown'
+                       ]
 end

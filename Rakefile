@@ -8,6 +8,13 @@ require 'bundler/setup'
 
 Bundler::GemHelper.install_tasks
 
+def gemspec
+  @gemspec ||= begin
+    file = File.expand_path('../basic_gem.gemspec', __FILE__)
+    eval(File.read(file), binding, file)
+  end
+end
+
 require 'spec'
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new(:spec) do |spec|
@@ -31,12 +38,12 @@ namespace :doc do
   require 'yard/rake/yardoc_task'
 
   YARD::Rake::YardocTask.new(:generate) do |yt|
-    # todo: pull files from gemspec
     yt.files   = Dir.glob(File.join(project_root, 'lib', '**', '*.rb')) + 
-                 Dir.glob(File.join(project_root, 'features', '**', '*.feature')) + 
-                 [ File.join(project_root, 'README.markdown') ] +
-                 [ File.join(project_root, 'CLONING.markdown') ]
-    yt.options = ['--output-dir', doc_destination, '--readme', 'README.markdown']
+                 ["-"] +
+                 gemspec.extra_rdoc_files +
+                 Dir.glob(File.join(project_root, 'features', '**', '*.feature'))
+    yt.options = ['--markup-provider', 'rdiscount', '--output-dir', doc_destination] +
+                 gemspec.rdoc_options
     p yt.files
     p "*********"
     p yt.options
