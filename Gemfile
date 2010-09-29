@@ -1,4 +1,4 @@
 source :gemcutter
 
-# Specify your gem's dependencies in basic_gem.gemspec
+# Specify your gem's dependencies in the .gemspec file
 gemspec

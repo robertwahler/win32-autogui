@@ -3,7 +3,7 @@ BasicGem
 
 An opinionated basic RubyGem structure. BasicGem provides no stand-alone 
 functionality.  Its purpose is to provide a repository for jump-starting 
-and maintaining a RubyGem.
+and maintaining a new RubyGem.
 
 See [CLONING](CLONING.markdown) for more info.
 

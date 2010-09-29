@@ -9,16 +9,18 @@ a repository for cloned applications to pull future enhancements and fixes.
 Features/Dependencies 
 ---------------------
 
-* Rspec for unit testing http://github.com/dchelimsky/rspec
-* Cucumber for functional testing http://github.com/aslakhellesoy/cucumber
-* Aruba for CLI testing http://github.com/aslakhellesoy/aruba
+* Bundler for dependency management [http://github.com/carlhuda/bundler](http://github.com/carlhuda/bundler)
+* Rspec for unit testing [http://github.com/dchelimsky/rspec](http://github.com/dchelimsky/rspec)
+* Cucumber for functional testing [http://github.com/aslakhellesoy/cucumber](http://github.com/aslakhellesoy/cucumber)
+* Aruba for CLI testing [http://github.com/aslakhellesoy/aruba](http://github.com/aslakhellesoy/aruba)
+* YARD for documentation generation [http://github.com/lsegal/yard/wiki](http://github.com/lsegal/yard/wiki)
 
 
-Jump-starting a new project with BasicGem
+Jump-starting a new gem with BasicGem
 -----------------------------------------
 
-The following steps illustrate creating a new application called "mutagem." 
-See http://github.com/robertwahler/mutagem for full source.
+The following steps illustrate creating a new gem called "mutagem" that handles file based mutexes.
+See [http://github.com/robertwahler/mutagem](http://github.com/robertwahler/mutagem) for full source.
 
     cd ~/workspace
     git clone git://github.com/robertwahler/basic_gem.git mutagem
@@ -34,13 +36,13 @@ git@red:mutagem.git, change the URL with sed:
 
     sed -i 's/url =.*\.git$/url = git@red:mutagem.git/' .git/config
 
+Push up the unchanged BasicGem repo
+
+    git push origin master:refs/heads/master
+
 Allow Gemlock.lock to be stored in the repo
 
     sed -i 's/Gemfile\.lock$//' .gitignore
-
-Push it up
-
-    git push origin master:refs/heads/master
 
 Add BasicGem as remote
 
@@ -52,27 +54,29 @@ Rename your gem
 
 We need to change the name of the gem from basic_gem to mutagem
 
-    git mv bin/basic_gem bin/mutagem
     git mv lib/basic_gem.rb lib/mutagem.rb
     git mv lib/basic_gem lib/mutagem
+    git mv basic_gem.gemspec mutagem.gemspec
 
     # BasicGem => Mutagem
-    find ./bin -type f -exec sed -i 's/BasicGem/Mutagem/' '{}' +
     find . -name *.rb -exec sed -i 's/BasicGem/Mutagem/' '{}' +
-    find . -name Rakefile -exec sed -i 's/BasicGem/Mutagem/' '{}' +
+    find . -name *.feature -exec sed -i 's/BasicGem/Mutagem/' '{}' +
+    sed -i 's/BasicGem/Mutagem/' Rakefile
+    sed -i 's/BasicGem/Mutagem/' mutagem.gemspec
+
     # basic_gem => mutagem
-    find ./bin -type f -exec sed -i 's/basic_gem/mutagem/' '{}' +
     find ./spec -type f -exec sed -i 's/basic_gem/mutagem/' '{}' +
     find . -name *.rb -exec sed -i 's/basic_gem/mutagem/' '{}' +
     find . -name *.feature -exec sed -i 's/basic_gem/mutagem/' '{}' +
-    find . -name Rakefile -exec sed -i 's/basic_gem/mutagem/' '{}' +
+    sed -i 's/basic_gem/mutagem/' Rakefile
+    sed -i 's/basic_gem/mutagem/' mutagem.gemspec
 
 Replace TODO's and update documentation
 
-* Replace README.rdoc
+* Replace README.markdown
 * Replace LICENSE
-* (OPTIONAL) git rm CLONING.rdoc
-* Replace the TODO's in Rakefile and bin
+* (OPTIONAL) git rm CLONING.markdown
+* Add author information and replace the TODO's in gemspec
 
 Gem should now be functional, lets test it
 
@@ -81,6 +85,7 @@ Gem should now be functional, lets test it
 
 Looks OK, commit it
 
+    git add Gemfile.lock
     git commit -a -m "renamed basic_gem to mutagem"
 
 
@@ -105,6 +110,20 @@ Conflicted?
 
     git mergetool
     git commit
+
+
+Rake tasks
+----------
+
+rake -T
+
+    rake build         # Build mutagem-0.0.1.gem into the pkg directory
+    rake doc:clean     # Remove generated documenation
+    rake doc:generate  # Generate YARD Documentation
+    rake features      # Run Cucumber features
+    rake install       # Build and install mutagem-0.0.1.gem into system gems
+    rake release       # Create tag v0.0.1 and build and push mutagem-0.0.1.gem to Rubygems
+    rake spec          # Run specs
 
 
 Copyright
