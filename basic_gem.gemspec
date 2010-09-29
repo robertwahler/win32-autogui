@@ -31,11 +31,11 @@ Gem::Specification.new do |s|
   s.rdoc_options     = [ 
                          '--title', 'BasicGem Documentation', 
                          '--main', 'README.markdown', 
+                         '--line-numbers',
                          '--inline-source' 
                        ]
   s.extra_rdoc_files = [
                          'LICENSE',
-                         'README.markdown',
                          'CLONING.markdown',
                          'HISTORY.markdown'
                        ]

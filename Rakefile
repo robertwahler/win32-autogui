@@ -40,9 +40,11 @@ namespace :doc do
   YARD::Rake::YardocTask.new(:generate) do |yt|
     yt.files   = Dir.glob(File.join(project_root, 'lib', '**', '*.rb')) + 
                  ["-"] +
-                 gemspec.extra_rdoc_files +
-    yt.options = ['--markup-provider', 'rdiscount', '--output-dir', doc_destination] +
-                 gemspec.rdoc_options
+                 gemspec.extra_rdoc_files
+    yt.options = ['--markup-provider', 'rdiscount', 
+                  '--output-dir', doc_destination
+                 ] +
+                 gemspec.rdoc_options - ['--line-numbers', '--inline-source']
   end
 
   desc "Remove generated documenation"
