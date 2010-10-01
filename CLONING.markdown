@@ -42,7 +42,7 @@ Push up the unchanged BasicGem repo
 
 Allow Gemlock.lock to be stored in the repo
 
-    sed -i 's/Gemfile\.lock$//' .gitignore
+    sed -i '/Gemfile\.lock$/d' .gitignore
 
 Add BasicGem as remote
 
@@ -71,11 +71,15 @@ We need to change the name of the gem from basic_gem to mutagem
     sed -i 's/basic_gem/mutagem/' Rakefile
     sed -i 's/basic_gem/mutagem/' mutagem.gemspec
 
+Remove CLONING.markdown
+
+    git rm CLONING.markdown
+    sed -i "/CLONING.markdown/d" .yardopts
+
 Replace TODO's and update documentation
 
 * Replace README.markdown
 * Replace LICENSE
-* (OPTIONAL) git rm CLONING.markdown
 * Add author information and replace the TODO's in gemspec
 
 Gem should now be functional, lets test it

@@ -22,13 +22,16 @@ Spec::Rake::SpecTask.new(:spec) do |spec|
   spec.spec_files = FileList['spec/**/*_spec.rb']
 end
 
-
 require 'cucumber'
 require 'cucumber/rake/task'
 Cucumber::Rake::Task.new(:features) do |task|
   task.cucumber_opts = ["features"]
 end
 
+desc "Run specs and features"
+task :test => [:spec, :features]
+
+task :default => :test
 
 namespace :doc do
   project_root = File.expand_path(File.dirname(__FILE__))
@@ -38,9 +41,6 @@ namespace :doc do
   require 'yard/rake/yardoc_task'
 
   YARD::Rake::YardocTask.new(:generate) do |yt|
-    yt.files   = Dir.glob(File.join(project_root, 'lib', '**', '*.rb')) + 
-                 ["-"] +
-                 gemspec.extra_rdoc_files
     yt.options = ['--markup-provider', 'rdiscount', 
                   '--output-dir', doc_destination
                  ] +
