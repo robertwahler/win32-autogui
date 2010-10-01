@@ -71,23 +71,53 @@ We need to change the name of the gem from basic_gem to mutagem
     sed -i 's/basic_gem/mutagem/' Rakefile
     sed -i 's/basic_gem/mutagem/' mutagem.gemspec
 
+
 Remove CLONING.markdown
+-----------------------
 
     git rm CLONING.markdown
     sed -i "/CLONING.markdown/d" .yardopts
 
+
 Replace TODO's and update documentation
+---------------------------------------
 
 * Replace README.markdown
 * Replace LICENSE
 * Add author information and replace the TODO's in gemspec
 
-Gem should now be functional, lets test it
+
+Gem should now be functional
+---------------------------
 
     rake spec
     rake features
 
-Looks OK, commit it
+
+Setup git copy-merge
+--------------------
+When we merge future basic_gem changes to our new gem, we want to always ignore 
+some upstream documentation file changes.  
+
+Set the merge type for the files we want to ignore in .git/info/gitattributes. You
+could specify .gitattributes instead of .git/info/gitattributes but then if your
+new gem is forked, your forked repos will miss out on document merges.
+
+    echo "CLONING.markdown merge=keep_local_copy" >> .git/info/gitattributes
+    echo "README.markdown merge=keep_local_copy" >> .git/info/gitattributes
+    echo "HISTORY.markdown merge=keep_local_copy" >> .git/info/gitattributes
+    echo "TODO.markdown merge=keep_local_copy" >> .git/info/gitattributes
+    echo "LICENSE merge=keep_local_copy" >> .git/info/gitattributes
+
+
+Setup the copy-merge driver
+
+    git config merge.keep_local_copy.name "always keep the local copy during merge"
+    git config merge.keep_local_copy.driver "true"
+
+
+Commit
+------
 
     git add Gemfile.lock
     git commit -a -m "renamed basic_gem to mutagem"
@@ -128,6 +158,7 @@ rake -T
     rake install       # Build and install mutagem-0.0.1.gem into system gems
     rake release       # Create tag v0.0.1 and build and push mutagem-0.0.1.gem to Rubygems
     rake spec          # Run specs
+    rake test          # Run specs and features
 
 
 Copyright
