@@ -1,9 +1,9 @@
 BasicGem
 ========
 
-An opinionated RubyGem structure. BasicGem provides no stand-alone functionality.  
-Its purpose is to provide a repository for jump-starting a new RubyGem and provide 
-a repository for cloned applications to pull future enhancements and fixes.
+An opinionated RubyGem structure. BasicGem provides no stand-alone functionality.  Its purpose is 
+to provide a repository for jump-starting a new RubyGem and provide a repository for cloned 
+applications to pull future enhancements and fixes.
 
 
 Features/Dependencies 
