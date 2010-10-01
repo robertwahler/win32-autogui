@@ -99,15 +99,15 @@ Setup git copy-merge
 When we merge future basic_gem changes to our new gem, we want to always ignore 
 some upstream documentation file changes.  
 
-Set the merge type for the files we want to ignore in .git/info/gitattributes. You
-could specify .gitattributes instead of .git/info/gitattributes but then if your
+Set the merge type for the files we want to ignore in .git/info/attributes. You
+could specify .gitattributes instead of .git/info/attributes but then if your
 new gem is forked, your forked repos will miss out on document merges.
 
-    echo "CLONING.markdown merge=keep_local_copy" >> .git/info/gitattributes
-    echo "README.markdown merge=keep_local_copy" >> .git/info/gitattributes
-    echo "HISTORY.markdown merge=keep_local_copy" >> .git/info/gitattributes
-    echo "TODO.markdown merge=keep_local_copy" >> .git/info/gitattributes
-    echo "LICENSE merge=keep_local_copy" >> .git/info/gitattributes
+    echo "CLONING.markdown merge=keep_local_copy" >> .git/info/attributes
+    echo "README.markdown merge=keep_local_copy" >> .git/info/attributes
+    echo "HISTORY.markdown merge=keep_local_copy" >> .git/info/attributes
+    echo "TODO.markdown merge=keep_local_copy" >> .git/info/attributes
+    echo "LICENSE merge=keep_local_copy" >> .git/info/attributes
 
 
 Setup the copy-merge driver

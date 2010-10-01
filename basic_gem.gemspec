@@ -31,7 +31,6 @@ Gem::Specification.new do |s|
   s.rdoc_options     = [ 
                          '--title', 'BasicGem Documentation', 
                          '--main', 'README.markdown', 
-                         '--charset=UTF-8',
                          '--line-numbers',
                          '--inline-source' 
                        ]
