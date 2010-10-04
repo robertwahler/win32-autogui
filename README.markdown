@@ -52,11 +52,16 @@ Add BasicGem as remote
 Rename your gem
 ---------------
 
-We need to change the name of the gem from basic_gem to mutagem
+Change the name of the gem from basic_gem to mutagem.  Note that
+renames will be tracked in future merges since git is tracking content and
+the content is non-trivial.
 
     git mv lib/basic_gem.rb lib/mutagem.rb
     git mv lib/basic_gem lib/mutagem
     git mv basic_gem.gemspec mutagem.gemspec
+
+    # commit renames now, 
+    git commit -m "rename basic_gem files"
 
     # BasicGem => Mutagem
     find . -name *.rb -exec sed -i 's/BasicGem/Mutagem/' '{}' +
