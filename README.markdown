@@ -81,8 +81,10 @@ Replace TODO's and update documentation
 ---------------------------------------
 
 * Replace README.markdown
+* Replace HISTORY.markdown
+* Replace TODO.markdown
 * Replace LICENSE
-* Add author information and replace the TODO's in gemspec
+* Modify .gemspec, add author information and replace the TODO's
 
 
 Gem should now be functional

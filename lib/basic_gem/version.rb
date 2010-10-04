@@ -1,4 +1,4 @@
-# BasicGem version support
+# Version support
 # 
 # 
 module BasicGem
