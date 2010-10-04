@@ -28,7 +28,7 @@ def all_feature_files
 end
 
 def all_spec_files
-  files = Dir['spec/basic_gem/*.rb']
+  files = Dir['spec/**/*_spec\.rb']
 end
 
 def run(cmd)
@@ -114,6 +114,8 @@ watch( '^features/step_definitions/(.*)\.rb' )   { run_default_cucumber }
 watch( '^features/support/(.*)\.rb' )   { run_default_cucumber }
 
 watch( '^spec/(.*)_spec\.rb'   )   { |m| run_spec(m[0]) }
+# specify just the lib files that have specs
+# TODO: This can be determined automatically from the spec file naming convention
 watch( '^lib/basic_gem.rb'   )   { run_default_spec }
 
 # --------------------------------------------------
