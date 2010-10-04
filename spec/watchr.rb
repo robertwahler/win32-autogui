@@ -1,5 +1,7 @@
 # Watchr: Autotest like functionality
 #
+# gem install watchr
+#
 # Run me with:
 #
 #   $ watchr spec/watchr.rb
@@ -26,7 +28,7 @@ def all_feature_files
 end
 
 def all_spec_files
-  files = Dir['spec/revenc/*.rb']
+  files = Dir['spec/basic_gem/*.rb']
 end
 
 def run(cmd)
@@ -103,7 +105,6 @@ prompt
 # --------------------------------------------------
 # Watchr Rules
 # --------------------------------------------------
-#watch( '^features/(.*)\.feature'   )   { |m| run_feature(m[0]) }
 watch( '^features/(.*)\.feature'   )   { run_default_cucumber }
 
 watch( '^bin/(.*)'   )   { run_default_cucumber }
@@ -113,9 +114,7 @@ watch( '^features/step_definitions/(.*)\.rb' )   { run_default_cucumber }
 watch( '^features/support/(.*)\.rb' )   { run_default_cucumber }
 
 watch( '^spec/(.*)_spec\.rb'   )   { |m| run_spec(m[0]) }
-# watch( '^lib/revenc/io.rb'   )   { run_default_spec }
-watch( '^lib/revenc/errors.rb'   )   { run_default_spec }
-watch( '^lib/revenc/lockfile.rb'   )   { run_default_spec }
+watch( '^lib/basic_gem.rb'   )   { run_default_spec }
 
 # --------------------------------------------------
 # Signal Handling

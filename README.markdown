@@ -173,6 +173,32 @@ rake -T
     rake test          # Run specs and features
 
 
+Autotesting with Watchr
+-------------------------
+
+[Watchr](http://github.com/mynyml/watchr.git) provides a flexible alternative to Autotest.  A
+jump start script is provided in spec/watchr.rb.
+
+### Install watchr ###
+
+    gem install watchr
+
+### Run watchr ###
+
+    watchr spec/watchr.rb
+
+outputs a menu
+
+    Ctrl-\ for menu, Ctrl-C to quit
+
+Watchr will now watch the files defined in 'spec/watchr.rb' and run Rspec or Cucumber, as appropriate.
+The watchr script provides a simple menu.
+
+Ctrl-\
+
+    MENU: a = all , f = features  s = specs, l = last feature (none), q = quit
+
+
 Copyright
 ---------
 
