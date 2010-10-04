@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 #
 #
-require File.expand_path("../lib/basic_gem/version", __FILE__)
+require File.expand_path("../lib/basic_gem", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "basic_gem"
-  s.version     = BasicGem::VERSION
+  s.version     = BasicGem::version
   s.platform    = Gem::Platform::RUBY
   s.authors     = []
   s.email       = []

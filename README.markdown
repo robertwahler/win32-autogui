@@ -9,18 +9,18 @@ applications to pull future enhancements and fixes.
 Features/Dependencies 
 ---------------------
 
-* Bundler for dependency management [http://github.com/carlhuda/bundler](http://github.com/carlhuda/bundler)
-* Rspec for unit testing [http://github.com/dchelimsky/rspec](http://github.com/dchelimsky/rspec)
-* Cucumber for functional testing [http://github.com/aslakhellesoy/cucumber](http://github.com/aslakhellesoy/cucumber)
-* Aruba for CLI testing [http://github.com/aslakhellesoy/aruba](http://github.com/aslakhellesoy/aruba)
-* YARD for documentation generation [http://github.com/lsegal/yard/wiki](http://github.com/lsegal/yard/wiki)
+* Bundler for dependency management <http://github.com/carlhuda/bundler>
+* Rspec for unit testing <http://github.com/dchelimsky/rspec>
+* Cucumber for functional testing <http://github.com/aslakhellesoy/cucumber>
+* Aruba for CLI testing <http://github.com/aslakhellesoy/aruba>
+* YARD for documentation generation <http://github.com/lsegal/yard/wiki>
 
 
 Jump-starting a new gem with BasicGem
 -----------------------------------------
 
 The following steps illustrate creating a new gem called "mutagem" that handles file based mutexes.
-See [http://github.com/robertwahler/mutagem](http://github.com/robertwahler/mutagem) for full source.
+See <http://github.com/robertwahler/mutagem> for full source.
 
     cd ~/workspace
     git clone git://github.com/robertwahler/basic_gem.git mutagem
@@ -57,10 +57,9 @@ renames will be tracked in future merges since git is tracking content and
 the content is non-trivial.
 
     git mv lib/basic_gem.rb lib/mutagem.rb
-    git mv lib/basic_gem lib/mutagem
     git mv basic_gem.gemspec mutagem.gemspec
 
-    # commit renames now, 
+    # commit renames now 
     git commit -m "rename basic_gem files"
 
     # BasicGem => Mutagem
@@ -84,6 +83,7 @@ Replace TODO's and update documentation
 * Replace HISTORY.markdown
 * Replace TODO.markdown
 * Replace LICENSE
+* Replace VERSION
 * Modify .gemspec, add author information and replace the TODO's
 
 
@@ -107,6 +107,7 @@ new gem is forked, your forked repos will miss out on document merges.
     echo "HISTORY.markdown merge=keep_local_copy" >> .git/info/attributes
     echo "TODO.markdown merge=keep_local_copy" >> .git/info/attributes
     echo "LICENSE merge=keep_local_copy" >> .git/info/attributes
+    echo "VERSION merge=keep_local_copy" >> .git/info/attributes
 
 
 Setup the copy-merge driver. The "trick" is that the driver, keep_local_copy, is using 
@@ -122,6 +123,13 @@ Commit
 
     git add Gemfile.lock
     git commit -a -m "renamed basic_gem to mutagem"
+
+
+Add code to project's namespace
+-------------------------------
+
+    mkdir lib/mutagem
+    vim lib/mutagem/mutex.rb
 
 
 Merging future BasicGem changes
@@ -141,7 +149,10 @@ Trusting pull of HEAD
 
     git pull basic_gem HEAD
 
-Conflicted?
+Conflict resolution
+
+*NOTE: Most conflicts can be resolved with 'git mergetool' but 'CONFLICT (delete/modify)' will 
+need to be resolved by hand.*
 
     git mergetool
     git commit
