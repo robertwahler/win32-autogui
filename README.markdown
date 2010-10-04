@@ -96,7 +96,7 @@ Gem should now be functional
 
 Setup git copy-merge
 --------------------
-When we merge future basic_gem changes to our new gem, we want to always ignore 
+When we merge future BasicGem changes to our new gem, we want to always ignore 
 some upstream documentation file changes.  
 
 Set the merge type for the files we want to ignore in .git/info/attributes. You
@@ -112,7 +112,7 @@ new gem is forked, your forked repos will miss out on document merges.
 
 Setup the copy-merge driver. The "trick" is that the driver, keep_local_copy, is using 
 the shell command "true" to return exit code 0.  Basically, the files marked with
-the keep_local_copy merge type will always ignore upstream changes.
+the keep_local_copy merge type will always ignore upstream changes if a merge conflict occurs.
 
     git config merge.keep_local_copy.name "always keep the local copy during merge"
     git config merge.keep_local_copy.driver "true"
@@ -176,7 +176,7 @@ rake -T
 Autotesting with Watchr
 -------------------------
 
-[Watchr](http://github.com/mynyml/watchr.git) provides a flexible alternative to Autotest.  A
+[Watchr](http://github.com/mynyml/watchr) provides a flexible alternative to Autotest.  A
 jump start script is provided in spec/watchr.rb.
 
 ### Install watchr ###
