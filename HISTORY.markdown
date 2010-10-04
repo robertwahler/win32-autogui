@@ -8,7 +8,7 @@ Changes
 
 ### 0.0.2 - 10/04/2010 ###
 
-* update file contents to make future merges track across renames
+* refactor out lib/basic_gem/version.rb to make clone merges cleaner
 
 ### 0.0.1 - 09/27/2010 ###
 
