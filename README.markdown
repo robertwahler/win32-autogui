@@ -13,7 +13,7 @@ Features/Dependencies
 * Rspec for unit testing <http://github.com/dchelimsky/rspec>
 * Cucumber for functional testing <http://github.com/aslakhellesoy/cucumber>
 * Aruba for CLI testing <http://github.com/aslakhellesoy/aruba>
-* YARD for documentation generation <http://github.com/lsegal/yard/wiki>
+* YARD for documentation generation <http://github.com/lsegal/yard>
 
 
 Jump-starting a new gem with BasicGem
