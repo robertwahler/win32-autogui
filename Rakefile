@@ -10,7 +10,7 @@ Bundler::GemHelper.install_tasks
 
 def gemspec
   @gemspec ||= begin
-    file = File.expand_path('../basic_gem.gemspec', __FILE__)
+    file = File.expand_path('../auto_gui.gemspec', __FILE__)
     eval(File.read(file), binding, file)
   end
 end

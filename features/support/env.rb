@@ -1,4 +1,4 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
-require 'basic_gem'
+require 'auto_gui'
 require 'aruba'
 require 'spec/expectations'

@@ -2,7 +2,7 @@
 
 
 # Master namespace
-module BasicGem
+module AutoGui
   
   # Contents of the VERSION file
   #

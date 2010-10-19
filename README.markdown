@@ -19,12 +19,12 @@ Features/Dependencies
 Jump-starting a new gem with BasicGem
 -----------------------------------------
 
-The following steps illustrate creating a new gem called "mutagem" that handles file based mutexes.
-See <http://github.com/robertwahler/mutagem> for full source.
+The following steps illustrate creating a new gem called "auto_gui" that handles file based mutexes.
+See <http://github.com/robertwahler/auto_gui> for full source.
 
     cd ~/workspace
-    git clone git://github.com/robertwahler/basic_gem.git mutagem
-    cd mutagem
+    git clone git://github.com/robertwahler/basic_gem.git auto_gui
+    cd auto_gui
 
 
 Setup repository for cloned project
@@ -32,9 +32,9 @@ Setup repository for cloned project
 
 We are going to change the origin URL to our own server and setup a remote
 for pulling in future BasicGem changes. If our own repo is setup at
-git@red:mutagem.git, change the URL with sed:
+git@red:auto_gui.git, change the URL with sed:
 
-    sed -i 's/url =.*\.git$/url = git@red:mutagem.git/' .git/config
+    sed -i 's/url =.*\.git$/url = git@red:auto_gui.git/' .git/config
 
 Push up the unchanged BasicGem repo
 
@@ -52,28 +52,28 @@ Add BasicGem as remote
 Rename your gem
 ---------------
 
-Change the name of the gem from basic_gem to mutagem.  Note that
+Change the name of the gem from basic_gem to auto_gui.  Note that
 renames will be tracked in future merges since git is tracking content and
 the content is non-trivial.
 
-    git mv lib/basic_gem.rb lib/mutagem.rb
-    git mv basic_gem.gemspec mutagem.gemspec
+    git mv lib/basic_gem.rb lib/auto_gui.rb
+    git mv basic_gem.gemspec auto_gui.gemspec
 
     # commit renames now 
     git commit -m "rename basic_gem files"
 
-    # BasicGem => Mutagem
-    find . -name *.rb -exec sed -i 's/BasicGem/Mutagem/' '{}' +
-    find . -name *.feature -exec sed -i 's/BasicGem/Mutagem/' '{}' +
-    sed -i 's/BasicGem/Mutagem/' Rakefile
-    sed -i 's/BasicGem/Mutagem/' mutagem.gemspec
+    # BasicGem => AutoGui
+    find . -name *.rb -exec sed -i 's/BasicGem/AutoGui/' '{}' +
+    find . -name *.feature -exec sed -i 's/BasicGem/AutoGui/' '{}' +
+    sed -i 's/BasicGem/AutoGui/' Rakefile
+    sed -i 's/BasicGem/AutoGui/' auto_gui.gemspec
 
-    # basic_gem => mutagem
-    find ./spec -type f -exec sed -i 's/basic_gem/mutagem/' '{}' +
-    find . -name *.rb -exec sed -i 's/basic_gem/mutagem/' '{}' +
-    find . -name *.feature -exec sed -i 's/basic_gem/mutagem/' '{}' +
-    sed -i 's/basic_gem/mutagem/' Rakefile
-    sed -i 's/basic_gem/mutagem/' mutagem.gemspec
+    # basic_gem => auto_gui
+    find ./spec -type f -exec sed -i 's/basic_gem/auto_gui/' '{}' +
+    find . -name *.rb -exec sed -i 's/basic_gem/auto_gui/' '{}' +
+    find . -name *.feature -exec sed -i 's/basic_gem/auto_gui/' '{}' +
+    sed -i 's/basic_gem/auto_gui/' Rakefile
+    sed -i 's/basic_gem/auto_gui/' auto_gui.gemspec
 
 
 Replace TODO's and update documentation
@@ -122,14 +122,14 @@ Commit
 ------
 
     git add Gemfile.lock
-    git commit -a -m "renamed basic_gem to mutagem"
+    git commit -a -m "renamed basic_gem to auto_gui"
 
 
 Add code to project's namespace
 -------------------------------
 
-    mkdir lib/mutagem
-    vim lib/mutagem/mutex.rb
+    mkdir lib/auto_gui
+    vim lib/auto_gui/mutex.rb
 
 
 Merging future BasicGem changes
@@ -163,12 +163,12 @@ Rake tasks
 
 rake -T
 
-    rake build         # Build mutagem-0.0.1.gem into the pkg directory
+    rake build         # Build auto_gui-0.0.1.gem into the pkg directory
     rake doc:clean     # Remove generated documenation
     rake doc:generate  # Generate YARD Documentation
     rake features      # Run Cucumber features
-    rake install       # Build and install mutagem-0.0.1.gem into system gems
-    rake release       # Create tag v0.0.1 and build and push mutagem-0.0.1.gem to Rubygems
+    rake install       # Build and install auto_gui-0.0.1.gem into system gems
+    rake release       # Create tag v0.0.1 and build and push auto_gui-0.0.1.gem to Rubygems
     rake spec          # Run specs
     rake test          # Run specs and features
 

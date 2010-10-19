@@ -1,5 +1,5 @@
 @announce
-Feature: BasicGem
+Feature: AutoGui
 
   This is a placeholder
 
