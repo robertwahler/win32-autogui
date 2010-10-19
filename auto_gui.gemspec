@@ -15,6 +15,9 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
   s.rubyforge_project         = "auto_gui"
 
+  s.add_dependency "windows-pr", ">= 1.0.9"
+  s.add_dependency "win32-process", ">= 0.6.2"
+
   s.add_development_dependency "bundler", ">= 1.0.0"
   s.add_development_dependency "rspec", ">= 1.2.9"
   s.add_development_dependency "cucumber", ">= 0.6"

@@ -1,5 +1,6 @@
 # require all files here
-
+require 'auto_gui/application'
+require 'auto_gui/window'
 
 # Master namespace
 module AutoGui
@@ -14,6 +15,11 @@ module AutoGui
     File.open(version_info_file, "r") do |f|
       f.read
     end
+  end
+
+  # @ return False (nil) or True (Integer)
+  def self.win32?
+    RUBY_PLATFORM =~ /mingw|mswin|cygwin/i
   end
 
 end
