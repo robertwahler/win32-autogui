@@ -116,9 +116,7 @@ prompt
 watch( '^spec/(.*)_spec\.rb'   )   { |m| run_spec(m[0]) }
 # specify just the lib files that have specs
 # TODO: This can be determined automatically from the spec file naming convention
-watch( '^lib/auto_gui.rb'   )   { run_default_spec }
-watch( '^lib/auto_gui/window.rb'   )   { run_default_spec }
-watch( '^lib/auto_gui/application.rb'   )   { run_default_spec }
+watch( '^lib/(.*)'   )   { run_default_spec }
 
 # --------------------------------------------------
 # Signal Handling

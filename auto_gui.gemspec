@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
   s.rubyforge_project         = "auto_gui"
 
+  s.add_dependency "windows-api", ">= 0.4.0"
   s.add_dependency "windows-pr", ">= 1.0.9"
   s.add_dependency "win32-process", ">= 0.6.2"
 

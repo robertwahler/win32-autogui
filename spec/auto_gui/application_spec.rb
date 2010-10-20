@@ -1,20 +1,30 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/calculator')
 
+include AutoGui::Input
+
 describe AutoGui::Application do
 
-  before do
-    @calculator = Calculator.new
-  end
+  describe "driving calculator.exe" do
 
-  after do
-    @calculator.close if @calculator.running?
-    sleep 0.5
-    @calculator.should_not be_running
-  end
+    before do
+      @calculator = Calculator.new
+    end
 
-  it "should be running when instanciated" do
-    @calculator.should be_running
-  end
+    after do
+      @calculator.close if @calculator.running?
+      #TODO: sleep  should be replaced with waitforclose
+      sleep 0.5
+      @calculator.should_not be_running
+    end
 
+    it "should be running when initialized" do
+      @calculator.should be_running
+    end
+
+    it "should calculate '2+2=4'" do
+      @calculator.keystroke(VK_2, VK_ADD, VK_2, VK_RETURN) 
+    end
+
+  end
 end

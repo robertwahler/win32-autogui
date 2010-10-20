@@ -1,6 +1,7 @@
 # require all files here
-require 'auto_gui/application'
+require 'auto_gui/input'
 require 'auto_gui/window'
+require 'auto_gui/application'
 
 # Master namespace
 module AutoGui

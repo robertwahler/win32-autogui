@@ -3,6 +3,7 @@ require "win32/process"
 module AutoGui
 
   class Application
+    include AutoGui::Input
 
     attr_reader :path  
     attr_reader :name  
@@ -33,7 +34,6 @@ module AutoGui
     def running?
       @main_window.handle != 0 && Window::IsWindow(@main_window.handle) != 0
     end
-
 
   private
 

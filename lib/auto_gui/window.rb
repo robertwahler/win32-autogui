@@ -1,7 +1,8 @@
 require 'windows/window'
 require 'windows/window/message'
 
-# Missing constants and functions from windows-pr gem
+# Reopen module and supply missing constants and 
+# functions from windows-pr gem
 #
 # TODO: Fork and send pull request 
 module Windows
