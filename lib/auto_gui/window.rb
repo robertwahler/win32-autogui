@@ -50,8 +50,16 @@ module AutoGui
       Window.new handle
     end
 
-    def close
+    def close(options={})
       PostMessage(handle, WM_SYSCOMMAND, SC_CLOSE, 0)
+
+      wait_for_close = (options[:wait_for_close] == true) ? true : false
+      seconds = options[:timeout] || 5
+      if wait_for_close 
+        timeout(seconds) do
+          sleep 0.05 until 0 == IsWindow(handle)
+        end
+      end
     end
 
   end
