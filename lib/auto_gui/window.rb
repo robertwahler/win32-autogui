@@ -17,25 +17,41 @@ module Windows
 
     API.new('IsWindow', 'L', 'I', 'user32')
     API.new('SetForegroundWindow', 'L', 'I', 'user32')
+    API.new('SendMessageA', 'LIIP', 'I', 'user32')
+    API.new('GetClassNameA', 'LPI', 'I', 'user32')
 
   end
 end
 
 module AutoGui
 
-  class Window
-    # instance methods from windows-pr gem
+  class Children
+    include Enumerable
     include Windows::Window
-    include Windows::Window::Message
-    # class methods from windows-pr gem
-    extend Windows::Window
 
-    attr_accessor :handle
-    attr_accessor :window_class
+    def initialize(parent)
+      @parent = parent
+    end
 
-    def initialize(handle, window_class = nil)
+    def each
+      child_after = 0
+      while (child_after = FindWindowEx(@parent.handle, child_after, nil, nil)) > 0 do
+        window = Window.new child_after
+        # immediate children only
+        yield window if (window.parent.handle == @parent.handle)
+      end
+    end
+  end
+
+  class Window
+    include Windows::Window           # instance methods from windows-pr gem
+    include Windows::Window::Message  # PostMessage and constants
+    extend Windows::Window            # class methods from windows-pr gem
+
+    attr_reader :handle
+
+    def initialize(handle)
       @handle = handle
-      @window_class = window_class
     end
     
     def self.find(title, seconds=10, window_class = nil)
@@ -50,6 +66,15 @@ module AutoGui
       Window.new handle
     end
 
+    def children
+      Children.new(self)
+    end
+
+    def parent
+      h = GetParent(handle)
+      Window.new h if h > 0
+    end
+
     def close(options={})
       PostMessage(handle, WM_SYSCOMMAND, SC_CLOSE, 0)
 
@@ -60,6 +85,22 @@ module AutoGui
           sleep 0.05 until 0 == IsWindow(handle)
         end
       end
+    end
+
+    def window_class
+      buffer = "\0" * 255
+      length = GetClassNameA(handle, buffer, buffer.length)
+      length == 0 ? '' : buffer[0..length - 1]
+    end
+
+    def text(max_length = 512)
+      buffer = "\0" * max_length
+      length = SendMessageA(handle, WM_GETTEXT, buffer.length, buffer)
+      length == 0 ? '' : buffer[0..length - 1]
+    end
+
+    def title
+      text
     end
 
   end

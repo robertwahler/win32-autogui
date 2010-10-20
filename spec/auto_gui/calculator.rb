@@ -6,4 +6,8 @@ class Calculator < AutoGui::Application
     super name, options
   end
 
+  def edit_window
+    main_window.children.find {|w| w.window_class == 'Edit'}
+  end
+
 end
