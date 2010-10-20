@@ -12,9 +12,7 @@ describe AutoGui::Application do
     end
 
     after do
-      @calculator.close if @calculator.running?
-      #TODO: sleep  should be replaced with waitforclose
-      sleep 0.5
+      @calculator.close(:wait_for_close => true) if @calculator.running?
       @calculator.should_not be_running
     end
 
