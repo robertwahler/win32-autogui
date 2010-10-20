@@ -103,6 +103,14 @@ module AutoGui
       text
     end
 
+    def inspect
+      c = [] 
+      children.each do |w| 
+        c << "@window_class: #{w.window_class} @title: \"#{w.title}\""
+      end
+      s = "#{self.class} @window_class: #{window_class} @title: \"#{title}\" @children=" + c.join(', ')
+    end
+
   end
 
 end

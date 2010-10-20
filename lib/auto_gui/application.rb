@@ -34,7 +34,6 @@ module AutoGui
     def running?
       main_window.handle != 0 && Window::IsWindow(main_window.handle) != 0
     end
-    
 
   private
 
