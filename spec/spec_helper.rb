@@ -9,6 +9,9 @@ require 'spec'
 require 'spec/autorun'
 require 'aruba/api'
 
+# applications
+require File.expand_path(File.dirname(__FILE__) + '/applications/calculator')
+
 # aruba helper, returns full path to files in the aruba tmp folder
 def fullpath(filename)
   File.expand_path(File.join(current_dir, filename))

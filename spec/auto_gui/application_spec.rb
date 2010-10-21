@@ -1,5 +1,4 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
-require File.expand_path(File.dirname(__FILE__) + '/calculator')
 
 include AutoGui::Input
 
@@ -34,7 +33,7 @@ describe AutoGui::Application do
       @calculator.edit_window.text.strip.should == "4."
     end
 
-    it "should open the 'About' menu" do
+    it "should open the 'About Calculator' dialog" do
       # TODO: need to set the foreground window first
       @calculator.keystroke(VK_MENU, VK_H, VK_A) 
       dialog_about = @calculator.dialog_about
