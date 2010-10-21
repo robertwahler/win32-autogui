@@ -118,6 +118,19 @@ module AutoGui
       text
     end
 
+    def is_window?
+      (handle != 0) && (IsWindow(handle) != 0)
+    end
+    
+    # Brings the window into the foreground and activates it. 
+    # Keyboard input is directed to the window, and various visual cues 
+    # are changed for the user.
+    #
+    # returns nonzero number if sucessful, nil or zero if failed
+    def set_focus
+      SetForegroundWindow(handle) if is_window?
+    end
+
     # Debugging information
     #
     # @return [String] with child window information
