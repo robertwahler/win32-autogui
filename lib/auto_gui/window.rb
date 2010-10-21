@@ -4,7 +4,7 @@ require 'windows/window/message'
 # Reopen module and supply missing constants and 
 # functions from windows-pr gem
 #
-# TODO: Fork and send pull request 
+# TODO: Fork and send pull request for Windows::Window module
 module Windows
   module Window
 
@@ -61,7 +61,6 @@ module AutoGui
   class Window
     include Windows::Window           # instance methods from windows-pr gem
     include Windows::Window::Message  # PostMessage and constants
-    extend Windows::Window            # class methods from windows-pr gem
 
     attr_reader :handle
 
@@ -69,22 +68,12 @@ module AutoGui
       @handle = handle
     end
     
-    def self.find(title, seconds=10, window_class = nil)
-      handle = timeout(seconds) do
-        loop do
-          h = FindWindow(window_class, title)
-          break h if h > 0
-          sleep 0.3
-        end
-      end
-
-      Window.new handle
-    end
-
+    # enumerable immeadiate child windows
     def children
       Children.new(self)
     end
 
+    # @return [Object] Window or nil 
     def parent
       h = GetParent(handle)
       Window.new h if h > 0
@@ -102,6 +91,7 @@ module AutoGui
       end
     end
 
+    # returns [String] the ANSI Windows ClassName
     def window_class
       buffer = "\0" * 255
       length = GetClassNameA(handle, buffer, buffer.length)
@@ -117,7 +107,10 @@ module AutoGui
     def title
       text
     end
-
+    
+    # Determines whether the specified window handle identifies an existing window 
+    #
+    # @returns [Boolean]
     def is_window?
       (handle != 0) && (IsWindow(handle) != 0)
     end
@@ -131,15 +124,33 @@ module AutoGui
       SetForegroundWindow(handle) if is_window?
     end
 
+    # The identifier (pid) of the process that created the window
+    #
+    # @returns [Integer] process id if the window exists, otherwise nil
+    def pid
+      return nil unless is_window?
+      process_id = 0.chr * 4
+      GetWindowThreadProcessId(handle, process_id)
+      process_id = process_id.unpack('L').first
+    end
+
+    # The identifier of the thread that created the window
+    #
+    # @returns [Integer] thread id if the window exists, otherwise nil
+    def thread_id
+      return nil unless is_window?
+      GetWindowThreadProcessId(handle, nil)
+    end
+
     # Debugging information
     #
     # @return [String] with child window information
     def inspect
       c = [] 
       children.each do |w| 
-        c << "@window_class: #{w.window_class} @title: \"#{w.title}\""
+        c << "@window_class: #{w.window_class} @handle: #{w.handle} @title: \"#{w.title}\""
       end
-      s = "#{self.class} @window_class: #{window_class} @title: \"#{title}\" @children=" + c.join(', ')
+      s = "#{self.class} @window_class: #{window_class} @handle: #{handle} @pid: #{pid} @thread_id: #{thread_id} @title: \"#{title}\" @children=" + c.join(', ')
     end
 
   end
