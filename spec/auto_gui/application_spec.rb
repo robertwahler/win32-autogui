@@ -36,9 +36,9 @@ describe AutoGui::Application do
 
     it "should open the 'About' menu" do
       # TODO: need to set the foreground window first
-      #@calculator.keystroke(VK_MENU, VK_H, VK_A) 
-      #sleep 1
-      #p @calculator
+      @calculator.keystroke(VK_MENU, VK_H, VK_A) 
+      dialog_about = @calculator.dialog_about
+      dialog_about.title.should == "About Calculator"
     end
 
   end

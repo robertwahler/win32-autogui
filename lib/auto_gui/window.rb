@@ -25,6 +25,21 @@ end
 
 module AutoGui
 
+  # Enumerate desktop child windows
+  #
+  # Start at the desktop and work down through all the child windows
+  class EnumerateDesktopWindows
+    include Enumerable
+    include Windows::Window
+
+    def each
+      child_after = 0
+      while (child_after = FindWindowEx(nil, child_after, nil, nil)) > 0 do
+        yield Window.new child_after
+      end
+    end
+  end
+
   class Children
     include Enumerable
     include Windows::Window
@@ -103,6 +118,9 @@ module AutoGui
       text
     end
 
+    # Debugging information
+    #
+    # @return [String] with child window information
     def inspect
       c = [] 
       children.each do |w| 
