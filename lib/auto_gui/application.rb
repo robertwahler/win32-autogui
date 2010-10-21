@@ -9,7 +9,6 @@ module AutoGui
     include Windows::Process           
     include Windows::Synchronize
     include Windows::Handle
-    include AutoGui::Input
 
     attr_reader :name  
     attr_reader :title  

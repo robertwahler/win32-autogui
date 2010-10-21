@@ -30,19 +30,19 @@ describe AutoGui::Application do
 
     it "should calculate '2+2=4'" do
       @calculator.set_focus
-      @calculator.keystroke(VK_2, VK_ADD, VK_2, VK_RETURN) 
+      keystroke(VK_2, VK_ADD, VK_2, VK_RETURN) 
       @calculator.edit_window.text.strip.should == "4."
     end
 
     it "should control the focus with 'set_focus'" do
       @calculator.set_focus
-      @calculator.keystroke(VK_9) 
+      keystroke(VK_9) 
       @calculator.edit_window.text.strip.should == "9."
       
       calculator2 = Calculator.new
       calculator2.pid.should_not == @calculator.pid
       calculator2.set_focus
-      calculator2.keystroke(VK_1, VK_0) 
+      keystroke(VK_1, VK_0) 
       calculator2.edit_window.text.strip.should == "10."
 
       @calculator.set_focus
@@ -55,7 +55,7 @@ describe AutoGui::Application do
       @calculator.set_focus
       dialog_about = @calculator.dialog_about
       dialog_about.should be_nil
-      @calculator.keystroke(VK_MENU, VK_H, VK_A) 
+      keystroke(VK_MENU, VK_H, VK_A) 
       dialog_about = @calculator.dialog_about
       dialog_about.title.should == "About Calculator"
     end
