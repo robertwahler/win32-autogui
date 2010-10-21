@@ -98,7 +98,7 @@ module AutoGui
       length == 0 ? '' : buffer[0..length - 1]
     end
 
-    def text(max_length = 512)
+    def text(max_length = 2048)
       buffer = "\0" * max_length
       length = SendMessageA(handle, WM_GETTEXT, buffer.length, buffer)
       length == 0 ? '' : buffer[0..length - 1]
@@ -140,6 +140,19 @@ module AutoGui
     def thread_id
       return nil unless is_window?
       GetWindowThreadProcessId(handle, nil)
+    end
+
+    # The window text including all child windows 
+    # joined together with newlines. Faciliates matching text.
+    # Text from any given window is limited to 2048 characters
+    def combined_text
+      return unless is_window?
+      t = []
+      t << text unless text == ''
+      children.each do |w| 
+        t << w.text unless w.text == ''
+      end
+      t.join("\n")
     end
 
     # Debugging information

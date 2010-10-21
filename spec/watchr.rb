@@ -117,6 +117,7 @@ watch( '^spec/(.*)_spec\.rb'   )   { |m| run_spec(m[0]) }
 # specify just the lib files that have specs
 # TODO: This can be determined automatically from the spec file naming convention
 watch( '^lib/(.*)'   )   { run_default_spec }
+watch( '^spec/applications/(.*)'   )   { run_default_spec }
 
 # --------------------------------------------------
 # Signal Handling

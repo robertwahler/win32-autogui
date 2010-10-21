@@ -38,8 +38,7 @@ module AutoGui
       process_handle = process_info.process_handle
       thread_handle = process_info.thread_handle
 
-      # TODO : timeout in milliseconds as option
-      timeout = 10*1000
+      timeout = options[:wait_for_close] || 10000
       
       # wait for process before enumerating windows
       ret = WaitForInputIdle(process_handle, timeout)
@@ -69,6 +68,12 @@ module AutoGui
 
     def set_focus
       main_window.set_focus if running? 
+    end
+
+    # The main_window text including all child windows 
+    # joined together with newlines. Faciliates matching text.
+    def combined_text
+      main_window.combined_text if running? 
     end
 
   private

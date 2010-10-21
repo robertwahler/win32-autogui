@@ -15,7 +15,7 @@ describe AutoGui::Application do
       @calculator.should_not be_running
     end
 
-    it "should be running when initialized" do
+    it "should start when initialized" do
       @calculator.should be_running
     end
 
@@ -36,7 +36,7 @@ describe AutoGui::Application do
 
     it "should control the focus with 'set_focus'" do
       @calculator.set_focus
-      keystroke(VK_9) 
+      keystroke(VK_9)
       @calculator.edit_window.text.strip.should == "9."
       
       calculator2 = Calculator.new
@@ -51,13 +51,16 @@ describe AutoGui::Application do
       calculator2.close(:wait_for_close => true)
     end
 
-    it "should open the 'About Calculator' dialog" do
+    it "should open and close the 'About Calculator' dialog" do
       @calculator.set_focus
       dialog_about = @calculator.dialog_about
       dialog_about.should be_nil
       keystroke(VK_MENU, VK_H, VK_A) 
       dialog_about = @calculator.dialog_about
       dialog_about.title.should == "About Calculator"
+      dialog_about.combined_text.should match(/Microsoft . Calculator/)
+      dialog_about.close
+      @calculator.dialog_about.should be_nil
     end
 
   end

@@ -142,6 +142,12 @@ module AutoGui
     Windows::API.new('keybd_event', 'IILL', 'V', 'user32')
     Windows::API.new('mouse_event', 'LLLLL', 'V', 'user32')
 
+    # send keystroke to the focused window, keystrokes are virtual keycodes
+    #
+    # @example
+    #
+    #     keystroke(VK_2, VK_ADD, VK_2, VK_RETURN) 
+    #
     def keystroke(*keys)
       return if keys.empty?
       
