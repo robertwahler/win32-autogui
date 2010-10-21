@@ -3,6 +3,7 @@ PATH
   specs:
     auto_gui (0.0.1)
       win32-process (>= 0.6.2)
+      windows-api (>= 0.4.0)
       windows-pr (>= 1.0.9)
 
 GEM
@@ -52,5 +53,6 @@ DEPENDENCIES
   rdiscount (>= 1.6.5)
   rspec (>= 1.2.9)
   win32-process (>= 0.6.2)
+  windows-api (>= 0.4.0)
   windows-pr (>= 1.0.9)
   yard (>= 0.6.1)
