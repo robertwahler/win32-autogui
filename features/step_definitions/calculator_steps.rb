@@ -12,9 +12,10 @@ end
 Given /^A GUI application named calculator$/ do 
   @calculator = Calculator.new
   @calculator.should be_running
+  puts ENV['PATH']
 end
 
-When /^I type in "([^"]*)" and hit return$/ do |arg1|
+When /^I type in "([^"]*)"$/ do |arg1|
   @calculator.set_focus
   # TODO: need type_in function
   keystroke(VK_2, VK_ADD, VK_2, VK_RETURN) 
@@ -26,5 +27,13 @@ end
 # appear naturally in the output
 Then /^the edit window text should match \/([^\/]*)\/$/ do |partial_output|
   @calculator.edit_window.text.should =~ /#{partial_output}/
+end
+
+Then /^the edit window text should contain exactly "([^"]*)"$/ do |exact_output|
+  @calculator.edit_window.text.should == unescape(exact_output)
+end
+
+Then /^the edit window text should contain exactly:$/ do |exact_output|
+  @calculator.edit_window.text.should == exact_output
 end
 

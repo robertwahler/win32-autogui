@@ -8,5 +8,5 @@ Feature: Automating a GUI application
     Given A GUI application named calculator
 
   Scenario: Simple calculation
-    When I type in "2+2" and hit return
-    Then the edit window text should match /4./
+    When I type in "2+2="
+    Then the edit window text should match /4/
