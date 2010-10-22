@@ -1,10 +1,10 @@
 # require all files here
-require 'auto_gui/input'
-require 'auto_gui/window'
-require 'auto_gui/application'
+require 'autogui/input'
+require 'autogui/window'
+require 'autogui/application'
 
 # Master namespace
-module AutoGui
+module Autogui
   
   # Contents of the VERSION file
   #

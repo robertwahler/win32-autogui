@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-include AutoGui::Input
+include Autogui::Input
 
-describe AutoGui::Application do
+describe Autogui::Application do
 
   describe "driving calculator.exe" do
 

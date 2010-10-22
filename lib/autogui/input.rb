@@ -1,6 +1,6 @@
 require 'windows/api'
 
-module AutoGui
+module Autogui
   module Input
 
     # MSDN virtual key codes
@@ -134,7 +134,7 @@ module AutoGui
     KEYBD_EVENT_KEYUP = 2
     KEYBD_EVENT_KEYDOWN = 0
 
-    Windows::API.auto_namespace = 'AutoGui::Input'
+    Windows::API.auto_namespace = 'Autogui::Input'
     Windows::API.auto_constant  = true
     Windows::API.auto_method    = true
     Windows::API.auto_unicode   = false

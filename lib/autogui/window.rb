@@ -23,7 +23,7 @@ module Windows
   end
 end
 
-module AutoGui
+module Autogui
 
   # Enumerate desktop child windows
   #

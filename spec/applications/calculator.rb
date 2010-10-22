@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-class Calculator < AutoGui::Application
+class Calculator < Autogui::Application
 
   def initialize(name="calc", options = {:title=> "Calculator"})
     super name, options
@@ -11,7 +11,7 @@ class Calculator < AutoGui::Application
   end
 
   def dialog_about
-    AutoGui::EnumerateDesktopWindows.new.find do |w| 
+    Autogui::EnumerateDesktopWindows.new.find do |w| 
       w.title.match(/About Calculator/) && (w.pid == pid)
     end
   end

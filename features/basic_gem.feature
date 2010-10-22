@@ -1,5 +1,5 @@
 @announce
-Feature: AutoGui
+Feature: Autogui
 
   This is a placeholder
 

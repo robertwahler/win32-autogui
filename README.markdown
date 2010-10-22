@@ -1,10 +1,13 @@
-AutoGui
-========
+Win32-Autogui
+=============
 
-A GUI testing framework.
+A Win32 GUI testing framework.
 
-Features/Dependencies 
----------------------
+
+Development
+-----------
+
+### Dependencies ###
 
 * Bundler for dependency management <http://github.com/carlhuda/bundler>
 * Rspec for unit testing <http://github.com/dchelimsky/rspec>
@@ -12,33 +15,30 @@ Features/Dependencies
 * Aruba for CLI testing <http://github.com/aslakhellesoy/aruba>
 * YARD for documentation generation <http://github.com/lsegal/yard>
 
-
-Rake tasks
-----------
+### Rake tasks ###
 
 rake -T
 
-    rake build         # Build auto_gui-0.0.1.gem into the pkg directory
+    rake build         # Build win32-autogui-0.0.1.gem into the pkg directory
     rake doc:clean     # Remove generated documenation
     rake doc:generate  # Generate YARD Documentation
     rake features      # Run Cucumber features
-    rake install       # Build and install auto_gui-0.0.1.gem into system gems
-    rake release       # Create tag v0.0.1 and build and push auto_gui-0.0.1.gem to Rubygems
+    rake install       # Build and install win32-autogui-0.0.1.gem into system gems
+    rake release       # Create tag v0.0.1 and build and push win32-autogui-0.0.1.gem to Rubygems
     rake spec          # Run specs
     rake test          # Run specs and features
 
 
-Autotesting with Watchr
--------------------------
+### Autotesting with Watchr ###
 
 [Watchr](http://github.com/mynyml/watchr) provides a flexible alternative to Autotest.  A
 jump start script is provided in spec/watchr.rb.
 
-### Install watchr ###
+#### Install watchr ###
 
     gem install watchr
 
-### Run watchr ###
+#### Run watchr ###
 
     watchr spec/watchr.rb
 

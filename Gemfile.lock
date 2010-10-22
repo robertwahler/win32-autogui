@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    auto_gui (0.0.1)
+    autogui (0.0.1)
       win32-process (>= 0.6.2)
       windows-api (>= 0.4.0)
       windows-pr (>= 1.0.9)
@@ -46,7 +46,7 @@ PLATFORMS
 
 DEPENDENCIES
   aruba (>= 0.2.0)
-  auto_gui!
+  autogui!
   bundler (>= 1.0.0)
   cucumber (>= 0.6)
   rake (>= 0.8.7)

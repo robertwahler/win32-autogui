@@ -3,7 +3,7 @@ require 'windows/synchronize'
 require 'windows/handle'
 require "win32/process"
 
-module AutoGui
+module Autogui
 
   class Application
     include Windows::Process           
@@ -51,7 +51,7 @@ module AutoGui
       raise "Start command failed while waiting for idle input, reason unknown" unless (ret == 0)
 
       # There may be multiple instances, use title and pid to id our main window
-      @main_window = AutoGui::EnumerateDesktopWindows.new.find do |w| 
+      @main_window = Autogui::EnumerateDesktopWindows.new.find do |w| 
         w.title == title && w.pid == pid 
       end
       @main_window.set_focus if running?
