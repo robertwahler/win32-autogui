@@ -158,5 +158,53 @@ module Autogui
       keybd_event keys.first, 0, KEYBD_EVENT_KEYUP, 0 
     end
 
+    def type_in(string)
+      string.each_char do |char|
+        keystroke(*char_to_virtual_keycode(char))
+      end
+    end
+
+    private
+
+    # convert a single character to a virtual keycode
+    # returns [Array] of virtual keycodes
+    def char_to_virtual_keycode(char)
+
+      unless char.size == 1
+        raise "virtual keycode conversion is for single characters only"
+      end
+      
+      code = char.unpack('U')[0]
+
+      case char
+        when '0'..'9'
+          [code - ?0 + 0x30]
+        when 'A'..'Z'
+          [VK_SHIFT, code]
+        when 'a'..'z'
+          [code - ?a + ?A]
+        when ' '
+          [code]
+        when '+'
+          [VK_ADD]
+        when '='
+          [VK_OEM_PLUS]
+        when ','
+          [VK_OEM_COMMA]
+        when '.'
+          [VK_OEM_PERIOD]
+        when ':'
+          [VK_SHIFT, VK_OEM_1]
+        when ';'
+          [VK_OEM_1]
+        when "\\"
+          [VK_OEM_102]
+        when "\n"
+          [VK_RETURN]
+        else
+          raise "No conversion exists for character #{char}"
+      end
+    end  
+
   end
 end

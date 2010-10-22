@@ -12,13 +12,11 @@ end
 Given /^A GUI application named calculator$/ do 
   @calculator = Calculator.new
   @calculator.should be_running
-  puts ENV['PATH']
 end
 
-When /^I type in "([^"]*)"$/ do |arg1|
+When /^I type in "([^"]*)"$/ do |string|
   @calculator.set_focus
-  # TODO: need type_in function
-  keystroke(VK_2, VK_ADD, VK_2, VK_RETURN) 
+  type_in(string)
 end
 
 # "the window text should match" allows regex in the partial_output, if
