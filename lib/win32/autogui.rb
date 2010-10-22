@@ -1,7 +1,7 @@
 # require all files here
-require 'autogui/input'
-require 'autogui/window'
-require 'autogui/application'
+require 'win32/autogui/input'
+require 'win32/autogui/window'
+require 'win32/autogui/application'
 
 # Master namespace
 module Autogui
@@ -12,7 +12,7 @@ module Autogui
   #
   # @return [String] the contents of the version file in #.#.# format
   def self.version
-    version_info_file = File.join(File.dirname(__FILE__), *%w[.. VERSION])
+    version_info_file = File.join(File.dirname(__FILE__), *%w[.. .. VERSION])
     File.open(version_info_file, "r") do |f|
       f.read
     end

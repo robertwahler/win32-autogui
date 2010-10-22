@@ -10,7 +10,7 @@ Bundler::GemHelper.install_tasks
 
 def gemspec
   @gemspec ||= begin
-    file = File.expand_path('../autogui.gemspec', __FILE__)
+    file = File.expand_path('../win32-autogui.gemspec', __FILE__)
     eval(File.read(file), binding, file)
   end
 end

@@ -3,17 +3,17 @@
 #
 
 Gem::Specification.new do |s|
-  s.name        = "autogui"
+  s.name        = "win32-autogui"
   s.version     = File.open(File.join(File.dirname(__FILE__), *%w[VERSION]), "r") { |f| f.read } 
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Robert Wahler"]
   s.email       = ["robert@gearheadforhire.com"]
-  s.homepage    = "http://rubygems.org/gems/autogui"
+  s.homepage    = "http://rubygems.org/gems/win32-autogui"
   s.summary     = "A GUI testing framework"
   s.description = "A GUI testing framework"
 
   s.required_rubygems_version = ">= 1.3.6"
-  s.rubyforge_project         = "autogui"
+  s.rubyforge_project         = "win32-autogui"
 
   s.add_dependency "windows-api", ">= 0.4.0"
   s.add_dependency "windows-pr", ">= 1.0.9"
@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
 
   s.has_rdoc = 'yard'
   s.rdoc_options     = [ 
-                         '--title', 'Autogui Documentation', 
+                         '--title', 'Win32-Autogui Documentation', 
                          '--main', 'README.markdown', 
                          '--line-numbers',
                          '--inline-source' 
