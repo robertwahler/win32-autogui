@@ -105,13 +105,13 @@ prompt
 # --------------------------------------------------
 # Watchr Rules
 # --------------------------------------------------
-#watch( '^features/(.*)\.feature'   )   { run_default_cucumber }
+watch( '^features/(.*)\.feature'   )   { run_default_cucumber }
 
-#watch( '^bin/(.*)'   )   { run_default_cucumber }
-#watch( '^lib/(.*)'   )   { run_default_cucumber }
+watch( '^bin/(.*)'   )   { run_default_cucumber }
+watch( '^lib/(.*)'   )   { run_default_cucumber }
 
-#watch( '^features/step_definitions/(.*)\.rb' )   { run_default_cucumber }
-#watch( '^features/support/(.*)\.rb' )   { run_default_cucumber }
+watch( '^features/step_definitions/(.*)\.rb' )   { run_default_cucumber }
+watch( '^features/support/(.*)\.rb' )   { run_default_cucumber }
 
 watch( '^spec/(.*)_spec\.rb'   )   { |m| run_spec(m[0]) }
 # specify just the lib files that have specs

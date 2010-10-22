@@ -1,4 +1,4 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
-require 'autogui'
+require 'win32/autogui'
 require 'aruba'
 require 'spec/expectations'
