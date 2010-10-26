@@ -12,10 +12,17 @@ module Autogui
 
     attr_reader :name  
     attr_reader :title  
-    attr_reader :main_window  
     attr_reader :pid
     attr_reader :thread_id
     
+    # @examples
+    #       # must be on the path
+    #       Application.new "calc"  
+    #
+    #       # valid dos path
+    #       Application.new "\\windows\\system32\calc"  
+    #
+    # @param name [String] a valid win32 exe name
     def initialize(name, options = {})
       @name = name
       @title = options[:title] || name
@@ -50,12 +57,16 @@ module Autogui
       raise "Start command failed on timeout" if ret == WAIT_TIMEOUT 
       raise "Start command failed while waiting for idle input, reason unknown" unless (ret == 0)
 
+      set_focus
+    end
+
+    def main_window
+      return @main_window if @main_window
+
       # There may be multiple instances, use title and pid to id our main window
       @main_window = Autogui::EnumerateDesktopWindows.new.find do |w| 
-        w.title == title && w.pid == pid 
+        w.title.match(title) && w.pid == pid 
       end
-      @main_window.set_focus if running?
-      @main_window
     end
 
     def close(options={})
