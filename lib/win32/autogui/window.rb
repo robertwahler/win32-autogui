@@ -150,7 +150,7 @@ module Autogui
       t = []
       t << text unless text == ''
       children.each do |w| 
-        t << w.text unless w.text == ''
+        t << w.combined_text unless w.combined_text == ''
       end
       t.join("\n")
     end
@@ -161,9 +161,9 @@ module Autogui
     def inspect
       c = [] 
       children.each do |w| 
-        c << "@window_class: #{w.window_class} @handle: #{w.handle} @title: \"#{w.title}\""
+        c << w.inspect 
       end
-      s = "#{self.class} @window_class: #{window_class} @handle: #{handle} @pid: #{pid} @thread_id: #{thread_id} @title: \"#{title}\" @children=" + c.join(', ')
+      s = super + " #{self.class}=<window_class:#{window_class} pid:#{pid} thread_id:#{thread_id} title:\"#{title}\" children=<" + c.join("\n") + ">>"
     end
 
   end

@@ -17,6 +17,7 @@ describe Autogui::Application do
 
     it "should start when initialized" do
       @calculator.should be_running
+      puts @calculator.inspect
     end
 
     it "should have the title 'Calculator' that matches the main_window title" do
@@ -25,7 +26,7 @@ describe Autogui::Application do
     end
 
     it "should have an inspect method showing child window information" do
-      @calculator.inspect.should match(/@children=@window_class: Edit/)
+      @calculator.inspect.should match(/children=</)
     end
 
     it "should calculate '2+2=4' using the keystroke method" do
