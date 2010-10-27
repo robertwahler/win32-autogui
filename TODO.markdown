@@ -1,4 +1,8 @@
 TODO
 ====
 
-* add start command to application
+
+before release
+--------------
+
+* add examples/quicknote/exe/quicknote.exe to repo

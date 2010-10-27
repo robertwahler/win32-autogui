@@ -1,0 +1,9 @@
+*.ddp
+*.dsk
+*.log
+*.dof
+exe/*.exe
+*.cfIndex
+*.cfProject
+tags
+rerun.txt
