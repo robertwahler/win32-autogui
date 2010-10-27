@@ -2,7 +2,8 @@ program quicknote;
 
 uses
   Forms,
-  FormMainU in 'FormMainU.pas' {FormMain};
+  FormMainU in 'FormMainU.pas' {FormMain},
+  FormAboutU in 'FormAboutU.pas' {FormAbout};
 
 {$R *.res}
 
