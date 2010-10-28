@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project         = "basic_gem"
 
   s.add_development_dependency "bundler", ">= 1.0.3"
-  s.add_development_dependency "rspec", ">= 1.2.9"
+  s.add_development_dependency "rspec", "= 1.3.1"
   s.add_development_dependency "cucumber", ">= 0.9.2"
   s.add_development_dependency "aruba", ">= 0.2.3"
   s.add_development_dependency "rake", ">= 0.8.7"
