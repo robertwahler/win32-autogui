@@ -74,18 +74,18 @@ def run_last_feature
 end
 
 def run_default_spec
-  cmd = "spec --color --format s ./spec"
+  cmd = "spec _1.3.1_ --color --format s ./spec"
   run(cmd)
 end
 
 def run_all_specs
-  cmd = "spec --color --format s #{all_spec_files.join(' ')}"
+  cmd = "spec _1.3.1_ --color --format s #{all_spec_files.join(' ')}"
   p cmd
   run(cmd)
 end
 
 def run_spec(spec)
-  cmd = "spec --color --format s #{spec}"
+  cmd = "spec _1.3.1_ --color --format s #{spec}"
   $last_spec = spec
   run(cmd)
 end

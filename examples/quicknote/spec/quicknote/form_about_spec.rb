@@ -6,12 +6,6 @@ describe "FormAbout" do
 
   before(:all) do
     @application = Quicknote.new
-    
-    # debug
-    puts "application:"
-    puts @application.inspect
-    puts "application.combined_text:"
-    puts @application.combined_text
   end
 
   after(:all) do

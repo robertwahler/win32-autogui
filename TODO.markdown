@@ -2,8 +2,8 @@ TODO
 ====
 
 
-before release
---------------
+general
+-------
 
 * add examples/quicknote/exe/quicknote.exe to repo
-* remove examples/* from gemspec
+* stop changing $LOAD_PATH in specs and features, modify ENV[] in before and afters
