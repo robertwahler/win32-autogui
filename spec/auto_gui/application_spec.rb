@@ -17,7 +17,6 @@ describe Autogui::Application do
 
     it "should start when initialized" do
       @calculator.should be_running
-      puts @calculator.inspect
     end
 
     it "should have the title 'Calculator' that matches the main_window title" do
