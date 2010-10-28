@@ -12,7 +12,7 @@ module BasicGem
   def self.version
     version_info_file = File.join(File.dirname(__FILE__), *%w[.. VERSION])
     File.open(version_info_file, "r") do |f|
-      f.read
+      f.read.strip
     end
   end
 
