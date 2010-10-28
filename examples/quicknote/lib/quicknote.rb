@@ -1,4 +1,5 @@
 # use the development version of win32-autogui
+# Production code should simply require 'win32/autogui'
 require File.expand_path(File.dirname(__FILE__) + '/../../../lib/win32/autogui')
 
 class Quicknote < Autogui::Application
