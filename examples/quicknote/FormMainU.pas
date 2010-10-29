@@ -78,7 +78,7 @@ end;
 
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
-  FFileName := 'Untitled.txt';
+  FFileName := 'untitled.txt';
   FDirtyFlag := False;
   UpdateTitleBar;
 end;

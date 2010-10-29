@@ -1,7 +1,6 @@
 *.ddp
 *.dsk
 *.log
-*.dof
 *.cfIndex
 *.cfProject
 tags
