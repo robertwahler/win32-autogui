@@ -53,6 +53,7 @@ type
     procedure SetDirty(Value: Boolean);
     procedure OpenTextFile(AFileName: String);
     procedure UpdateTitleBar;
+    procedure Reset;
 
     property Dirty: Boolean read FDirtyFlag write SetDirty;
     property FileName: String read FFileName write FFilename;
@@ -126,9 +127,18 @@ begin
   SetDirty(True);
 end;
 
+procedure TFormMain.Reset;
+begin
+  Memo.Text := '';
+  SetDirty(False);
+end;
+
 procedure TFormMain.ActionFileNewExecute(Sender: TObject);
 begin
-  //
+  if PromptAndSave <> mrCancel then
+  begin
+    Reset;
+  end;
 end;
 
 procedure TFormMain.ActionFileOpenExecute(Sender: TObject);
@@ -160,6 +170,8 @@ begin
 end;
 
 function TFormMain.PromptAndSave: Integer;
+var
+  msg: String;
 begin
 
   // Default
@@ -167,14 +179,12 @@ begin
 
   if Dirty then
   begin
-
-    Result := MessageDlg('Text has changed. Save changes to ' + FileName +'?', mtConfirmation, mbYesNoCancel, 0);
-
+    msg := 'Text has changed. Save changes to ' + FileName +'?';
+    Result := MessageDlg(msg, mtConfirmation, mbYesNoCancel, 0);
     if Result = mrYes then
     begin
       ActionFileSaveExecute(self);
     end;
-
   end;
 
 end;

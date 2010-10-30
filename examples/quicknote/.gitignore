@@ -3,5 +3,6 @@
 *.log
 *.cfIndex
 *.cfProject
+tmp/aruba
 tags
 rerun.txt

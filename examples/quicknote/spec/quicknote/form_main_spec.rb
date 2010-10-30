@@ -14,46 +14,58 @@ describe "FormMain" do
   before(:each) do
     @application = Quicknote.new unless @application.running?
     @application.should be_running
+
+    # arubu helpers
+    FileUtils.rm_rf(current_dir)
+    @input_file = "input_file.txt"
+    create_file(@input_file, "the quick brown fox")
   end
   after(:all) do
-    @application.close(:wait_for_close => true) if @application.running?
+    @application.file_exit if @application.running?
+    # force it
+    @application.close(:wait_for_close => true)  if @application.running?
     @application.should_not be_running
   end
 
   describe "after startup" do
-    it "should have the title 'QuickNote - untitled.txt" do
+    it "should have the title 'QuickNote - untitled.txt'" do
       @application.main_window.title.should == "QuickNote - untitled.txt"
     end
     it "should have no text" do
       pending
     end
-
   end
 
   describe "editing text" do
     before(:each) do
       @application.set_focus
-      type_in("hello world")
     end
-    after(:all) do
-      @application.close(:wait_for_close => true)
+    after(:each) do
+      @application.file_new(:save => false)
     end
 
     it "should add the '+' modified flag to the title" do
+      @application.main_window.title.should == "QuickNote - untitled.txt"
+      type_in("hello world")
       @application.main_window.title.should == "QuickNote - +untitled.txt"
+    end
+    it "should change the text" do
+      @application.edit_window.text.should == '' 
+      type_in("hello world")
+      @application.edit_window.text.should == 'hello world' 
     end
   end
 
   describe "file open" do
-    after(:all) do
-      @application.close(:wait_for_close => true)
-    end
     before(:each) do
       @application.main_window.title.should == "QuickNote - untitled.txt"
       #@application.load_file("test.txt")
     end
+    after(:each) do
+      @application.file_new(:save => false)
+    end
 
-    it "should prompt to save with modified text" do
+    it "should prompt and save with modified text" do
       pending
     end
     it "should not prompt to save with unmodified text" do
@@ -67,8 +79,15 @@ describe "FormMain" do
     end
   end
 
-  describe "file new" do
-    it "should prompt to save with modified text" do
+  describe "file new (VK_MENU, VK_F, VK_N)" do
+    before(:each) do
+      @application.set_focus
+    end
+    after(:all) do
+      @application.file_new(:save => false)
+    end
+
+    it "should prompt and save modified text" do
       pending
     end
     it "should not prompt to save with unmodified text" do
@@ -78,7 +97,10 @@ describe "FormMain" do
       pending
     end
     it "should clear the existing text" do
-      pending
+      type_in("hello world")
+      @application.edit_window.text.should == 'hello world' 
+      @application.file_new(:save => false)
+      @application.edit_window.text.should == '' 
     end
   end
   
@@ -110,7 +132,7 @@ describe "FormMain" do
   end
 
   describe "file exit (VK_MENU, VK_F, VK_X)" do
-    it "should prompt to save with modified text" do
+    it "should prompt and save with modified text" do
       pending
     end
     it "should not prompt to save with unmodified text" do
