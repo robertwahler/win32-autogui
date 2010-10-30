@@ -17,12 +17,10 @@ describe "FormMain" do
 
     # arubu helpers
     FileUtils.rm_rf(current_dir)
-    @input_file = "input_file.txt"
-    create_file(@input_file, "the quick brown fox")
   end
   after(:all) do
     @application.file_exit if @application.running?
-    # force it
+    # still running? force it to close
     @application.close(:wait_for_close => true)  if @application.running?
     @application.should_not be_running
   end
@@ -58,8 +56,9 @@ describe "FormMain" do
 
   describe "file open" do
     before(:each) do
-      @application.main_window.title.should == "QuickNote - untitled.txt"
-      #@application.load_file("test.txt")
+      @filename = "input_file.txt"
+      @file_contents = create_file(@filename, "the quick brown fox")
+      @application.set_focus
     end
     after(:each) do
       @application.file_new(:save => false)
@@ -71,11 +70,28 @@ describe "FormMain" do
     it "should not prompt to save with unmodified text" do
       pending
     end
-    it "should change the title" do
+    it "should not prompt to save with unmodified text" do
       pending
     end
-    it "should load the text" do
-      pending
+
+    describe "succeeding" do 
+      it "should change the title" do
+        @application.main_window.title.should == "QuickNote - untitled.txt"
+        @application.file_open(fullpath(@filename), :save => false)
+        @application.main_window.title.should == "QuickNote - #{fullpath(@filename)}"
+      end
+      it "should load the text" do
+        pending
+      end
+    end
+
+    describe "failing" do 
+      it "should show an error dialog" do
+        pending
+      end
+      it "should keep existing text" do
+        pending
+      end
     end
   end
 
@@ -94,7 +110,13 @@ describe "FormMain" do
       pending
     end
     it "should change the title" do
-      pending
+      pending "file_open"
+    end
+    it "should remove the '+' modified flag from the title" do
+      type_in("hello world")
+      @application.main_window.title.should == "QuickNote - +untitled.txt"
+      @application.file_new(:save => false)
+      @application.main_window.title.should == "QuickNote - untitled.txt"
     end
     it "should clear the existing text" do
       type_in("hello world")

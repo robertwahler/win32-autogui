@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 1415
-  Top = 332
+  Left = 994
+  Top = 413
   Width = 248
   Height = 366
   Caption = 'QuickNote'
@@ -29,6 +29,7 @@ object FormMain: TFormMain
     Width = 240
     Height = 293
     Align = alClient
+    ScrollBars = ssVertical
     TabOrder = 1
     OnChange = MemoChange
   end

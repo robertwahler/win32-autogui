@@ -29,21 +29,46 @@ class Quicknote < Autogui::Application
     end
   end
 
+  def file_open_dialog
+    Autogui::EnumerateDesktopWindows.new.find do |w| 
+      w.title.match(/Text File Open/) && (w.pid == pid)
+    end
+  end
+
   # menu action File, New
   def file_new(options={})
     set_focus
     keystroke(VK_MENU, VK_F, VK_N) 
     if message_dialog_confirm 
-      puts "DEBUG: dialog is here" 
+      puts "DEBUG: confirm dialog is here" 
       options[:save] == true ? keystroke(VK_Y) : keystroke(VK_N)
     end
-    puts "WARNING: dialog is still here" if message_dialog_confirm 
+    # sanity check
+    raise "confirm dialog is still here" if message_dialog_confirm 
+  end
+  
+  # menu action File, New
+  def file_open(filename, options={})
+    set_focus
+    keystroke(VK_MENU, VK_F, VK_O) 
+    if message_dialog_confirm 
+      puts "DEBUG: confirm dialog is here" 
+      options[:save] == true ? keystroke(VK_Y) : keystroke(VK_N)
+    end
+
+    # sanity checks
+    raise "confirm dialog is still here" if message_dialog_confirm 
+    raise "file_open_dialog not found" unless file_open_dialog
+
+    type_in(filename)
+    keystroke(VK_RETURN)
   end
 
   # menu action File, Exit
   def file_exit
     set_focus
     keystroke(VK_N) if message_dialog_confirm 
+    keystroke(VK_ESCAPE) if file_open_dialog
     keystroke(VK_MENU, VK_F, VK_X) 
     keystroke(VK_N) if message_dialog_confirm 
   end

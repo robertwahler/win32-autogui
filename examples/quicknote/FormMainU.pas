@@ -124,13 +124,15 @@ end;
 
 procedure TFormMain.MemoChange(Sender: TObject);
 begin
-  SetDirty(True);
+  Dirty := True;
 end;
 
 procedure TFormMain.Reset;
 begin
-  Memo.Text := '';
-  SetDirty(False);
+  //Memo.Clear;
+  Memo.text := '';
+  Dirty := False;
+  UpdateTitleBar;
 end;
 
 procedure TFormMain.ActionFileNewExecute(Sender: TObject);
@@ -166,7 +168,11 @@ end;
 
 procedure TFormMain.OpenTextFile(AFileName: String);
 begin
-  //
+  //Reset;
+  FileName := AFileName;
+  Memo.Lines.LoadFromFile(FileName);
+  Dirty := False;
+  UpdateTitleBar;
 end;
 
 function TFormMain.PromptAndSave: Integer;
