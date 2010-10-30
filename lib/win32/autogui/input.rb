@@ -120,11 +120,11 @@ module Autogui
     VK_OEM_MINUS = 0xbd
     VK_OEM_PERIOD = 0xbe
     VK_OEM_2 = 0xbf
-    VK_OEM_3 = 0xc0
+    VK_OEM_3 = 0xc0         # US '~' key
     VK_OEM_4 = 0xdb
-    VK_OEM_5 = 0xdc
+    VK_OEM_5 = 0xdc         # US '\' key
     VK_OEM_6 = 0xdd
-    VK_OEM_7 = 0xde
+    VK_OEM_7 = 0xde         # US quotes key
     VK_OEM_8 = 0xdf
 
     # delay in seconds between keystrokes
@@ -193,12 +193,20 @@ module Autogui
           [VK_OEM_COMMA]
         when '.'
           [VK_OEM_PERIOD]
+        when '-'
+          [VK_OEM_MINUS]
+        when '_'
+          [VK_SHIFT, VK_OEM_MINUS]
         when ':'
           [VK_SHIFT, VK_OEM_1]
         when ';'
           [VK_OEM_1]
+        when '\''
+          [VK_OEM_7]
+        when '\"'
+          [VK_SHIFT, VK_OEM_7]
         when "\\"
-          [VK_OEM_102]
+          [VK_OEM_5]
         when "\n"
           [VK_RETURN]
         else
