@@ -30,7 +30,7 @@ describe "FormMain" do
       @application.main_window.title.should == "QuickNote - untitled.txt"
     end
     it "should have no text" do
-      pending
+      @application.edit_window.text.should == '' 
     end
   end
 
@@ -55,42 +55,61 @@ describe "FormMain" do
   end
 
   describe "file open" do
-    before(:each) do
+    before(:all) do
       @filename = "input_file.txt"
       @file_contents = create_file(@filename, "the quick brown fox")
       @application.set_focus
     end
+    before(:each) do
+      @application.set_focus
+    end
     after(:each) do
-      @application.file_new(:save => false)
+      keystroke(VK_ESCAPE) if @application.file_open_dialog 
     end
 
     it "should prompt and save with modified text" do
-      pending
+      pending "file save"
     end
     it "should not prompt to save with unmodified text" do
-      pending
-    end
-    it "should not prompt to save with unmodified text" do
-      pending
+      @application.main_window.title.should_not match(/\+/)
+      keystroke(VK_MENU, VK_F, VK_O) 
+      @application.message_dialog_confirm.should be_nil
     end
 
     describe "succeeding" do 
-      it "should change the title" do
+      before(:all) do
         @application.main_window.title.should == "QuickNote - untitled.txt"
         @application.file_open(fullpath(@filename), :save => false)
+      end
+
+      it "should change the title" do
         @application.main_window.title.should == "QuickNote - #{fullpath(@filename)}"
       end
       it "should load the text" do
-        pending
+        @application.edit_window.text.should == 'the quick brown fox' 
       end
     end
 
     describe "failing" do 
-      it "should show an error dialog" do
-        pending
+      before(:all) do
+        @application.file_new(:save => false)
+        @application.set_focus
+        type_in("foobar")
+        @application.file_open(fullpath("a_bogus_filename.txt"), :save => false)
+        @application.error_dialog.should_not be_nil
+      end
+      after(:all) do
+        if @application.error_dialog
+          @application.error_dialog.set_focus
+          keystroke(VK_ESCAPE) 
+        end
+      end
+
+      it "should show an error dialog with message 'Cannot open file'" do
+        @application.error_dialog.combined_text.should match(/Cannot open file/)
       end
       it "should keep existing text" do
-        pending
+        @application.edit_window.text.should == 'foobar' 
       end
     end
   end

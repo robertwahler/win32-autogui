@@ -35,12 +35,18 @@ class Quicknote < Autogui::Application
     end
   end
 
+  def error_dialog
+    Autogui::EnumerateDesktopWindows.new.find do |w| 
+      w.title.match(/^QuickNote$/) && (w.pid == pid) && (w.window_class == "#32770")
+    end
+  end
+
   # menu action File, New
   def file_new(options={})
     set_focus
     keystroke(VK_MENU, VK_F, VK_N) 
     if message_dialog_confirm 
-      puts "DEBUG: confirm dialog is here" 
+      #puts "DEBUG: confirm dialog is here" 
       options[:save] == true ? keystroke(VK_Y) : keystroke(VK_N)
     end
     # sanity check
@@ -52,7 +58,7 @@ class Quicknote < Autogui::Application
     set_focus
     keystroke(VK_MENU, VK_F, VK_O) 
     if message_dialog_confirm 
-      puts "DEBUG: confirm dialog is here" 
+      #puts "DEBUG: confirm dialog is here" 
       options[:save] == true ? keystroke(VK_Y) : keystroke(VK_N)
     end
 
