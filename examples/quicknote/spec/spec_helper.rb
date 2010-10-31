@@ -22,6 +22,13 @@ def fullpath(filename)
   path
 end
 
+# return the contents of "filename" in the aruba tmp folder
+def get_file_content(filename)
+  in_current_dir do
+    IO.read(filename)
+  end
+end
+
 Spec::Runner.configure do |config|
    config.include Aruba::Api
 end
