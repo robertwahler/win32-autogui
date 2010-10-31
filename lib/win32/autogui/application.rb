@@ -2,6 +2,7 @@ require 'windows/process'
 require 'windows/synchronize'
 require 'windows/handle'
 require "win32/process"
+require "win32/clipboard"
 
 module Autogui
 
@@ -85,6 +86,16 @@ module Autogui
     # joined together with newlines. Faciliates matching text.
     def combined_text
       main_window.combined_text if running? 
+    end
+
+    # wrapper for win32/clipboard Clipboard.data
+    def clipboard
+      Win32::Clipboard.data
+    end
+
+    # wrapper for win32/clipboard Clipboard.set_data()
+    def clipboard=(data)
+      Win32::Clipboard.set_data(data)
     end
 
   private

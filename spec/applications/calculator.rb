@@ -16,4 +16,9 @@ class Calculator < Autogui::Application
     end
   end
 
+  def clear_entry
+    set_focus
+    keystroke(VK_DELETE)
+  end
+
 end
