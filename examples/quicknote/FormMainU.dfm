@@ -51,6 +51,7 @@ object FormMain: TFormMain
     object ActionFileSave: TAction
       Caption = '&Save'
       OnExecute = ActionFileSaveExecute
+      OnUpdate = ActionFileSaveUpdate
     end
     object ActionFileOpen: TAction
       Caption = '&Open'

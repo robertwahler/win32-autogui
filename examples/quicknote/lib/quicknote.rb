@@ -78,5 +78,11 @@ class Quicknote < Autogui::Application
     keystroke(VK_MENU, VK_F, VK_X) 
     keystroke(VK_N) if message_dialog_confirm 
   end
+  
+  # menu action File, Save
+  def file_save
+    set_focus
+    keystroke(VK_MENU, VK_F, VK_S) 
+  end
 
 end

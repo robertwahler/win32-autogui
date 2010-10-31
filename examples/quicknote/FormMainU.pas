@@ -43,6 +43,7 @@ type
     procedure ActionFileNewExecute(Sender: TObject);
     procedure ActionFileOpenExecute(Sender: TObject);
     procedure ActionFileSaveExecute(Sender: TObject);
+    procedure ActionFileSaveUpdate(Sender: TObject);
 
   private
     FDirtyFlag: Boolean;
@@ -129,8 +130,7 @@ end;
 
 procedure TFormMain.Reset;
 begin
-  //Memo.Clear;
-  Memo.text := '';
+  Memo.Clear;
   Dirty := False;
   UpdateTitleBar;
 end;
@@ -168,7 +168,6 @@ end;
 
 procedure TFormMain.OpenTextFile(AFileName: String);
 begin
-  //Reset;
   FileName := AFileName;
   Memo.Lines.LoadFromFile(FileName);
   Dirty := False;
@@ -195,5 +194,10 @@ begin
 
 end;
 
+
+procedure TFormMain.ActionFileSaveUpdate(Sender: TObject);
+begin
+  TAction(Sender).Enabled := Dirty;
+end;
 
 end.

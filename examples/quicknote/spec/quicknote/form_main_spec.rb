@@ -145,15 +145,66 @@ describe "FormMain" do
     end
   end
   
-  describe "file save" do
+  describe "file save (VK_MENU, VK_F, VK_S)" do
+    before(:each) do
+      @filename = "input_file.txt"
+      @file_contents = create_file(@filename, "original content")
+      @application.file_open(fullpath(@filename), :save => false)
+      @application.main_window.title.should == "QuickNote - #{fullpath(@filename)}"
+      @application.edit_window.text.should == "original content" 
+      @application.set_focus
+    end
+    after(:each) do
+      keystroke(VK_ESCAPE) if @application.error_dialog
+    end
+
     it "should do nothing unless modified text" do
-      pending
+      append_to_file(@filename, "sneak in extra content that shouldn't be here")
+      contents = get_file_content(@filename)
+      contents.should match(/extra content/)
+      @application.file_save
+      contents.should match(/extra content/)
+      @application.edit_window.text.should_not match(/extra content/)
     end
-    it "should remove the '+' modified flag from the title" do
-      pending
+
+    describe "succeeding" do 
+      it "should remove the '+' modified flag from the title" do
+        type_in("anything")
+        @application.main_window.title.should == "QuickNote - +#{fullpath(@filename)}"
+        @application.file_save
+        @application.main_window.title.should == "QuickNote - #{fullpath(@filename)}"
+      end
+      it "should save the text" do
+        type_in("foobar")
+        @application.edit_window.text.should == "foobar" + "original content"
+        @application.file_save
+        get_file_content(@filename).should == "foobar" + "original content"
+      end
     end
-    it "should save the text" do
-      pending
+
+    describe "failing" do 
+      before(:all) do
+        # remove the test folder to cause failure
+        FileUtils.rm_rf(current_dir)
+        type_in("anything")
+      end
+      after(:all) do
+        if @application.error_dialog
+          @application.error_dialog.set_focus
+          keystroke(VK_ESCAPE) 
+        end
+      end
+
+      it "should show an error dialog with message 'Cannot save file'" do
+        @application.error_dialog.should_not be_nil
+        @application.error_dialog.combined_text.should match(/Cannot save file/)
+      end
+      it "should keep the '+' modified flag on the title" do
+        @application.main_window.title.should == "QuickNote - +#{fullpath(@filename)}"
+      end
+      it "should keep existing text" do
+        @application.edit_window.text.should ==  "anything" + "original content"
+      end
     end
   end
 
