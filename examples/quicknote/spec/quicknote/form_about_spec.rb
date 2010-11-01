@@ -42,14 +42,9 @@ describe "FormAbout" do
   end
 
   it "should have an 'Ok' button" do
-    puts @dialog_about.inspect
-    pending
+    button = @dialog_about.children.find {|w| w.window_class == 'TButton'}
+    button.should_not be_nil
+    button.text.should match(/Ok/)
   end
-
-# TODO: static painted text?  For messagedialogs, set the title to unique text so they can be detected
-#   it "should have a copyright notice" do
-#     puts @dialog_about.inspect
-#     @dialog_about.combined_text.should match(/Copyright .* GearheadForHire.com, LLC/)
-#   end
 
 end
