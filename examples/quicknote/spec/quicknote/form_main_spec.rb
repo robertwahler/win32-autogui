@@ -5,18 +5,14 @@ include Autogui::Input
 describe "FormMain" do
   before(:all) do
     @application = Quicknote.new
+    FileUtils.rm_rf(current_dir)
     # debug
-#     puts "application:"
-#     puts @application.inspect
-#     puts "application.combined_text:"
-#     puts @application.combined_text
+    puts "application:\n#{@application.inspect}\n" 
+    puts "application.combined_text:\n #{@application.combined_text}\n"
   end
   before(:each) do
     @application = Quicknote.new unless @application.running?
     @application.should be_running
-
-    # arubu helpers
-    FileUtils.rm_rf(current_dir)
   end
   after(:all) do
     @application.file_exit if @application.running?
@@ -183,26 +179,31 @@ describe "FormMain" do
     end
 
     describe "failing" do 
-      before(:all) do
-        # remove the test folder to cause failure
-        FileUtils.rm_rf(current_dir)
-        type_in("anything")
-      end
-      after(:all) do
-        if @application.error_dialog
-          @application.error_dialog.set_focus
-          keystroke(VK_ESCAPE) 
+      before(:each) do
+        # set read-only to cause save failure
+        in_current_dir do
+          `attrib +R #{@filename}`
         end
       end
+      after(:each) do
+        # cleanup read-only file
+        FileUtils.rm_rf(current_dir)
+      end
 
-      it "should show an error dialog with message 'Cannot save file'" do
+      it "should show an error dialog with message 'Cannot create file'" do
+        type_in("anything")
+        @application.file_save
         @application.error_dialog.should_not be_nil
-        @application.error_dialog.combined_text.should match(/Cannot save file/)
+        @application.error_dialog.combined_text.should match(/Cannot create file/)
       end
       it "should keep the '+' modified flag on the title" do
+        type_in("anything")
+        @application.file_save
         @application.main_window.title.should == "QuickNote - +#{fullpath(@filename)}"
       end
       it "should keep existing text" do
+        type_in("anything")
+        @application.file_save
         @application.edit_window.text.should ==  "anything" + "original content"
       end
     end

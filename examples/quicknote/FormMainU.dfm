@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 994
-  Top = 413
+  Left = 392
+  Top = 114
   Width = 248
   Height = 366
   Caption = 'QuickNote'

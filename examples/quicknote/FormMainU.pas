@@ -52,7 +52,8 @@ type
     function PromptAndSave: Integer;
 
     procedure SetDirty(Value: Boolean);
-    procedure OpenTextFile(AFileName: String);
+    procedure LoadTextFile(AFileName: String);
+    procedure SaveTextFile(AFileName: String);
     procedure UpdateTitleBar;
     procedure Reset;
 
@@ -156,20 +157,28 @@ begin
 
   if FileOpenDialog.Execute then
   begin
-    OpenTextFile(FileOpenDialog.FileName);
+    LoadTextFile(FileOpenDialog.FileName);
   end;
 
 end;
 
 procedure TFormMain.ActionFileSaveExecute(Sender: TObject);
 begin
-  //
+  SaveTextFile(FileName);
 end;
 
-procedure TFormMain.OpenTextFile(AFileName: String);
+procedure TFormMain.LoadTextFile(AFileName: String);
 begin
   FileName := AFileName;
   Memo.Lines.LoadFromFile(FileName);
+  Dirty := False;
+  UpdateTitleBar;
+end;
+
+procedure TFormMain.SaveTextFile(AFileName: String);
+begin
+  FileName := AFileName;
+  Memo.Lines.SaveToFile(FileName);
   Dirty := False;
   UpdateTitleBar;
 end;
