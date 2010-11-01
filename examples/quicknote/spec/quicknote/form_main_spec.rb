@@ -4,21 +4,40 @@ include Autogui::Input
 
 describe "FormMain" do
   before(:all) do
+    @debug = false
     @application = Quicknote.new
     FileUtils.rm_rf(current_dir)
-    # debug
-    puts "application:\n#{@application.inspect}\n" 
-    puts "application.combined_text:\n #{@application.combined_text}\n"
+    puts "FormMain before(:all)" if @debug
+    puts "application:\n#{@application.inspect}\n" if @debug
+    puts "application.combined_text:\n #{@application.combined_text}\n" if @debug
   end
   before(:each) do
     @application = Quicknote.new unless @application.running?
     @application.should be_running
+    @application.set_focus
+    puts "FormMain before(:each)" if @debug
   end
   after(:all) do
-    @application.file_exit if @application.running?
-    # still running? force it to close
-    @application.close(:wait_for_close => true)  if @application.running?
-    @application.should_not be_running
+    if @application.running?
+      if @application.error_dialog
+        @application.error_dialog.set_focus
+        keystroke(VK_ESCAPE) 
+        @application.file_exit 
+      end
+      # still running? force it to close
+      @application.close(:wait_for_close => true)
+      @application.should_not be_running
+    end
+    puts "FormMain after(:all)" if @debug
+  end
+  after(:each) do
+    if @application.running?
+      if @application.error_dialog
+        @application.error_dialog.set_focus
+        keystroke(VK_ESCAPE) 
+      end
+    end
+    puts "FormMain after(:each)" if @debug
   end
 
   describe "after startup" do
@@ -31,9 +50,6 @@ describe "FormMain" do
   end
 
   describe "editing text" do
-    before(:each) do
-      @application.set_focus
-    end
     after(:each) do
       @application.file_new(:save => false)
     end
@@ -54,10 +70,6 @@ describe "FormMain" do
     before(:all) do
       @filename = "input_file.txt"
       @file_contents = create_file(@filename, "the quick brown fox")
-      @application.set_focus
-    end
-    before(:each) do
-      @application.set_focus
     end
     after(:each) do
       keystroke(VK_ESCAPE) if @application.file_open_dialog 
@@ -73,51 +85,38 @@ describe "FormMain" do
     end
 
     describe "succeeding" do 
-      before(:all) do
+      it "should change the title" do
         @application.main_window.title.should == "QuickNote - untitled.txt"
         @application.file_open(fullpath(@filename), :save => false)
-      end
-
-      it "should change the title" do
         @application.main_window.title.should == "QuickNote - #{fullpath(@filename)}"
       end
       it "should load the text" do
+        @application.file_open(fullpath(@filename), :save => false)
         @application.edit_window.text.should == 'the quick brown fox' 
       end
     end
 
     describe "failing" do 
-      before(:all) do
+      before(:each) do
         @application.file_new(:save => false)
-        @application.set_focus
-        type_in("foobar")
-        @application.file_open(fullpath("a_bogus_filename.txt"), :save => false)
-        @application.error_dialog.should_not be_nil
-      end
-      after(:all) do
-        if @application.error_dialog
-          @application.error_dialog.set_focus
-          keystroke(VK_ESCAPE) 
-        end
       end
 
       it "should show an error dialog with message 'Cannot open file'" do
+        type_in("foobar")
+        @application.file_open(fullpath("a_bogus_filename.txt"), :save => false)
+        @application.error_dialog.should_not be_nil
         @application.error_dialog.combined_text.should match(/Cannot open file/)
       end
       it "should keep existing text" do
+        type_in("foobar")
+        @application.file_open(fullpath("a_bogus_filename.txt"), :save => false)
+        @application.error_dialog.should_not be_nil
         @application.edit_window.text.should == 'foobar' 
       end
     end
   end
 
   describe "file new (VK_MENU, VK_F, VK_N)" do
-    before(:each) do
-      @application.set_focus
-    end
-    after(:all) do
-      @application.file_new(:save => false)
-    end
-
     it "should prompt and save modified text" do
       pending
     end
@@ -149,9 +148,6 @@ describe "FormMain" do
       @application.main_window.title.should == "QuickNote - #{fullpath(@filename)}"
       @application.edit_window.text.should == "original content" 
       @application.set_focus
-    end
-    after(:each) do
-      keystroke(VK_ESCAPE) if @application.error_dialog
     end
 
     it "should do nothing unless modified text" do
