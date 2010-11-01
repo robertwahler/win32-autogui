@@ -79,6 +79,9 @@ module Autogui
       Window.new h if h > 0
     end
 
+    # PostMessage SC_CLOSE and optionally wait for the window to close
+    #
+    # @param [Hash] options
     def close(options={})
       PostMessage(handle, WM_SYSCOMMAND, SC_CLOSE, 0)
 
@@ -110,7 +113,7 @@ module Autogui
     
     # Determines whether the specified window handle identifies an existing window 
     #
-    # @returns [Boolean]
+    # @return [Boolean]
     def is_window?
       (handle != 0) && (IsWindow(handle) != 0)
     end
@@ -126,7 +129,7 @@ module Autogui
 
     # The identifier (pid) of the process that created the window
     #
-    # @returns [Integer] process id if the window exists, otherwise nil
+    # @return [Integer] process id if the window exists, otherwise nil
     def pid
       return nil unless is_window?
       process_id = 0.chr * 4
@@ -136,7 +139,7 @@ module Autogui
 
     # The identifier of the thread that created the window
     #
-    # @returns [Integer] thread id if the window exists, otherwise nil
+    # @return [Integer] thread id if the window exists, otherwise nil
     def thread_id
       return nil unless is_window?
       GetWindowThreadProcessId(handle, nil)

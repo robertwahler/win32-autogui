@@ -144,7 +144,7 @@ module Autogui
 
     # send keystroke to the focused window, keystrokes are virtual keycodes
     #
-    # @example
+    # @example send 2+2<CR>
     #
     #     keystroke(VK_2, VK_ADD, VK_2, VK_RETURN) 
     #
