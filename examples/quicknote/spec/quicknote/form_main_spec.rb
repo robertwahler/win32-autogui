@@ -51,27 +51,32 @@ describe "FormMain" do
 
     it "should add the '+' modified flag to the title" do
       @application.main_window.title.should == "QuickNote - untitled.txt"
-      type_in("hello world")
+      type_in("hello")
       @application.main_window.title.should == "QuickNote - +untitled.txt"
     end
     it "should change the text" do
       @application.edit_window.text.should == '' 
-      type_in("hello world")
-      @application.edit_window.text.should == 'hello world' 
+      type_in("hello")
+      @application.edit_window.text.should == 'hello' 
     end
   end
 
   describe "file open (VK_MENU, VK_F, VK_O)" do
-    before(:all) do
+    before(:each) do
       @filename = "input_file.txt"
       @file_contents = create_file(@filename, "the quick brown fox")
+      @application.file_new(:save => false)
     end
     after(:each) do
+      keystroke(VK_N) if @application.message_dialog_confirm
       keystroke(VK_ESCAPE) if @application.file_open_dialog 
     end
 
-    it "should prompt and save with modified text" do
-      pending "file save"
+    it "should prompt to save with modified text" do
+      type_in("foobar")
+      @application.main_window.title.should match(/\+/)
+      keystroke(VK_MENU, VK_F, VK_O) 
+      @application.message_dialog_confirm.should_not be_nil
     end
     it "should not prompt to save with unmodified text" do
       @application.main_window.title.should_not match(/\+/)
@@ -80,7 +85,7 @@ describe "FormMain" do
     end
 
     describe "succeeding" do 
-      it "should change the title" do
+      it "should add the filename to the title" do
         @application.main_window.title.should == "QuickNote - untitled.txt"
         @application.file_open(fullpath(@filename), :save => false)
         @application.main_window.title.should == "QuickNote - #{fullpath(@filename)}"
@@ -92,10 +97,6 @@ describe "FormMain" do
     end
 
     describe "failing" do 
-      before(:each) do
-        @application.file_new(:save => false)
-      end
-
       it "should show an error dialog with message 'Cannot open file'" do
         type_in("foobar")
         @application.file_open(fullpath("a_bogus_filename.txt"), :save => false)
@@ -112,24 +113,39 @@ describe "FormMain" do
   end
 
   describe "file new (VK_MENU, VK_F, VK_N)" do
-    it "should prompt and save modified text" do
-      pending
+    after(:each) do
+      #keystroke(VK_N) if @application.message_dialog_confirm
+    end
+
+    it "should prompt to save modified text" do
+      type_in("hello")
+      @application.main_window.title.should match(/\+/)
+      keystroke(VK_MENU, VK_F, VK_N) 
+      @application.message_dialog_confirm.should_not be_nil
     end
     it "should not prompt to save with unmodified text" do
-      pending
+      @application.file_new(:save => false)
+      @application.main_window.title.should_not match(/\+/)
+      keystroke(VK_MENU, VK_F, VK_N) 
+      @application.message_dialog_confirm.should be_nil
     end
-    it "should change the title" do
-      pending "file open"
-    end
-    it "should remove the '+' modified flag from the title" do
-      type_in("hello world")
-      @application.main_window.title.should == "QuickNote - +untitled.txt"
+    it "should add the filename 'untitled.txt' to the title" do
+      filename = "input_file.txt"
+      file_contents = create_file(filename, "the quick brown fox")
+      @application.file_open(filename, :save => false)
+      @application.main_window.title.should match(/#{filename}/)
       @application.file_new(:save => false)
       @application.main_window.title.should == "QuickNote - untitled.txt"
     end
+    it "should remove the '+' modified flag from the title" do
+      type_in("hello")
+      @application.main_window.title.should match(/\+/)
+      @application.file_new(:save => false)
+      @application.main_window.title.should_not match(/\+/)
+    end
     it "should clear the existing text" do
-      type_in("hello world")
-      @application.edit_window.text.should == 'hello world' 
+      type_in("hello")
+      @application.edit_window.text.should match(/hello/) 
       @application.file_new(:save => false)
       @application.edit_window.text.should == '' 
     end
@@ -200,14 +216,14 @@ describe "FormMain" do
     end
   end
 
-  describe "file save as" do
+  describe "file save as (VK_MENU, VK_F, VK_A)" do
     it "should prompt for filename" do
       pending
     end
     it "should remove the '+' modified flag from the title" do
       pending
     end
-    it "should change the title" do
+    it "should add the filename to the title" do
       pending
     end
     it "should save the text" do
