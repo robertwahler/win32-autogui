@@ -72,8 +72,8 @@ describe Autogui::Application do
     describe "clipboard" do
       before(:each) do
         @calculator.clear_entry
-        @calculator.clipboard = ""
-        @calculator.clipboard.should == ""
+        @calculator.clipboard.text = ""
+        @calculator.clipboard.text.should == ""
       end
       
       describe "copy (VK_CONTROL, VK_C)" do
@@ -83,14 +83,14 @@ describe Autogui::Application do
           @calculator.edit_window.text.strip.should == "3,002."
           @calculator.edit_window.set_focus
           keystroke(VK_CONTROL, VK_C) 
-          @calculator.clipboard.should == "3002"
+          @calculator.clipboard.text.should == "3002"
         end
       end
 
       describe "paste (VK_CONTROL, VK_V)" do
         it "should paste into the edit window" do
           @calculator.edit_window.set_focus
-          @calculator.clipboard = "12345"
+          @calculator.clipboard.text = "12345"
           @calculator.edit_window.text.strip.should == "0."
           keystroke(VK_CONTROL, VK_V) 
           @calculator.edit_window.text.strip.should == "12,345."

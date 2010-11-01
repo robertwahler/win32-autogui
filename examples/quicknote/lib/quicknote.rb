@@ -66,7 +66,10 @@ class Quicknote < Autogui::Application
     raise "confirm dialog is still here" if message_dialog_confirm 
     raise "file_open_dialog not found" unless file_open_dialog
 
-    type_in(filename)
+    # Paste in filename for speed, much faster than 'type_in(filename)'
+    clipboard.text = filename
+    keystroke(VK_CONTROL, VK_V)
+
     keystroke(VK_RETURN)
   end
 

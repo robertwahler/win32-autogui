@@ -6,6 +6,19 @@ require "win32/clipboard"
 
 module Autogui
 
+  # wrapper for win32/clipboard
+  class Clipboard
+
+    def text 
+      Win32::Clipboard.data
+    end
+
+    def text=(str)
+      Win32::Clipboard.set_data(str)
+    end
+
+  end
+
   class Application
     include Windows::Process           
     include Windows::Synchronize
@@ -88,14 +101,8 @@ module Autogui
       main_window.combined_text if running? 
     end
 
-    # wrapper for win32/clipboard Clipboard.data
     def clipboard
-      Win32::Clipboard.data
-    end
-
-    # wrapper for win32/clipboard Clipboard.set_data()
-    def clipboard=(data)
-      Win32::Clipboard.set_data(data)
+      @clipboard || Autogui::Clipboard.new
     end
 
   private
