@@ -21,8 +21,8 @@ object FormAbout: TFormAbout
     Width = 259
     Height = 26
     Caption = 
-      'QuickNote is an example application for the RubyGem win32-guites' +
-      't.'
+      'QuickNote is an example application for the RubyGem win32-autogu' +
+      'i.'
     WordWrap = True
   end
   object LabelCopyright: TLabel

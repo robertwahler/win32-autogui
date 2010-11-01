@@ -15,26 +15,31 @@ uses
 
 type
   TFormMain = class(TForm)
-    ActionList: TActionList;
-    MainMenu: TMainMenu;
-    ActionFileExit: TAction;
-    MenuFile: TMenuItem;
-    MenuExit: TMenuItem;
     XPManifest: TXPManifest;
     StatusBar: TStatusBar;
     Memo: TMemo;
-    MenuHelp: TMenuItem;
+
+    FileOpenDialog: TOpenDialog;
+    FileSaveDialog: TSaveDialog;
+
+    ActionList: TActionList;
+    ActionFileExit: TAction;
     ActionHelpAbout: TAction;
-    About1: TMenuItem;
     ActionFileNew: TAction;
     ActionFileSave: TAction;
     ActionFileOpen: TAction;
-    New1: TMenuItem;
-    N1: TMenuItem;
-    ActionFileOpen1: TMenuItem;
-    Save1: TMenuItem;
-    FileOpenDialog: TOpenDialog;
-    FileSaveDialog: TSaveDialog;
+    ActionFileSaveAs: TAction;
+
+    MainMenu: TMainMenu;
+    MenuFile: TMenuItem;
+    MenuFileSaveAs: TMenuItem;
+    MenuFileNew: TMenuItem;
+    MenuFileOpen: TMenuItem;
+    MenuFileSave: TMenuItem;
+    MenuHelp: TMenuItem;
+    MenuFileDividerAfterSaveAs: TMenuItem;
+    MenuExit: TMenuItem;
+    MenuHelpAbout: TMenuItem;
 
     procedure ActionFileExitExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -45,6 +50,7 @@ type
     procedure ActionFileSaveExecute(Sender: TObject);
     procedure ActionFileSaveUpdate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure ActionFileSaveAsExecute(Sender: TObject);
 
   private
     FDirtyFlag: Boolean;
@@ -82,27 +88,22 @@ end;
 
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
-  FFileName := 'untitled.txt';
-  FDirtyFlag := False;
-  UpdateTitleBar;
+  Reset;
 end;
 
 procedure TFormMain.SetDirty(Value: Boolean);
 begin
-
   if Value <> FDirtyFlag then
   begin
     FdirtyFlag := Value;
     UpdateTitleBar;
   end;
-
 end;
 
 procedure TFormMain.UpdateTitleBar;
 var
   fileFlags: String;
 begin
-
   if Dirty then
     fileFlags := '+'
   else
@@ -115,14 +116,12 @@ procedure TFormMain.ActionHelpAboutExecute(Sender: TObject);
 var
   FormAbout: TFormAbout;
 begin
-
   FormAbout := TFormAbout.Create(Application);
   try
     FormAbout.ShowModal
   finally
     FormAbout.Release;
   end;
-
 end;
 
 procedure TFormMain.MemoChange(Sender: TObject);
@@ -133,6 +132,7 @@ end;
 procedure TFormMain.Reset;
 begin
   Memo.Clear;
+  FileName := 'untitled.txt';
   Dirty := False;
   UpdateTitleBar;
 end;
@@ -145,9 +145,19 @@ begin
   end;
 end;
 
+procedure TFormMain.ActionFileSaveAsExecute(Sender: TObject);
+begin
+  FileSaveDialog.Title := 'Text File Save';
+  FileSaveDialog.Filter := 'Text Files (*.txt)|*.txt|All files (*.*)|*.*';
+
+  if FileSaveDialog.Execute then
+  begin
+    SaveTextFile(FileSaveDialog.FileName);
+  end;
+end;
+
 procedure TFormMain.ActionFileOpenExecute(Sender: TObject);
 begin
-
   FileOpenDialog.Title := 'Text File Open';
   FileOpenDialog.Filter := 'Text Files (*.txt)|*.txt|All files (*.*)|*.*';
   FileOpenDialog.DefaultExt := '';
@@ -160,7 +170,6 @@ begin
   begin
     LoadTextFile(FileOpenDialog.FileName);
   end;
-
 end;
 
 procedure TFormMain.ActionFileSaveExecute(Sender: TObject);
@@ -186,24 +195,21 @@ end;
 
 function TFormMain.PromptAndSave: Integer;
 var
-  msg: String;
+  Msg: String;
 begin
-
   // Default
   Result := mrYes;
 
   if Dirty then
   begin
-    msg := 'Text has changed. Save changes to ' + FileName +'?';
+    Msg := 'Text has changed. Save changes to ' + FileName +'?';
     Result := MessageDlg(msg, mtConfirmation, mbYesNoCancel, 0);
     if Result = mrYes then
     begin
       ActionFileSaveExecute(self);
     end;
   end;
-
 end;
-
 
 procedure TFormMain.ActionFileSaveUpdate(Sender: TObject);
 begin

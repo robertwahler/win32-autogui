@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 392
-  Top = 114
+  Left = 848
+  Top = 217
   Width = 248
   Height = 366
   Caption = 'QuickNote'
@@ -58,22 +58,29 @@ object FormMain: TFormMain
       Caption = '&Open'
       OnExecute = ActionFileOpenExecute
     end
+    object ActionFileSaveAs: TAction
+      Caption = 'Save &As'
+      OnExecute = ActionFileSaveAsExecute
+    end
   end
   object MainMenu: TMainMenu
     Left = 136
     Top = 244
     object MenuFile: TMenuItem
       Caption = '&File'
-      object New1: TMenuItem
+      object MenuFileNew: TMenuItem
         Action = ActionFileNew
       end
-      object ActionFileOpen1: TMenuItem
+      object MenuFileOpen: TMenuItem
         Action = ActionFileOpen
       end
-      object Save1: TMenuItem
+      object MenuFileSave: TMenuItem
         Action = ActionFileSave
       end
-      object N1: TMenuItem
+      object MenuFileSaveAs: TMenuItem
+        Action = ActionFileSaveAs
+      end
+      object MenuFileDividerAfterSaveAs: TMenuItem
         Caption = '-'
       end
       object MenuExit: TMenuItem
@@ -82,7 +89,7 @@ object FormMain: TFormMain
     end
     object MenuHelp: TMenuItem
       Caption = '&Help'
-      object About1: TMenuItem
+      object MenuHelpAbout: TMenuItem
         Action = ActionHelpAbout
       end
     end
@@ -96,6 +103,7 @@ object FormMain: TFormMain
     Top = 192
   end
   object FileSaveDialog: TSaveDialog
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
     Left = 80
     Top = 192
   end

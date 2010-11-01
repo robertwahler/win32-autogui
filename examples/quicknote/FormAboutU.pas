@@ -14,6 +14,7 @@ type
     ButtonOk: TButton;
     LabelCopyright: TLabel;
     procedure ButtonOkClick(Sender: TObject);
+
   private
 
   public

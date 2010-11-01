@@ -29,7 +29,7 @@ describe "FormMain" do
   end
   after(:each) do
     if @application.running?
-      keystroke(VK_N) if @application.message_dialog_confirm
+      keystroke(VK_N) if @application.message_dialog_confirm || @application.dialog_overwrite_confirm
       keystroke(VK_ESCAPE) if @application.error_dialog
     end
     puts "FormMain after(:each)" if @debug
@@ -113,10 +113,6 @@ describe "FormMain" do
   end
 
   describe "file new (VK_MENU, VK_F, VK_N)" do
-    after(:each) do
-      #keystroke(VK_N) if @application.message_dialog_confirm
-    end
-
     it "should prompt to save modified text" do
       type_in("hello")
       @application.main_window.title.should match(/\+/)
@@ -133,7 +129,7 @@ describe "FormMain" do
       filename = "input_file.txt"
       file_contents = create_file(filename, "the quick brown fox")
       @application.file_open(filename, :save => false)
-      @application.main_window.title.should match(/#{filename}/)
+      @application.main_window.title.downcase.should == "QuickNote - #{fullpath(filename)}".downcase
       @application.file_new(:save => false)
       @application.main_window.title.should == "QuickNote - untitled.txt"
     end
@@ -156,7 +152,7 @@ describe "FormMain" do
       @filename = "input_file.txt"
       @file_contents = create_file(@filename, "original content")
       @application.file_open(fullpath(@filename), :save => false)
-      @application.main_window.title.should == "QuickNote - #{fullpath(@filename)}"
+      @application.main_window.title.downcase.should == "QuickNote - #{fullpath(@filename)}".downcase
       @application.edit_window.text.should == "original content" 
       @application.set_focus
     end
@@ -217,31 +213,57 @@ describe "FormMain" do
   end
 
   describe "file save as (VK_MENU, VK_F, VK_A)" do
+    before(:each) do
+      @filename = "original.txt"
+      @file_contents = create_file(@filename, "original content")
+      @saveas_filename = "newfile.txt"
+      create_file(@saveas_filename,  "")
+      @application.file_open(fullpath(@filename), :save => false)
+    end
+    after(:each) do
+      keystroke(VK_N) if @application.dialog_overwrite_confirm
+      keystroke(VK_ESCAPE) if @application.file_save_as_dialog 
+    end
+
     it "should prompt for filename" do
-      pending
+      keystroke(VK_MENU, VK_F, VK_A) 
+      @application.file_save_as_dialog.should_not be_nil
+    end
+    it "should confirm file overwrites" do
+      type_in("anything")
+      keystroke(VK_MENU, VK_F, VK_A) 
+      @application.clipboard.text = fullpath(@saveas_filename)
+      keystroke(VK_CONTROL, VK_V)
+      keystroke(VK_RETURN) 
+      File.exists?(fullpath(@saveas_filename)).should be_true
+      @application.dialog_overwrite_confirm.should_not be_nil
     end
     it "should remove the '+' modified flag from the title" do
-      pending
+      type_in("anything")
+      @application.main_window.title.should match(/\+/)
+      @application.file_save_as(fullpath(@saveas_filename), :overwrite => true)
+      @application.main_window.title.should_not match(/\+/)
     end
     it "should add the filename to the title" do
-      pending
+      @application.file_save_as(fullpath(@saveas_filename), :overwrite => true)
+      @application.main_window.title.downcase.should == "QuickNote - #{fullpath(@saveas_filename)}".downcase
     end
     it "should save the text" do
-      pending
+      get_file_content(@saveas_filename).should == ''
+      @application.file_save_as(fullpath(@saveas_filename), :overwrite => true)
+      get_file_content(@saveas_filename).should match(/original content/)
     end
   end
 
   describe "file exit (VK_MENU, VK_F, VK_X)" do
     it "should prompt and save with modified text" do
       type_in("anything")
-      @application.set_focus
       keystroke(VK_MENU, VK_F, VK_X) 
       @application.message_dialog_confirm.should_not be_nil
       @application.main_window.is_window?.should == true
       @application.should be_running
     end
     it "should not prompt to save with unmodified text" do
-      @application.set_focus
       keystroke(VK_MENU, VK_F, VK_X) 
       @application.message_dialog_confirm.should be_nil
       @application.main_window.is_window?.should == false
