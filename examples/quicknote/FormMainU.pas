@@ -44,6 +44,7 @@ type
     procedure ActionFileOpenExecute(Sender: TObject);
     procedure ActionFileSaveExecute(Sender: TObject);
     procedure ActionFileSaveUpdate(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 
   private
     FDirtyFlag: Boolean;
@@ -207,6 +208,15 @@ end;
 procedure TFormMain.ActionFileSaveUpdate(Sender: TObject);
 begin
   TAction(Sender).Enabled := Dirty;
+end;
+
+procedure TFormMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  // Prompt user to save changes
+  if PromptAndSave = mrCancel then
+  begin
+    CanClose := False;
+  end;
 end;
 
 end.

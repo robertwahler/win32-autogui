@@ -5,11 +5,12 @@ include Autogui::Input
 describe "FormMain" do
   before(:all) do
     @debug = false
+    @verbose = true
     @application = Quicknote.new
     FileUtils.rm_rf(current_dir)
     puts "FormMain before(:all)" if @debug
-    puts "application:\n#{@application.inspect}\n" if @debug
-    puts "application.combined_text:\n #{@application.combined_text}\n" if @debug
+    puts "application:\n#{@application.inspect}\n" if @debug && @verbose
+    puts "application.combined_text:\n #{@application.combined_text}\n" if @debug && @verbose
   end
   before(:each) do
     @application = Quicknote.new unless @application.running?
@@ -19,11 +20,7 @@ describe "FormMain" do
   end
   after(:all) do
     if @application.running?
-      if @application.error_dialog
-        @application.error_dialog.set_focus
-        keystroke(VK_ESCAPE) 
-        @application.file_exit 
-      end
+      @application.file_exit 
       # still running? force it to close
       @application.close(:wait_for_close => true)
       @application.should_not be_running
@@ -32,10 +29,8 @@ describe "FormMain" do
   end
   after(:each) do
     if @application.running?
-      if @application.error_dialog
-        @application.error_dialog.set_focus
-        keystroke(VK_ESCAPE) 
-      end
+      keystroke(VK_N) if @application.message_dialog_confirm
+      keystroke(VK_ESCAPE) if @application.error_dialog
     end
     puts "FormMain after(:each)" if @debug
   end
@@ -66,7 +61,7 @@ describe "FormMain" do
     end
   end
 
-  describe "file open" do
+  describe "file open (VK_MENU, VK_F, VK_O)" do
     before(:all) do
       @filename = "input_file.txt"
       @file_contents = create_file(@filename, "the quick brown fox")
@@ -124,7 +119,7 @@ describe "FormMain" do
       pending
     end
     it "should change the title" do
-      pending "file_open"
+      pending "file open"
     end
     it "should remove the '+' modified flag from the title" do
       type_in("hello world")
@@ -222,11 +217,17 @@ describe "FormMain" do
 
   describe "file exit (VK_MENU, VK_F, VK_X)" do
     it "should prompt and save with modified text" do
-      pending
+      type_in("anything")
+      @application.set_focus
+      keystroke(VK_MENU, VK_F, VK_X) 
+      @application.message_dialog_confirm.should_not be_nil
+      @application.main_window.is_window?.should == true
+      @application.should be_running
     end
     it "should not prompt to save with unmodified text" do
       @application.set_focus
       keystroke(VK_MENU, VK_F, VK_X) 
+      @application.message_dialog_confirm.should be_nil
       @application.main_window.is_window?.should == false
       @application.should_not be_running
     end
