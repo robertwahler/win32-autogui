@@ -63,6 +63,8 @@ module Autogui
 
     # @return [String] the executable name of the application
     attr_reader :name  
+    # @return [String] the executable application parameters 
+    attr_reader :parameters  
     # @return [String] window title of the application
     attr_accessor :title  
     # @return [Number] the process identifier (PID) returned by Process.create
@@ -86,9 +88,11 @@ module Autogui
     # @option options [Number] :create_process_timeout (10) timeout in seconds to wait for the create_process to return 
     # @option options [Number] :main_window_timeout (10) timeout in seconds to wait for main_window to appear
     def initialize(name, options = {})
+
       @name = name
       @title = options[:title] || name
       @main_window_timeout = options[:main_window_timeout] || 10
+      @parameters = options[:parameters]
 
       start(options)
     end
@@ -103,9 +107,12 @@ module Autogui
     # @param [Hash] options @see initialize
     def start(options={})
       
+      command_line = name
+      command_line = name + ' ' + parameters if parameters
+
       # returns a struct, raises an error if fails
       process_info = Process.create(
-         :app_name => name,
+         :command_line => command_line,
          :close_handles => false,
          :creation_flags => Process::DETACHED_PROCESS
       )
@@ -140,7 +147,6 @@ module Autogui
 
       timeout(main_window_timeout) do
         begin
-          puts "looking"
           # There may be multiple instances, use title and pid to id our main window
           @main_window = Autogui::EnumerateDesktopWindows.new.find do |w| 
             w.title.match(title) && w.pid == pid 

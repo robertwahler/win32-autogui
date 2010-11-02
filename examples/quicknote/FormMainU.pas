@@ -12,6 +12,7 @@ uses
   ActnList,
   XPMan,
   ComCtrls,
+  StrUtils,
   Dialogs;
 
 type
@@ -92,22 +93,40 @@ procedure TFormMain.FormCreate(Sender: TObject);
 var
   SplashForm: TFormSplash;
   i: integer;
+  splash: Boolean;
 begin
+  // defaults
+  splash := true;
 
-  SplashForm := TFormSplash.Create(Application);
-  try
-    SplashForm.Show;
-    // Simulate app creation work load
-    for i:= 1 to 200 do
+  // parse commandline
+  if ParamCount >= 1 then
+  begin
+    for i := 1 to ParamCount do
     begin
-      Application.ProcessMessages;
-      Sleep(10);
+      if AnsiStartsText('--NOSPLASH', ParamStr(i)) then
+      begin
+        splash := false;
+      end;
     end;
-  finally
-    // Enable a timer that will shutdown and release Splash
-    // form after a short wait
-    SplashForm.Timer.Enabled := True;
   end;
+
+  if splash then
+  begin
+    SplashForm := TFormSplash.Create(Application);
+    try
+      SplashForm.Show;
+      // Simulate app creation work load
+      for i:= 1 to 200 do
+      begin
+        Application.ProcessMessages;
+        Sleep(10);
+      end;
+    finally
+      // Enable a timer that will shutdown and release Splash
+      // form after a short wait
+      SplashForm.Timer.Enabled := True;
+    end;
+  end;  
 
   Reset;
 end;
