@@ -58,7 +58,7 @@ The first step is to subclass Win32-autogui's application class.
 
 ### Write specs ###
 The following RSpec code describes driving the Windows calculator for testing. 
-Multiple instances running simultaneously is supported.  See "should control
+Multiple instances running simultaneously are supported.  See "should control
 focus with set_focus."
 
     require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
@@ -67,7 +67,7 @@ focus with set_focus."
 
     describe Autogui::Application do
 
-      describe "driving calculator.exe" do
+      describe "driving calc.exe" do
 
         before(:all) do
           @calculator = Calculator.new

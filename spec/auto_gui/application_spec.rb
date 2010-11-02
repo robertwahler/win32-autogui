@@ -4,7 +4,7 @@ include Autogui::Input
 
 describe Autogui::Application do
 
-  describe "driving calculator.exe" do
+  describe "driving calc.exe" do
 
     before(:all) do
       @calculator = Calculator.new
