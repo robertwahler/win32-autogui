@@ -37,8 +37,8 @@ describe "FormAbout" do
     @application.dialog_about.should be_nil
   end
 
-  it "should have the title 'About Myapp'" do
-    @dialog_about.title.should == "About Myapp"
+  it "should have the title 'About MyApp'" do
+    @dialog_about.title.should == "About MyApp"
   end
 
   it "should have an 'Ok' button" do

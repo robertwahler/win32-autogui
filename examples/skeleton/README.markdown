@@ -31,6 +31,9 @@ rename skeleton app to 'quicknote'
     git mv lib/myapp.rb lib/quicknote.rb
     git mv spec/myapp spec/quicknote
 
+    # MyApp => QuickNote
+    find . -name *.rb -exec sed -i 's/MyApp/QuickNote/' '{}' +
+
     # Myapp => Quicknote
     find . -name *.rb -exec sed -i 's/Myapp/Quicknote/' '{}' +
 
@@ -40,9 +43,13 @@ rename skeleton app to 'quicknote'
 test it
 
     rake spec
+    rake features
 
 
 commit it
+
+    git add .
+    git commit -m "renamed skelton app to MyApp"
 
 Copyright
 ---------

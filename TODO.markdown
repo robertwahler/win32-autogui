@@ -1,6 +1,10 @@
 TODO
 ====
 
+docs
+----
+
+* document with screenies or video using irb to drive calculator/quicknote
 
 general
 -------

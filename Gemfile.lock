@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    win32-autogui (0.0.1)
+    win32-autogui (0.1.1)
       win32-clipboard (>= 0.5.2)
       win32-process (>= 0.6.2)
       windows-api (>= 0.4.0)

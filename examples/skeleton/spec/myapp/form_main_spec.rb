@@ -37,7 +37,7 @@ describe "FormMain" do
 
   describe "after startup" do
     it "should have the title 'Myapp" do
-      @application.main_window.title.should == "Myapp"
+      @application.main_window.title.should match(/MyApp/)
     end
     it "should have no text" do
       @application.edit_window.text.should == '' 

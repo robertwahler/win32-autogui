@@ -122,6 +122,7 @@ module Autogui
       raise "Start command failed on timeout" if ret == WAIT_TIMEOUT 
       raise "Start command failed while waiting for idle input, reason unknown" unless (ret == 0)
 
+      # TODO: raise if set_focus fails to return success, suspect window title at this point
       set_focus
     end
 
