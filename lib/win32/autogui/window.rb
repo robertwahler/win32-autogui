@@ -89,6 +89,8 @@ module Autogui
     # PostMessage SC_CLOSE and optionally wait for the window to close
     #
     # @param [Hash] options
+    # @option options [Boolean] :wait_for_close (true) sleep while waiting for timeout or close
+    # @option options [Boolean] :timeout (5) wait_for_close timeout in seconds
     def close(options={})
       PostMessage(handle, WM_SYSCOMMAND, SC_CLOSE, 0)
 

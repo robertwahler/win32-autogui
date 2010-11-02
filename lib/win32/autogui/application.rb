@@ -121,9 +121,6 @@ module Autogui
 
       raise "Start command failed on timeout" if ret == WAIT_TIMEOUT 
       raise "Start command failed while waiting for idle input, reason unknown" unless (ret == 0)
-
-      # TODO: raise if set_focus fails to return success, suspect window title at this point
-      set_focus
     end
 
     # The application main window found by enumerating windows by title and pid
@@ -136,10 +133,27 @@ module Autogui
       @main_window = Autogui::EnumerateDesktopWindows.new.find do |w| 
         w.title.match(title) && w.pid == pid 
       end
+
+      # sanity checks
+      raise "cannot find main_window, check application title" unless @main_window
+
+      @main_window
     end
 
+    # Call the main_window's close method
+    #
+    # PostMessage SC_CLOSE and optionally wait for the window to close
+    #
+    # @param [Hash] options
+    # @option options [Boolean] :wait_for_close (true) sleep while waiting for timeout or close
+    # @option options [Boolean] :timeout (5) wait_for_close timeout in seconds
     def close(options={})
       main_window.close(options)
+    end
+
+    # Send SIGKILL to force the application to die
+    def kill
+      Process::kill(9, pid)
     end
 
     # @return [Boolean] if the application is currently running

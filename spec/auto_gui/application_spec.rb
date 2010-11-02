@@ -8,6 +8,7 @@ describe Autogui::Application do
 
     before(:all) do
       @calculator = Calculator.new
+      @calculator.set_focus
     end
 
     after(:all) do
@@ -19,6 +20,13 @@ describe Autogui::Application do
       @calculator.should be_running
     end
 
+    it "should die when sending the kill signal" do
+      killme = Calculator.new
+      killme.should be_running
+      killme.kill
+      killme.should_not be_running
+    end
+
     it "should have the title 'Calculator' that matches the main_window title" do
       @calculator.main_window.title.should == 'Calculator'
       @calculator.main_window.title.should == @calculator.title
@@ -28,16 +36,19 @@ describe Autogui::Application do
       @calculator.inspect.should match(/children=</)
     end
 
-    it "should calculate '2+2=4' using the keystroke method" do
-      @calculator.set_focus
-      keystroke(VK_2, VK_ADD, VK_2, VK_RETURN) 
-      @calculator.edit_window.text.strip.should == "4."
-    end
+    it "should raise an error if setting focus and the application title is incorrect" do
+      goodcalc = Calculator.new "calc", :title => "Calculator"
+      lambda { goodcalc.set_focus }.should_not raise_error
+      goodcalc.close
 
-    it "should calculate '2+12=14' using the type_in method" do
-      @calculator.set_focus
-      type_in("2+12=")
-      @calculator.edit_window.text.strip.should == "14."
+      badcalc = Calculator.new "calc", :title => "BaDTitle"
+      lambda {
+        begin
+          badcalc.setfocus
+        ensure
+          badcalc.kill
+        end
+      }.should raise_error
     end
 
     it "should control the focus with 'set_focus'" do
@@ -67,6 +78,24 @@ describe Autogui::Application do
       dialog_about.combined_text.should match(/Microsoft . Calculator/)
       dialog_about.close
       @calculator.dialog_about.should be_nil
+    end
+
+    describe "calculations" do
+      before(:each) do
+        @calculator.clear_entry
+      end
+
+      it "should calculate '2+2=4' using the keystroke method" do
+        @calculator.set_focus
+        keystroke(VK_2, VK_ADD, VK_2, VK_RETURN) 
+        @calculator.edit_window.text.strip.should == "4."
+      end
+
+      it "should calculate '2+12=14' using the type_in method" do
+        @calculator.set_focus
+        type_in("2+12=")
+        @calculator.edit_window.text.strip.should == "14."
+      end
     end
 
     describe "clipboard" do
