@@ -2,10 +2,11 @@
 # Production code should simply require 'win32/autogui'
 require File.expand_path(File.dirname(__FILE__) + '/../../../lib/win32/autogui')
 
+APPNAME="exe\\quicknote.exe"  # relative path to app using Windows style path
+
 class Quicknote < Autogui::Application
 
-  # TODO: replace hard-coded path
-  def initialize(name="\\dat\\win32-autogui\\examples\\quicknote\\exe\\quicknote", options = {:title=> "QuickNote -"})
+  def initialize(name=APPNAME, options = {:title=> "QuickNote -"})
     super name, options
   end
 

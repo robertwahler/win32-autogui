@@ -1,8 +1,10 @@
 require 'win32/autogui'
 
+APPNAME="exe\\myapp.exe"  # relative path to app using Windows style path
+
 class Myapp < Autogui::Application
 
-  def initialize(name="\\dat\\win32-autogui\\examples\\myapp\\exe\\myapp", options = {:title=> "myapp -"})
+  def initialize(name=APPNAME, options = {:title=> "Myapp"})
     super name, options
   end
 
@@ -16,7 +18,7 @@ class Myapp < Autogui::Application
 
   def dialog_about
     Autogui::EnumerateDesktopWindows.new.find do |w| 
-      w.title.match(/About myapp/) && (w.pid == pid)
+      w.title.match(/About Myapp/) && (w.pid == pid)
     end
   end
 
@@ -55,7 +57,7 @@ class Myapp < Autogui::Application
 
   def error_dialog
     Autogui::EnumerateDesktopWindows.new.find do |w| 
-      w.title.match(/^myapp$/) && (w.pid == pid) && (w.window_class == "#32770")
+      w.title.match(/^Myapp$/) && (w.pid == pid) && (w.window_class == "#32770")
     end
   end
 
