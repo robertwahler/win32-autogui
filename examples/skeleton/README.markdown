@@ -41,6 +41,10 @@ rename skeleton app to 'quicknote'
     # myapp => quicknote
     find . -name *.rb -exec sed -i 's/myapp/quicknote/' '{}' +
 
+customize docs
+
+    vim README.markdown LICENSE
+
 test it
 
     rake spec

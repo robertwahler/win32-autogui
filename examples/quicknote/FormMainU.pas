@@ -3,6 +3,7 @@ unit FormMainU;
 interface
 
 uses
+  Windows,
   Classes,
   Controls,
   Forms,
@@ -77,7 +78,8 @@ var
 implementation
 
 uses
-  FormAboutU;
+  FormAboutU,
+  FormSplashU;
 
 {$R *.dfm}
 
@@ -87,7 +89,26 @@ begin
 end;
 
 procedure TFormMain.FormCreate(Sender: TObject);
+var
+  SplashForm: TFormSplash;
+  i: integer;
 begin
+
+  SplashForm := TFormSplash.Create(Application);
+  try
+    SplashForm.Show;
+    // Simulate app creation work load
+    for i:= 1 to 200 do
+    begin
+      Application.ProcessMessages;
+      Sleep(10);
+    end;
+  finally
+    // Enable a timer that will shutdown and release Splash
+    // form after a short wait
+    SplashForm.Timer.Enabled := True;
+  end;
+
   Reset;
 end;
 

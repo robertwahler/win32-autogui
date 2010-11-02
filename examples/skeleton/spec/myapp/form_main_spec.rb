@@ -39,9 +39,6 @@ describe "FormMain" do
     it "should have the title 'Myapp" do
       @application.main_window.title.should match(/MyApp/)
     end
-    it "should have no text" do
-      @application.edit_window.text.should == '' 
-    end
   end
 
   describe "file exit (VK_MENU, VK_F, VK_X)" do

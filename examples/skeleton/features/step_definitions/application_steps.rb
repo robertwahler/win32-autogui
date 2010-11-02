@@ -5,7 +5,7 @@ include Autogui::Input
 After('@application') do
   if @application
     @application.close(:wait_for_close => true) if @application.running?
-    @application.should_not be_running
+    @application.should be_running
   end
 end
 

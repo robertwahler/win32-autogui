@@ -6,7 +6,7 @@ APPNAME="exe\\quicknote.exe"  # relative path to app using Windows style path
 
 class Quicknote < Autogui::Application
 
-  def initialize(name=APPNAME, options = {:title=> "QuickNote -"})
+  def initialize(name=APPNAME, options = {:title=> "QuickNote -", :main_window_timeout => 20})
     super name, options
   end
 
