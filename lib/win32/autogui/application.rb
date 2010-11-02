@@ -30,6 +30,8 @@ module Autogui
   # that it can be started and controlled via Ruby.  This
   # class is meant to be subclassed.
   #
+  # TODO: Version 1.0 will be implemented as a mixin.
+  #
   # @example
   #
   #   class Calculator < Autogui::Application
@@ -123,9 +125,12 @@ module Autogui
       raise "Start command failed while waiting for idle input, reason unknown" unless (ret == 0)
     end
 
-    # The application main window found by enumerating windows by title and pid
+    # The application main window found by enumerating windows 
+    # by title and application pid
     #
-    # @return [Autogui::Window] or nil if not found
+    # @raise [Exception] if the main window cannot be found
+    #
+    # @return [Autogui::Window]
     def main_window
       return @main_window if @main_window
 

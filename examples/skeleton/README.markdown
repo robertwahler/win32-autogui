@@ -5,10 +5,11 @@ This is a template of the file structure needed for jump-starting
 GUI testing with the Win32-autogui RubyGem.
 
 
-Usage
-=====
-Create a new Win32 application testing structure for the binary quicknote.exe.  Replace
-'quicknote' with the name of your application.
+Usage Example
+=============
+Create a new Win32 application testing structure for the binary quicknote.exe.  
+
+NOTE: Replace 'quicknote' with the name of your application.
 
 get the source for Win32-autogui
 
@@ -45,11 +46,11 @@ test it
     rake spec
     rake features
 
-
 commit it
 
     git add .
     git commit -m "renamed skelton app to MyApp"
+
 
 Copyright
 ---------

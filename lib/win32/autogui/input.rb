@@ -147,7 +147,7 @@ module Autogui
     Windows::API.new('keybd_event', 'IILL', 'V', 'user32')
     Windows::API.new('mouse_event', 'LLLLL', 'V', 'user32')
 
-    # send keystroke to the focused window, keystrokes are virtual keycodes
+    # Send keystroke to the focused window, keystrokes are virtual keycodes
     #
     # @example send 2+2<CR>
     #
@@ -163,7 +163,16 @@ module Autogui
       keybd_event keys.first, 0, KEYBD_EVENT_KEYUP, 0 
     end
 
-    # string together keystrokes, simulates the user typing
+    # String together keystrokes, simulates the user typing. 
+    #
+    # Note: This method can be slow for large strings.  Consider using
+    # the clipboard instead.  
+    #
+    # @see Clipboard 
+    #
+    # @example send 2+2<CR>
+    #
+    #     type_in("2+2\n")
     #
     # @param [String] string of characters to simulate typing
     def type_in(string)

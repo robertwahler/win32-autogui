@@ -13,11 +13,18 @@ and [Cucumber](http://github.com/aslakhellesoy/cucumber).  Examples of
 using both these tools are provided with this gem.
 
 
+Quick Start
+-----------
+See [examples/skeleton/README.markdown](examples/skeleton/README.markdown) for 
+a template of the file structure needed for jump-starting GUI testing with 
+the Win32-autogui RubyGem.
+
+
 Example Usage: Driving Calc.exe
 -------------------------------
 
 Using [RSpec](http://github.com/dchelimsky/rspec) to test drive the stock 
-Windows calculator application.  This example is used as Win32-autogui's 
+Window's calculator application.  This example is used as Win32-autogui's 
 internal spec. See [spec/auto_gui/application_spec.rb](spec/auto_gui/application_spec.rb).  
 
 A more complete example of testing a Window's Delphi program is presented with 
