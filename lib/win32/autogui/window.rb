@@ -4,7 +4,7 @@ require 'windows/window/message'
 # Reopen module and supply missing constants and 
 # functions from windows-pr gem
 #
-# TODO: Fork and send pull request for Windows::Window module
+# TODO: Fork and send pull request for Windows::Window module, be sure to lock bundle before sending request
 module Windows
   module Window
 
@@ -40,14 +40,18 @@ module Autogui
     end
   end
 
+  # Enumerate just the child windows one level down from the parent window
+  #
   class Children
     include Enumerable
     include Windows::Window
 
+    # @param [Number] parent window handle
     def initialize(parent)
       @parent = parent
     end
 
+    # @yield [Window]
     def each
       child_after = 0
       while (child_after = FindWindowEx(@parent.handle, child_after, nil, nil)) > 0 do
@@ -58,6 +62,7 @@ module Autogui
     end
   end
 
+  # Wrapper for window
   class Window
     include Windows::Window           # instance methods from windows-pr gem
     include Windows::Window::Message  # PostMessage and constants
@@ -69,6 +74,8 @@ module Autogui
     end
     
     # enumerable immeadiate child windows
+    #
+    # @see Children
     def children
       Children.new(self)
     end
@@ -94,23 +101,25 @@ module Autogui
       end
     end
 
-    # returns [String] the ANSI Windows ClassName
+    # @return [String] the ANSI Windows ClassName
     def window_class
       buffer = "\0" * 255
       length = GetClassNameA(handle, buffer, buffer.length)
       length == 0 ? '' : buffer[0..length - 1]
     end
 
+    # Window text (WM_GETTEXT)
+    #
+    # @param [Number] max_length (2048)
+    #
+    # @return [String] of max_length (2048)
     def text(max_length = 2048)
       buffer = "\0" * max_length
       length = SendMessageA(handle, WM_GETTEXT, buffer.length, buffer)
       length == 0 ? '' : buffer[0..length - 1]
     end
+    alias :title :text
 
-    def title
-      text
-    end
-    
     # Determines whether the specified window handle identifies an existing window 
     #
     # @return [Boolean]
@@ -122,7 +131,7 @@ module Autogui
     # Keyboard input is directed to the window, and various visual cues 
     # are changed for the user.
     #
-    # returns nonzero number if sucessful, nil or zero if failed
+    # @return [Number] nonzero number if sucessful, nil or zero if failed
     def set_focus
       SetForegroundWindow(handle) if is_window?
     end
@@ -148,6 +157,14 @@ module Autogui
     # The window text including all child windows 
     # joined together with newlines. Faciliates matching text.
     # Text from any given window is limited to 2048 characters
+    #
+    # @example partial match of the Window's calulator's about dialog copywrite text
+    #
+    #   dialog_about = @calculator.dialog_about
+    #   dialog_about.title.should == "About Calculator"
+    #   dialog_about.combined_text.should match(/Microsoft . Calculator/)
+    #
+    # @return [String] with newlines
     def combined_text
       return unless is_window?
       t = []

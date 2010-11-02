@@ -1,5 +1,10 @@
+# The algorithms in this module are presented in the book
+# Scripted GUI testing with Ruby by Ian Dees
+# @see http://pragprog.com/titles/idgtr/scripted-gui-testing-with-ruby
+
 require 'windows/api'
 
+# methods for simulating user input
 module Autogui
   module Input
 
@@ -158,6 +163,9 @@ module Autogui
       keybd_event keys.first, 0, KEYBD_EVENT_KEYUP, 0 
     end
 
+    # string together keystrokes, simulates the user typing
+    #
+    # @param [String] string of characters to simulate typing
     def type_in(string)
       string.each_char do |char|
         keystroke(*char_to_virtual_keycode(char))
@@ -167,7 +175,10 @@ module Autogui
     private
 
     # convert a single character to a virtual keycode
-    # returns [Array] of virtual keycodes
+    #
+    # @param [Char] char is the character to convert
+    #
+    # @return [Array] of virtual keycodes
     def char_to_virtual_keycode(char)
 
       unless char.size == 1

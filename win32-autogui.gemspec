@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Robert Wahler"]
   s.email       = ["robert@gearheadforhire.com"]
   s.homepage    = "http://rubygems.org/gems/win32-autogui"
-  s.summary     = "A GUI testing framework"
-  s.description = "A GUI testing framework"
+  s.summary     = "Win32 GUI testing framework"
+  s.description = "Win32 GUI testing framework"
 
   s.required_rubygems_version = ">= 1.3.6"
   s.rubyforge_project         = "win32-autogui"

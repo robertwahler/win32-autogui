@@ -18,7 +18,7 @@ module Autogui
     end
   end
 
-  # @ return False (nil) or True (Integer)
+  # @return False (nil) or True (Integer)
   def self.win32?
     RUBY_PLATFORM =~ /mingw|mswin|cygwin/i
   end

@@ -78,7 +78,7 @@ module Autogui
     #
     # @param [String] name a valid win32 exe name with optional path
     # @param [Hash] options initialize options passed to start method
-    # @option options [String] :title (Application.name) the application window title
+    # @option options [String] :title (Application.name) the application window title, used along with the pid to locate the application main window
     # @option options [Number] :wait_for_close (10000) (10 secs) timeout for starting application in msec
 
     #   :wait_for_close [Number]     #
@@ -115,7 +115,7 @@ module Autogui
       # wait for process before enumerating windows
       ret = WaitForInputIdle(process_handle, timeout)
 
-      # done with the handles, close them
+      # done with the handles
       CloseHandle(process_handle)
       CloseHandle(thread_handle)
 
@@ -127,7 +127,7 @@ module Autogui
 
     # The application main window found by enumerating windows by title and pid
     #
-    # @return [Autogui#Window] or nil if not found
+    # @return [Autogui::Window] or nil if not found
     def main_window
       return @main_window if @main_window
 

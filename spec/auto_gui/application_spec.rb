@@ -57,7 +57,7 @@ describe Autogui::Application do
       calculator2.close(:wait_for_close => true)
     end
 
-    it "should open and close the 'About Calculator' dialog" do
+    it "should open and close the 'About Calculator' dialog via (VK_MENU, VK_H, VK_A)" do
       @calculator.set_focus
       dialog_about = @calculator.dialog_about
       dialog_about.should be_nil
