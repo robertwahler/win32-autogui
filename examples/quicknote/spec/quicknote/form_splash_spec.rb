@@ -23,7 +23,12 @@ describe "FormSplash" do
       @application.splash.should_not be_nil
     end
     it "should close within 5 seconds" do
-      pending
+      @application.splash.should_not be_nil
+      seconds = 5
+      timeout(seconds) do
+        @application.splash.wait_for_close
+      end
+      @application.splash.should be_nil
     end
   end
 

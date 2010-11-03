@@ -5,6 +5,7 @@ require 'windows/window/message'
 # functions from windows-pr gem
 #
 # TODO: Fork and send pull request for Windows::Window module, be sure to lock bundle before sending request
+#
 module Windows
   module Window
 
@@ -28,6 +29,7 @@ module Autogui
   # Enumerate desktop child windows
   #
   # Start at the desktop and work down through all the child windows
+  #
   class EnumerateDesktopWindows
     include Enumerable
     include Windows::Window
@@ -47,11 +49,13 @@ module Autogui
     include Windows::Window
 
     # @param [Number] parent window handle
+    #
     def initialize(parent)
       @parent = parent
     end
 
     # @yield [Window]
+    #
     def each
       child_after = 0
       while (child_after = FindWindowEx(@parent.handle, child_after, nil, nil)) > 0 do
@@ -63,6 +67,7 @@ module Autogui
   end
 
   # Wrapper for window
+  #
   class Window
     include Windows::Window           # instance methods from windows-pr gem
     include Windows::Window::Message  # PostMessage and constants
@@ -76,11 +81,13 @@ module Autogui
     # enumerable immeadiate child windows
     #
     # @see Children
+    #
     def children
       Children.new(self)
     end
 
     # @return [Object] Window or nil 
+    #
     def parent
       h = GetParent(handle)
       Window.new h if h > 0
@@ -91,19 +98,26 @@ module Autogui
     # @param [Hash] options
     # @option options [Boolean] :wait_for_close (true) sleep while waiting for timeout or close
     # @option options [Boolean] :timeout (5) wait_for_close timeout in seconds
+    #
     def close(options={})
       PostMessage(handle, WM_SYSCOMMAND, SC_CLOSE, 0)
-
-      wait_for_close = (options[:wait_for_close] == true) ? true : false
+      wait_for_close(options) if (options[:wait_for_close] == true) 
+    end
+    
+    # Wait for the window to close
+    #
+    # @param [Hash] options
+    # @option options [Boolean] :timeout (5) timeout in seconds
+    #
+    def wait_for_close(options={})
       seconds = options[:timeout] || 5
-      if wait_for_close 
-        timeout(seconds) do
-          sleep 0.05 until 0 == IsWindow(handle)
-        end
+      timeout(seconds) do
+        sleep 0.05 until 0 == IsWindow(handle)
       end
     end
 
     # @return [String] the ANSI Windows ClassName
+    # 
     def window_class
       buffer = "\0" * 255
       length = GetClassNameA(handle, buffer, buffer.length)
@@ -115,6 +129,7 @@ module Autogui
     # @param [Number] max_length (2048)
     #
     # @return [String] of max_length (2048)
+    #
     def text(max_length = 2048)
       buffer = "\0" * max_length
       length = SendMessageA(handle, WM_GETTEXT, buffer.length, buffer)
@@ -125,6 +140,7 @@ module Autogui
     # Determines whether the specified window handle identifies an existing window 
     #
     # @return [Boolean]
+    #
     def is_window?
       (handle != 0) && (IsWindow(handle) != 0)
     end
@@ -134,6 +150,7 @@ module Autogui
     # are changed for the user.
     #
     # @return [Number] nonzero number if sucessful, nil or zero if failed
+    #
     def set_focus
       SetForegroundWindow(handle) if is_window?
     end
@@ -141,6 +158,7 @@ module Autogui
     # The identifier (pid) of the process that created the window
     #
     # @return [Integer] process id if the window exists, otherwise nil
+    #
     def pid
       return nil unless is_window?
       process_id = 0.chr * 4
@@ -151,6 +169,7 @@ module Autogui
     # The identifier of the thread that created the window
     #
     # @return [Integer] thread id if the window exists, otherwise nil
+    #
     def thread_id
       return nil unless is_window?
       GetWindowThreadProcessId(handle, nil)
@@ -167,6 +186,7 @@ module Autogui
     #   dialog_about.combined_text.should match(/Microsoft . Calculator/)
     #
     # @return [String] with newlines
+    #
     def combined_text
       return unless is_window?
       t = []
