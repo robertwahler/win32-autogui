@@ -37,11 +37,11 @@ describe Autogui::Application do
     end
 
     it "should raise an error if setting focus and the application title is incorrect" do
-      goodcalc = Calculator.new "calc", :title => "Calculator"
+      goodcalc = Calculator.new :title => "Calculator"
       lambda { goodcalc.set_focus }.should_not raise_error
       goodcalc.close
 
-      badcalc = Calculator.new "calc", :title => "BaDTitle"
+      badcalc = Calculator.new :title => "BaDTitle"
       lambda {
         begin
           badcalc.setfocus

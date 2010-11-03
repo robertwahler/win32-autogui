@@ -2,12 +2,18 @@
 # Production code should simply require 'win32/autogui'
 require File.expand_path(File.dirname(__FILE__) + '/../../../lib/win32/autogui')
 
-APPNAME="exe\\quicknote.exe"  # relative path to app using Windows style path
 
 class Quicknote < Autogui::Application
 
-  def initialize(name=APPNAME, options = {:title=> "QuickNote -", :parameters => '--nosplash', :main_window_timeout => 20})
-    super name, options
+  def initialize(options = {})
+    # relative path to app using Windows style path
+    @name ="exe\\quicknote.exe"  
+    defaults = {
+                 :title=> "QuickNote -", 
+                 :parameters => '--nosplash', 
+                 :main_window_timeout => 20
+               }
+    super defaults.merge(options)
   end
 
   def edit_window
@@ -41,7 +47,7 @@ class Quicknote < Autogui::Application
     end
   end
 
-  # title and class are the same as dialog_overwrite_confirm
+  # Title and class are the same as dialog_overwrite_confirm
   def file_save_as_dialog
     Autogui::EnumerateDesktopWindows.new.find do |w| 
       w.title.match(/Text File Save/) && 

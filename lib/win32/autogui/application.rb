@@ -13,6 +13,7 @@ module Autogui
     # Clipboard text getter
     # 
     # @return [String] clipboard data
+    #
     def text 
       Win32::Clipboard.data
     end
@@ -20,6 +21,7 @@ module Autogui
     # Clipboard text setter
     #
     # @param [String] str text to load onto the clipboard
+    #
     def text=(str)
       Win32::Clipboard.set_data(str)
     end
@@ -29,8 +31,6 @@ module Autogui
   # Application class wraps a binary application so 
   # that it can be started and controlled via Ruby.  This
   # class is meant to be subclassed.
-  #
-  # TODO: Version 1.0 will be implemented as a mixin.
   #
   # @example
   #
@@ -62,9 +62,9 @@ module Autogui
     include Windows::Handle
 
     # @return [String] the executable name of the application
-    attr_reader :name  
+    attr_accessor :name  
     # @return [String] the executable application parameters 
-    attr_reader :parameters  
+    attr_accessor :parameters  
     # @return [String] window title of the application
     attr_accessor :title  
     # @return [Number] the process identifier (PID) returned by Process.create
@@ -76,23 +76,32 @@ module Autogui
     
     # @example initialize an application on the path
     #
-    #   Application.new "calc"  
+    #   Application.new :name => "calc"  
     #
     # @example initialize with full DOS path
     #
-    #   Application.new "\\windows\\system32\\calc.exe"  
+    #   Application.new :name => "\\windows\\system32\\calc.exe"  
     #
-    # @param [String] name a valid win32 exe name with optional path
-    # @param [Hash] options initialize options passed to start method
-    # @option options [String] :title (Application.name) the application window title, used along with the pid to locate the application main window
+    # @param [Hash] options initialize options
+    # @option options [String] :name a valid win32 exe name with optional path
+    # @option options [String] :title the application window title, used along with the pid to locate the application main window, defaults to :name
     # @option options [Number] :create_process_timeout (10) timeout in seconds to wait for the create_process to return 
     # @option options [Number] :main_window_timeout (10) timeout in seconds to wait for main_window to appear
-    def initialize(name, options = {})
+    # @option options [Number] :parameters command line parameters used by Process.create
+    #
+    def initialize(options = {})
 
-      @name = name
+      unless options.kind_of?(Hash)
+        raise ArgumentError, 'Initialize expecting options to be a Hash'
+      end
+
+      @name = options[:name] || name
       @title = options[:title] || name
       @main_window_timeout = options[:main_window_timeout] || 10
       @parameters = options[:parameters]
+
+      # sanity checks
+      raise 'Application name not set' unless name 
 
       start(options)
     end
@@ -103,8 +112,10 @@ module Autogui
     # @raise [Exception] if create_process_timeout exceeded
     # @raise [Exception] if start failed for any reason other than create_process_timeout
     #
-    # @return [Window] main_window or nil if failed
-    # @param [Hash] options @see initialize
+    # @return [Number] the pid
+    # @param [Hash] options
+    # @option options [Number] :create_process_timeout (10) timeout in seconds to wait for the Process.create to return 
+    #
     def start(options={})
       
       command_line = name
@@ -132,6 +143,7 @@ module Autogui
 
       raise "Start command failed on create_process_timeout" if ret == WAIT_TIMEOUT 
       raise "Start command failed while waiting for idle input, reason unknown" unless (ret == 0)
+      @pid
     end
 
     # The application main window found by enumerating windows 
@@ -142,6 +154,7 @@ module Autogui
     #
     # @return [Autogui::Window]
     # @see initialize for options
+    # 
     def main_window
       return @main_window if @main_window
 
@@ -168,6 +181,7 @@ module Autogui
     # @param [Hash] options
     # @option options [Boolean] :wait_for_close (true) sleep while waiting for timeout or close
     # @option options [Boolean] :timeout (5) wait_for_close timeout in seconds
+    #
     def close(options={})
       main_window.close(options)
     end
@@ -185,6 +199,7 @@ module Autogui
     # Set the application input focus to the main_window
     # 
     # @return [Number] nonzero number if sucess, nil or zero if failed
+    # 
     def set_focus
       main_window.set_focus if running? 
     end
@@ -199,6 +214,7 @@ module Autogui
     #   dialog_about.combined_text.should match(/Microsoft . Calculator/)
     #
     # @return [String] with newlines
+    #
     def combined_text
       main_window.combined_text if running? 
     end
@@ -212,6 +228,7 @@ module Autogui
     #   @calculator.edit_window.text.strip.should == "12,345."
     #
     # @return [Clipboard] 
+    #
     def clipboard
       @clipboard || Autogui::Clipboard.new
     end

@@ -5,8 +5,12 @@ class Calculator < Autogui::Application
   # initialize with the binary name 'calc' and the window title
   # 'Calculator' used along with the application pid to find the 
   # main application window
-  def initialize(name="calc", options = {:title=> "Calculator"})
-    super name, options
+  def initialize(options = {})
+    defaults = {
+                 :name => "calc",
+                 :title => "Calculator"
+               }
+    super defaults.merge(options)
   end
 
   # the calculator's results window 
