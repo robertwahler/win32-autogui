@@ -30,6 +30,12 @@ class Quicknote < Autogui::Application
     end
   end
 
+  def splash
+    Autogui::EnumerateDesktopWindows.new.find do |w| 
+      w.title.match(/FormSplash/) && (w.pid == pid)
+    end
+  end
+
   def message_dialog_confirm
     Autogui::EnumerateDesktopWindows.new.find do |w| 
       w.title.match(/Confirm/) && (w.pid == pid)
