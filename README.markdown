@@ -1,7 +1,7 @@
 Win32-Autogui
 =============
 
-A Win32 GUI testing framework presented as a RubyGem.
+A Win32 GUI testing framework presented as a [RubyGem](http://rubygems.org/).
 
 
 Overview
@@ -40,8 +40,12 @@ The first step is to subclass Win32-autogui's application class.
       # initialize with the binary name 'calc' and the window title
       # 'Calculator' used along with the application pid to find the 
       # main application window
-      def initialize(name="calc", options = {:title=> "Calculator"})
-        super name, options
+      def initialize(options = {})
+        defaults = {
+                     :name => "calc",
+                     :title => "Calculator"
+                   }
+        super defaults.merge(options)
       end
 
       # the calculator's results window 

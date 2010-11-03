@@ -28,7 +28,7 @@ module Autogui
 
   end
 
-  # Application class wraps a binary application so 
+  # The Application class wraps a binary application so 
   # that it can be started and controlled via Ruby.  This
   # class is meant to be subclassed.
   #
@@ -67,16 +67,24 @@ module Autogui
 
     # @return [String] the executable name of the application
     attr_accessor :name  
+    
     # @return [String] the executable application parameters 
     attr_accessor :parameters  
+    
     # @return [String] window title of the application
     attr_accessor :title  
+
     # @return [Number] the process identifier (PID) returned by Process.create
     attr_reader :pid
+
     # @return [Number] the process thread id returned by Process.create
     attr_reader :thread_id
+
     # @return [Number] the main_window wait timeout in seconds
     attr_accessor :main_window_timeout
+    
+    # @return [Number] the wait timeout in seconds used by Process.create
+    attr_accessor :create_process_timeout
     
     # @example initialize an application on the path
     #
@@ -89,9 +97,9 @@ module Autogui
     # @param [Hash] options initialize options
     # @option options [String] :name a valid win32 exe name with optional path
     # @option options [String] :title the application window title, used along with the pid to locate the application main window, defaults to :name
+    # @option options [Number] :parameters command line parameters used by Process.create
     # @option options [Number] :create_process_timeout (10) timeout in seconds to wait for the create_process to return 
     # @option options [Number] :main_window_timeout (10) timeout in seconds to wait for main_window to appear
-    # @option options [Number] :parameters command line parameters used by Process.create
     #
     def initialize(options = {})
 
@@ -102,12 +110,13 @@ module Autogui
       @name = options[:name] || name
       @title = options[:title] || name
       @main_window_timeout = options[:main_window_timeout] || 10
+      @create_process_timeout = options[:create_process_timeout] || 10
       @parameters = options[:parameters]
 
       # sanity checks
       raise 'Application name not set' unless name 
 
-      start(options)
+      start
     end
     
     # Start up the binary application via Process.create and
@@ -117,10 +126,8 @@ module Autogui
     # @raise [Exception] if start failed for any reason other than create_process_timeout
     #
     # @return [Number] the pid
-    # @param [Hash] options
-    # @option options [Number] :create_process_timeout (10) timeout in seconds to wait for the Process.create to return 
     #
-    def start(options={})
+    def start
       
       command_line = name
       command_line = name + ' ' + parameters if parameters
@@ -136,8 +143,6 @@ module Autogui
       process_handle = process_info.process_handle
       thread_handle = process_info.thread_handle
 
-      create_process_timeout = options[:create_process_timeout] || 10
-      
       # wait for process
       ret = WaitForInputIdle(process_handle, (create_process_timeout * 1000))
 
