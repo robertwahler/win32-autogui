@@ -41,10 +41,10 @@ describe "FormAbout" do
     @dialog_about.title.should == "About QuickNote"
   end
 
-  it "should have an 'Ok' button" do
+  it "should have an 'OK' button" do
     button = @dialog_about.children.find {|w| w.window_class == 'TButton'}
     button.should_not be_nil
-    button.text.should match(/Ok/)
+    button.text.should match(/^OK$/)
   end
 
 end

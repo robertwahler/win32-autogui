@@ -37,7 +37,7 @@ object FormAbout: TFormAbout
     Top = 136
     Width = 75
     Height = 25
-    Caption = 'Ok'
+    Caption = 'OK'
     TabOrder = 0
     OnClick = ButtonOkClick
   end

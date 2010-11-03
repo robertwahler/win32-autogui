@@ -5,6 +5,7 @@ include Autogui::Input
 describe "FormSplash" do
   after(:all) do
     if @application.running?
+      @application.splash.wait_for_close if @application.splash
       @application.file_exit 
       # still running? force it to close
       @application.close(:wait_for_close => true)
