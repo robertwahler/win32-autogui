@@ -36,8 +36,12 @@ module Autogui
   #
   #   class Calculator < Autogui::Application
   #
-  #     def initialize(name="calc", options = {:title=> "Calculator"})
-  #       super name, options
+  #     def initialize(options = {})
+  #       defaults = {
+  #                    :name => "calc",
+  #                    :title => "Calculator"
+  #                  }
+  #       super defaults.merge(options)
   #     end
   #
   #     def edit_window
