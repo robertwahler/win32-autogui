@@ -1,7 +1,7 @@
 Win32-Autogui
 =============
 
-A Win32 GUI testing framework presented as a [RubyGem](http://rubygems.org/).
+A Win32 GUI testing framework packaged as a [RubyGem](http://rubygems.org/).
 
 
 Overview
