@@ -19,6 +19,9 @@ See [examples/skeleton/README.markdown](examples/skeleton/README.markdown) for
 a template of the file structure needed for jump-starting GUI testing with 
 the Win32-autogui RubyGem.
 
+Read our introduction blog posting here: <http://www.gearheadforhire.com/articles/ruby/win32-autogui/using-ruby-to-drive-windows-applications>
+
+
 
 Example Usage: Driving Calc.exe
 -------------------------------
