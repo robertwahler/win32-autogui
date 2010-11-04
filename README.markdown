@@ -195,7 +195,7 @@ Win32-autogui depends on the following RubyGems
 
 Installation
 ------------
-Win32-autogui is avaliable on [RubyGems.org](http://rubygems.org/gems/win32-autogui)
+Win32-autogui is available on [RubyGems.org](http://rubygems.org/gems/win32-autogui)
 
     gem install win32-autogui
 
