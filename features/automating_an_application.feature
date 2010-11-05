@@ -1,3 +1,4 @@
+@calculator
 Feature: Automating a GUI application
 
   As a developer, I want to run automated tests on GUI applications
