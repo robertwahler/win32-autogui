@@ -1,3 +1,4 @@
+require 'timeout'
 require 'windows/window'
 require 'windows/window/message'
 require 'win32/autogui/windows/window'

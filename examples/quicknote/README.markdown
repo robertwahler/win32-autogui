@@ -7,6 +7,7 @@ source code for the Win32-autogui gem.  It is not fit for any other purpose.
 
 Modifications to the load paths for use in a real world project
 ----------------------------------------------------------------
+**NOTE:** _see examples/skeleton for a ready-to-go template._
 
 spec/spec_helper.rb
 

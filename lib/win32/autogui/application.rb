@@ -1,3 +1,4 @@
+require 'timeout'
 require 'windows/process'
 require 'windows/synchronize'
 require 'windows/handle'
