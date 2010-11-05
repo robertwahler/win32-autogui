@@ -271,4 +271,13 @@ describe "FormMain" do
     end
   end
 
+  describe "hotkey (VK_CONTROL, VK_X)" do
+    it "should should exit the program" do
+      @application.main_window.is_window?.should == true
+      keystroke(VK_CONTROL, VK_X) 
+      @application.main_window.is_window?.should == false
+      @application.should_not be_running
+    end
+  end
+
 end

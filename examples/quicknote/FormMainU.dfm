@@ -39,6 +39,7 @@ object FormMain: TFormMain
     Top = 244
     object ActionFileExit: TAction
       Caption = 'E&xit'
+      ShortCut = 16472
       OnExecute = ActionFileExitExecute
     end
     object ActionHelpAbout: TAction
