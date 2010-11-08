@@ -1,4 +1,5 @@
 # require all files here
+require 'win32/autogui/logging'
 require 'win32/autogui/input'
 require 'win32/autogui/window'
 require 'win32/autogui/application'

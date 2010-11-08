@@ -65,6 +65,7 @@ module Autogui
     include Windows::Process           
     include Windows::Synchronize
     include Windows::Handle
+    include Autogui::Logging
 
     # @return [String] the executable name of the application
     attr_accessor :name  
@@ -101,11 +102,13 @@ module Autogui
     # @option options [Number] :parameters command line parameters used by Process.create
     # @option options [Number] :create_process_timeout (10) timeout in seconds to wait for the create_process to return 
     # @option options [Number] :main_window_timeout (10) timeout in seconds to wait for main_window to appear
+    # @option options [String] :logger_logfile (nil) initialize Log4r::Logger's output filename
+    # @option options [String] :logger_level (Log4r::WARN) initialize Log4r::Logger's initial level
     #
     def initialize(options = {})
 
       unless options.kind_of?(Hash)
-        raise ArgumentError, 'Initialize expecting options to be a Hash'
+        raise_error ArgumentError, 'Initialize expecting options to be a Hash'
       end
 
       @name = options[:name] || name
@@ -114,8 +117,12 @@ module Autogui
       @create_process_timeout = options[:create_process_timeout] || 10
       @parameters = options[:parameters]
 
+      # logger setup
+      logger.logfile = options[:logger_logfile] if options[:logger_logfile]
+      logger.level = options[:logger_level] if options[:logger_level]
+
       # sanity checks
-      raise 'Application name not set' unless name 
+      raise_error 'application name not set' unless name 
 
       start
     end
@@ -151,8 +158,8 @@ module Autogui
       CloseHandle(process_handle)
       CloseHandle(thread_handle)
 
-      raise "Start command failed on create_process_timeout" if ret == WAIT_TIMEOUT 
-      raise "Start command failed while waiting for idle input, reason unknown" unless (ret == 0)
+      raise_error "start command failed on create_process_timeout" if ret == WAIT_TIMEOUT 
+      raise_error "start command failed while waiting for idle input, reason unknown" unless (ret == 0)
       @pid
     end
 
@@ -168,6 +175,10 @@ module Autogui
     def main_window
       return @main_window if @main_window
 
+      # pre sanity checks
+      raise_error "calling main_window without a pid, application not initialized properly" unless @pid
+      raise_error "calling main_window without a window title, application not initialized properly" unless @title
+
       timeout(main_window_timeout) do
         begin
           # There may be multiple instances, use title and pid to id our main window
@@ -178,8 +189,8 @@ module Autogui
          end until @main_window
       end
 
-      # sanity checks
-      raise "cannot find main_window, check application title" unless @main_window
+      # post sanity checks
+      raise_error "cannot find main_window, check application title" unless @main_window
 
       @main_window
     end
@@ -243,7 +254,30 @@ module Autogui
       @clipboard || Autogui::Clipboard.new
     end
 
-  private
+    private
+
+    # @overload raise_error(exception, message)
+    #   raise and log specific exception with message
+    #   @param [Exception] to raise
+    #   @param [String] message error message to raise
+    #
+    # @overload raise_error(message)
+    #   raise and log generic exception with message
+    #   @param [String] message error message to raise
+    #
+    def raise_error(*args)
+      if args.first.kind_of?(Exception)
+        exception_type = args.shift
+        error_message = args.shift || 'Unknown error'
+      else
+        raise ArgumentError unless args.first.is_a?(String)
+        exception_type = RuntimeError
+        error_message = args.shift || 'Unknown error'
+      end
+
+      logger.error error_message
+      raise  exception_type, error_message
+    end
 
   end
 
