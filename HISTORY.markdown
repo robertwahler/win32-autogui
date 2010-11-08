@@ -6,6 +6,11 @@ Most recent changes are at the top
 Changes
 -------
 
+### 0.3.0 - 11/08/2010 ###
+
+* Added Log4R logging
+* Window.set_focus works first call in IRB
+
 ### 0.2.1 - 11/05/2010 ###
 
 * Added missing "require 'timeout'", fixes issue #1

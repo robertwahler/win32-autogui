@@ -40,7 +40,8 @@ module Autogui
   #     def initialize(options = {})
   #       defaults = {
   #                    :name => "calc",
-  #                    :title => "Calculator"
+  #                    :title => "Calculator",
+  #                    :logger_logfile => 'log/calc.log'
   #                  }
   #       super defaults.merge(options)
   #     end
@@ -90,11 +91,30 @@ module Autogui
     
     # @example initialize an application on the path
     #
-    #   Application.new :name => "calc"  
+    #   app = Application.new :name => "calc"  
+    #
+    # @example initialize with relative DOS path
+    #
+    #   app = Application.new :name => "binaries\\mybinary.exe"  
     #
     # @example initialize with full DOS path
     #
-    #   Application.new :name => "\\windows\\system32\\calc.exe"  
+    #   app = Application.new :name => "\\windows\\system32\\calc.exe"  
+    #
+    # @example initialize with logging to file at the default WARN level  (STDOUT logging is the default)
+    #
+    #   app = Application.new :name => "calc", :logger_logfile => 'log/calc.log' 
+    #
+    # @example initialize with logging to file at DEBUG level
+    #
+    #   include Autogui::Logging
+    #   app = Application.new :name => "calc", :logger_logfile => 'log/calc.log', :logger.level => Log4r::DEBUG
+    #
+    # @example initialize without logging to file and turn it on later
+    #
+    #   include Autogui::Logging
+    #   app = Application.new :name => "calc"
+    #   logger.logfile = 'app.log'
     #
     # @param [Hash] options initialize options
     # @option options [String] :name a valid win32 exe name with optional path

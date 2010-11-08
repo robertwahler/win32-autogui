@@ -46,7 +46,8 @@ The first step is to subclass Win32-autogui's application class.
       def initialize(options = {})
         defaults = {
                      :name => "calc",
-                     :title => "Calculator"
+                     :title => "Calculator",
+                     :logger_filename => "calculator.log"
                    }
         super defaults.merge(options)
       end
@@ -194,6 +195,7 @@ Win32-autogui depends on the following RubyGems
 * Windows-pr  <http://github.com/djberg96/windows-pr>
 * Win32-process <http://github.com/djberg96/win32-process>
 * Win32-clipboard <http://github.com/djberg96/win32-clipboard>
+* Log4r for logging <http://log4r.rubyforge.org/>
 
 
 Installation

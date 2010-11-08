@@ -2,12 +2,12 @@ require 'log4r'
 
 # Open up Log4r and add a simple log accessor for 'logfile'
 #
-# @example: allows simple setup
+# @example allows simple setup
 #
 #   include Autogui::Logging
 #
 #   logger.filename = 'log/autogui.log'
-#   logger.warn "warning messsage goes to log file"
+#   logger.warn "warning message goes to log file"
 #
 module Log4r
   class Logger
@@ -34,16 +34,16 @@ module Autogui
   module Logging
 
     # Logging mixin allows simple logging setup
-    # to STDOUT and one filename.  Logger is a wrapper
+    # to STDOUT and optionally, to one filename.  Logger is a wrapper
     # for Log4r::Logger it accepts any methods that 
     # Log4r::Logger accepts in addition to the "logfile" filename.
     #
-    # @example:  simple loggin setup to file
+    # @example  simple logging to file setup
     #
     #   include Autogui::Logging
     #
     #   logger.filename = 'log/autogui.log'
-    #   logger.warn "warning messsage goes to 'log/autogui.log'" 
+    #   logger.warn "warning message goes to 'log/autogui.log'" 
     #
     #   logger.level = Log4r::DEBUG
     #   logger.debug "this message goes to 'log/autogui.log'"
