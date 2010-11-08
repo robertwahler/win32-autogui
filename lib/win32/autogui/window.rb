@@ -50,6 +50,8 @@ module Autogui
   class Window
     include Windows::Window           # instance methods from windows-pr gem
     include Windows::Window::Message  # PostMessage and constants
+    include Autogui::Logging
+    include Autogui::Input
 
     attr_reader :handle
 
@@ -82,7 +84,7 @@ module Autogui
       PostMessage(handle, WM_SYSCOMMAND, SC_CLOSE, 0)
       wait_for_close(options) if (options[:wait_for_close] == true) 
     end
-    
+
     # Wait for the window to close
     #
     # @param [Hash] options
@@ -96,7 +98,7 @@ module Autogui
     end
 
     # @return [String] the ANSI Windows ClassName
-    # 
+    #
     def window_class
       buffer = "\0" * 255
       length = GetClassNameA(handle, buffer, buffer.length)
@@ -125,13 +127,31 @@ module Autogui
     end
     
     # Brings the window into the foreground and activates it. 
-    # Keyboard input is directed to the window, and various visual cues 
+    # Keyboard input is directed to the window, and various visual cues
     # are changed for the user.
+    #
+    # A process can set the foreground window only if one of the following conditions is true: 
+    #
+    #    * The process is the foreground process.
+    #    * The process was started by the foreground process.
+    #    * The process received the last input event.
+    #    * There is no foreground process.
+    #    * The foreground process is being debugged.
+    #    * The foreground is not locked.
+    #    * The foreground lock time-out has expired.
+    #    * No menus are active. 
     #
     # @return [Number] nonzero number if sucessful, nil or zero if failed
     #
     def set_focus
-      SetForegroundWindow(handle) if is_window?
+      if is_window?
+        # if current process was the last to receive input, we can be sure that 
+        # SetForegroundWindow will be allowed.  Send the shift key to whatever has
+        # the focus now.  This allows IRB to set_focus.
+        keystroke(VK_SHIFT)
+        ret = SetForegroundWindow(handle)
+        logger.warn("SetForegroundWindow failed") if ret == 0
+      end
     end
 
     # The identifier (pid) of the process that created the window
