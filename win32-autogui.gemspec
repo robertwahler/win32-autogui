@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project         = "win32-autogui"
 
   s.add_dependency "windows-api", ">= 0.4.0"
-  s.add_dependency "windows-pr", ">= 1.0.9"
+  s.add_dependency "windows-pr", ">= 1.1.2"
   s.add_dependency "win32-process", ">= 0.6.2"
   s.add_dependency "win32-clipboard", ">= 0.5.2"
   s.add_dependency "log4r", ">= 1.1.9"

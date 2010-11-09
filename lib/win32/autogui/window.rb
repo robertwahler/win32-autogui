@@ -1,6 +1,7 @@
 require 'timeout'
 require 'windows/window'
 require 'windows/window/message'
+require 'windows/window/classes'
 require 'win32/autogui/windows/window'
 
 module Autogui
@@ -50,6 +51,7 @@ module Autogui
   class Window
     include Windows::Window           # instance methods from windows-pr gem
     include Windows::Window::Message  # PostMessage and constants
+    include Windows::Window::Classes  # GetClassName
     include Autogui::Logging
     include Autogui::Input
 
@@ -97,11 +99,11 @@ module Autogui
       end
     end
 
-    # @return [String] the ANSI Windows ClassName
+    # @return [String] the Windows ClassName
     #
     def window_class
       buffer = "\0" * 255
-      length = GetClassNameA(handle, buffer, buffer.length)
+      length = GetClassName(handle, buffer, buffer.length)
       length == 0 ? '' : buffer[0..length - 1]
     end
 
