@@ -6,6 +6,10 @@ Most recent changes are at the top
 Changes
 -------
 
+### 0.3.X - 11/10/2010 ###
+
+* Added static logging constants to Autogui::Logging
+
 ### 0.3.0 - 11/08/2010 ###
 
 * Added Log4R logging

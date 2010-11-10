@@ -51,12 +51,18 @@ describe Autogui::Logging do
 
     it "should log debug messages when debug level set" do
       @application = Calculator.new :logger_logfile => fullpath(@logfile)
-      get_file_content(@logfile).should == ''
-      logger.debug "debug message here"
-      get_file_content(@logfile).should_not match(/debug message here/)
-      logger.level = Log4r::DEBUG
-      logger.debug "debug message here"
-      get_file_content(@logfile).should match(/debug message here/)
+      level_save = logger.level
+      begin
+        logger.level = Autogui::Logging::WARN
+        get_file_content(@logfile).should == ''
+        logger.debug "debug message here"
+        get_file_content(@logfile).should_not match(/debug message here/)
+        logger.level = Autogui::Logging::DEBUG
+        logger.debug "debug message here"
+        get_file_content(@logfile).should match(/debug message here/)
+      ensure
+        logger.level = level_save
+      end
     end
   end
 

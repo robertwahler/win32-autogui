@@ -108,7 +108,7 @@ module Autogui
     # @example initialize with logging to file at DEBUG level
     #
     #   include Autogui::Logging
-    #   app = Application.new :name => "calc", :logger_logfile => 'log/calc.log', :logger.level => Log4r::DEBUG
+    #   app = Application.new :name => "calc", :logger_logfile => 'log/calc.log', :logger.level => Autogui::Logging::DEBUG
     #
     # @example initialize without logging to file and turn it on later
     #
@@ -122,8 +122,8 @@ module Autogui
     # @option options [Number] :parameters command line parameters used by Process.create
     # @option options [Number] :create_process_timeout (10) timeout in seconds to wait for the create_process to return 
     # @option options [Number] :main_window_timeout (10) timeout in seconds to wait for main_window to appear
-    # @option options [String] :logger_logfile (nil) initialize Log4r::Logger's output filename
-    # @option options [String] :logger_level (Log4r::WARN) initialize Log4r::Logger's initial level
+    # @option options [String] :logger_logfile (nil) initialize logger's output filename
+    # @option options [String] :logger_level (Autogui::Logging::WARN) initialize logger's initial level
     #
     def initialize(options = {})
 
@@ -206,7 +206,7 @@ module Autogui
             w.title.match(title) && w.pid == pid 
           end
           sleep 0.1 
-         end until @main_window
+        end until @main_window
       end
 
       # post sanity checks

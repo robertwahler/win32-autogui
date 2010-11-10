@@ -28,10 +28,18 @@ end
 
 module Autogui
 
-  STANDARD_LOGGER = 'standard'
-
   # wrapper for Log4r gem
   module Logging
+
+    # Redefine logging levels so that they can be accessed before
+    # the logger is initialized at the expense of flexibility.
+    DEBUG = 1
+    INFO = 2
+    WARN = 3
+    ERROR = 4
+    FATAL = 5
+
+    STANDARD_LOGGER = 'standard'
 
     # Logging mixin allows simple logging setup
     # to STDOUT and optionally, to one filename.  Logger is a wrapper
@@ -45,7 +53,7 @@ module Autogui
     #   logger.filename = 'log/autogui.log'
     #   logger.warn "warning message goes to 'log/autogui.log'" 
     #
-    #   logger.level = Log4r::DEBUG
+    #   logger.level = Autogui::Logging::DEBUG
     #   logger.debug "this message goes to 'log/autogui.log'"
     #
     def logger
@@ -59,7 +67,17 @@ module Autogui
     # Initialize the logger, defaults to log4r::Warn
     def init_logger
       log = Log4r::Logger.new(STANDARD_LOGGER)
-      Log4r::Logger[STANDARD_LOGGER].level = Log4r::WARN
+
+      # sanity checks since we defined log4r's dynamic levels statically
+      unless (Log4r::DEBUG == DEBUG) && 
+             (Log4r::INFO == INFO) && 
+             (Log4r::WARN == WARN) && 
+             (Log4r::ERROR == ERROR) && 
+             (Log4r::FATAL == FATAL) 
+        raise "Logger levels do not match Log4r levels, levels may have been customized"
+      end
+
+      Log4r::Logger[STANDARD_LOGGER].level = WARN
       Log4r::Logger[STANDARD_LOGGER].trace = true
 
       Log4r::StderrOutputter.new :console
