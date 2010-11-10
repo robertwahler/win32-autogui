@@ -3,6 +3,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 include Autogui::Logging
 
 describe Autogui::Logging do
+  before(:all) do
+    # quiet console output, we are only testing the file output
+    logger.remove(:console)
+  end
   before(:each) do
     FileUtils.rm_rf(current_dir)
     @logfile = "autogui.log"
@@ -13,6 +17,9 @@ describe Autogui::Logging do
       @application.close(:wait_for_close => true) if @application.running?
       @application.should_not be_running
     end
+  end
+  after(:all) do
+    logger.add(:console)
   end
 
   describe "to file" do

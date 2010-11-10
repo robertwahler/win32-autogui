@@ -8,6 +8,7 @@ Changes
 
 ### 0.3.X - 11/10/2010 ###
 
+* EnumerateDesktopWindows now accepts an optional timeout allowing the "find" method to continue enumerating windows until the timeout is reached
 * Added static logging constants to Autogui::Logging
 
 ### 0.3.0 - 11/08/2010 ###

@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 include Autogui::Input
+include Autogui::Logging
 
 describe Autogui::Application do
 

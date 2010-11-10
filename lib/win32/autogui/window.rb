@@ -6,6 +6,8 @@ require 'win32/autogui/windows/window'
 
 module Autogui
 
+  class FindTimeout < Timeout::Error; end
+
   # Enumerate desktop child windows
   #
   # Start at the desktop and work down through all the child windows
@@ -13,6 +15,35 @@ module Autogui
   class EnumerateDesktopWindows
     include Enumerable
     include Windows::Window
+    include Autogui::Logging
+
+    # @return [Number] timeout (0) in seconds
+    attr_accessor :timeout
+
+    # @option options [Number] :timeout (0) maximum seconds to continue enumerating windows
+    def initialize(options ={})
+      @timeout = options[:timeout] || 0
+    end
+
+    # redefine Enumerable's find to continue looping until a timeout reached
+    def find(ifnone = nil)
+      return to_enum :find, ifnone unless block_given?
+
+      begin
+        Timeout.timeout(timeout, FindTimeout) do
+          begin
+            each { |o| return o if yield(o) }
+            sleep 0.2 unless (timeout == 0)
+            #logger.debug "find looping" unless (timeout == 0)
+          end until (timeout == 0)
+        end
+      rescue FindTimeout
+        logger.warn "EnumerateDesktopWindows.find timeout"
+        nil
+      end
+
+      ifnone.call if ifnone
+    end
 
     def each
       child_after = 0

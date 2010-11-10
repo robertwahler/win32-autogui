@@ -8,7 +8,8 @@ class Calculator < Autogui::Application
   def initialize(options = {})
     defaults = {
                  :name => "calc",
-                 :title => "Calculator"
+                 :title => "Calculator",
+                 :logger_level => Autogui::Logging::DEBUG
                }
     super defaults.merge(options)
   end
@@ -19,12 +20,12 @@ class Calculator < Autogui::Application
   end
 
   # About dialog, hotkey (VK_MENU, VK_H, VK_A)
-  def dialog_about
-    Autogui::EnumerateDesktopWindows.new.find do |w| 
+  def dialog_about(options = {})
+    Autogui::EnumerateDesktopWindows.new(options).find do |w| 
       w.title.match(/About Calculator/) && (w.pid == pid)
     end
   end
-
+  
   # the 'CE' button
   def clear_entry
     set_focus
