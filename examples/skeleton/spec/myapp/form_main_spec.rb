@@ -1,22 +1,22 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 include Autogui::Input
+include Autogui::Logging
+
+logger.level = Autogui::Logging::DEBUG
 
 describe "FormMain" do
   before(:all) do
-    @debug = false
-    @verbose = true
     @application = Myapp.new
     FileUtils.rm_rf(current_dir)
-    puts "FormMain before(:all)" if @debug
-    puts "application:\n#{@application.inspect}\n" if @debug && @verbose
-    puts "application.combined_text:\n #{@application.combined_text}\n" if @debug && @verbose
+    #logger.debug "FormMain before(:all)" 
+    #logger.debug "application:\n#{@application.inspect}\n" 
+    #logger.debug "application.combined_text:\n #{@application.combined_text}\n" 
   end
   before(:each) do
     @application = Myapp.new unless @application.running?
     @application.should be_running
     @application.set_focus
-    puts "FormMain before(:each)" if @debug
   end
   after(:all) do
     if @application.running?
@@ -25,14 +25,12 @@ describe "FormMain" do
       @application.close(:wait_for_close => true)
       @application.should_not be_running
     end
-    puts "FormMain after(:all)" if @debug
   end
   after(:each) do
     if @application.running?
       keystroke(VK_N) if @application.message_dialog_confirm || @application.dialog_overwrite_confirm
       keystroke(VK_ESCAPE) if @application.error_dialog
     end
-    puts "FormMain after(:each)" if @debug
   end
 
   describe "after startup" do

@@ -1,23 +1,37 @@
 require 'myapp'
 
 include Autogui::Input
+include Autogui::Logging
 
 After('@application') do
-  if @application
-    @application.close(:wait_for_close => true) if @application.running?
+  if @application && @application.running?
+    @application.dialog_tips.close if @application.dialog_tips
+    @application.dialog_wizard.close if @application.dialog_wizard
+    begin
+      @application.close(:wait_for_close => true) if @application.running?
+    rescue
+      @application.kill
+      raise
+    end
+  end
+end
+
+Given /^the application is running$/ do 
+  unless @application && @application.running?
+    @application = Myapp.new
     @application.should be_running
   end
 end
 
-Before('@applicaton') do
-  @application = Myapp.new
-  @application.should_not be_running
+When /^I start the application with parameters "([^"]*)"$/ do |parameters|
+  @application = Myapp.new  :parameters => parameters
+  @application.should be_running
+end
 
-  # debug
-  puts "application:"
-  puts @application.inspect
-  puts "application.combined_text"
-  puts @application.combined_text
+When /^I start the application$/ do
+  data_folder = cygpath_to_windows_path(File.expand_path(current_dir))
+  @application = Myapp.new  :parameters => "--nosplash  --data_folder:#{data_folder}"
+  @application.should be_running
 end
 
 When /^I type in "([^"]*)"$/ do |string|

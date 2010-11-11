@@ -24,28 +24,28 @@ class Quicknote < Autogui::Application
     main_window.children.find {|w| w.window_class == 'TStatusBar'}
   end
 
-  def dialog_about
-    Autogui::EnumerateDesktopWindows.new.find do |w| 
+  def dialog_about(options={})
+    Autogui::EnumerateDesktopWindows.new(options).find do |w| 
       w.title.match(/About QuickNote/) && (w.pid == pid)
     end
   end
 
-  def splash
-    Autogui::EnumerateDesktopWindows.new.find do |w| 
+  def splash(options={})
+    Autogui::EnumerateDesktopWindows.new(options).find do |w| 
       w.title.match(/FormSplash/) && (w.pid == pid)
     end
   end
 
-  def message_dialog_confirm
-    Autogui::EnumerateDesktopWindows.new.find do |w| 
+  def message_dialog_confirm(options={})
+    Autogui::EnumerateDesktopWindows.new(options).find do |w| 
       w.title.match(/Confirm/) && (w.pid == pid)
     end
   end
 
   # Title and class are the same as dialog_overwrite_confirm
   # Use child windows to differentiate
-  def dialog_overwrite_confirm
-    Autogui::EnumerateDesktopWindows.new.find do |w| 
+  def dialog_overwrite_confirm(options={})
+    Autogui::EnumerateDesktopWindows.new(options).find do |w| 
       w.title.match(/^Text File Save$/) && 
         (w.pid == pid) && 
         (w.window_class == "#32770") &&
@@ -54,8 +54,8 @@ class Quicknote < Autogui::Application
   end
 
   # Title and class are the same as dialog_overwrite_confirm
-  def file_save_as_dialog
-    Autogui::EnumerateDesktopWindows.new.find do |w| 
+  def file_save_as_dialog(options={})
+    Autogui::EnumerateDesktopWindows.new(options).find do |w| 
       w.title.match(/Text File Save/) && 
         (w.pid == pid) &&
         (w.window_class == "#32770") &&
@@ -63,14 +63,14 @@ class Quicknote < Autogui::Application
     end
   end
 
-  def file_open_dialog
-    Autogui::EnumerateDesktopWindows.new.find do |w| 
+  def file_open_dialog(options={})
+    Autogui::EnumerateDesktopWindows.new(options).find do |w| 
       w.title.match(/Text File Open/) && (w.pid == pid)
     end
   end
 
-  def error_dialog
-    Autogui::EnumerateDesktopWindows.new.find do |w| 
+  def error_dialog(options={})
+    Autogui::EnumerateDesktopWindows.new(options).find do |w| 
       w.title.match(/^QuickNote$/) && (w.pid == pid) && (w.window_class == "#32770")
     end
   end
