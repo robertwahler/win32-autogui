@@ -2,7 +2,6 @@ require 'timeout'
 require 'windows/process'
 require 'windows/synchronize'
 require 'windows/handle'
-require "win32/process"
 require "win32/clipboard"
 
 module Autogui
