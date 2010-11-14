@@ -21,6 +21,13 @@ Gem::Specification.new do |s|
   s.add_development_dependency "aruba", ">= 0.2.3"
   s.add_development_dependency "rake", ">= 0.8.7"
   s.add_development_dependency "yard", ">= 0.6.1"
+
+  # Specify a markdown gem for rake doc:generate
+  #
+  # Without the development dependency, running yard rake
+  # tasks will fail.  Kramdown chosen to provide a pure Ruby solution.
+  #s.add_development_dependency "kramdown", ">= 0.12.0"
+  # TODO: use kramdown, instead of rdiscount when yard patch pulled
   s.add_development_dependency "rdiscount", ">= 1.6.5"
 
   s.files        = `git ls-files`.split("\n")

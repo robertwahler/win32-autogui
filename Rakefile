@@ -41,8 +41,7 @@ namespace :doc do
   require 'yard/rake/yardoc_task'
 
   YARD::Rake::YardocTask.new(:generate) do |yt|
-    yt.options = ['--markup-provider', 'rdiscount', 
-                  '--output-dir', doc_destination
+    yt.options = ['--output-dir', doc_destination
                  ] +
                  gemspec.rdoc_options - ['--line-numbers', '--inline-source']
   end
