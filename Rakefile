@@ -50,5 +50,10 @@ namespace :doc do
   task :clean do
     rm_r doc_destination if File.exists?(doc_destination)
   end
+  
+  desc "List undocumented objects"
+  task :undocumented do
+    system('yard stats --list-undoc')
+  end
 
 end
