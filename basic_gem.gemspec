@@ -26,9 +26,7 @@ Gem::Specification.new do |s|
   #
   # Without the development dependency, running yard rake
   # tasks will fail.  Kramdown chosen to provide a pure Ruby solution.
-  #s.add_development_dependency "kramdown", ">= 0.12.0"
-  # TODO: use kramdown, instead of rdiscount when yard patch pulled
-  s.add_development_dependency "rdiscount", ">= 1.6.5"
+  s.add_development_dependency "kramdown", ">= 0.12.0"
 
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
