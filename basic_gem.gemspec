@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "cucumber", ">= 0.9.4"
   s.add_development_dependency "aruba", ">= 0.2.2"
   s.add_development_dependency "rake", ">= 0.8.7"
-  s.add_development_dependency "yard", ">= 0.6.1"
+  s.add_development_dependency "yard", ">= 0.6.2"
 
   # Specify a markdown gem for rake doc:generate
   #
