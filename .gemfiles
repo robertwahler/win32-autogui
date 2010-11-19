@@ -1,3 +1,4 @@
+.gemfiles
 .gitattributes
 .gitignore
 .yardopts
@@ -15,6 +16,7 @@ features/step_definitions/.gitignore
 features/support/env.rb
 lib/basic_gem.rb
 spec/basic_gem/basic_gem_spec.rb
+spec/basic_gem/gemspec_spec.rb
 spec/spec.opts
 spec/spec_helper.rb
 spec/watchr.rb
