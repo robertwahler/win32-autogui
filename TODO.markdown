@@ -9,6 +9,7 @@ general
 * (1.0) application class should be a mixin, not classical inheritance 
 * (1.0) "rake release" broken on Windows, create patch to fix Bundler.  For now, 'git tag v0.3.0 && rake build && gem push pkg/win32-autogui-0.3.0.gem'
 * (1.0) unicode support for window text
+* (1.0) add an exception dialog watcher that accepts a block and scans for exception dialogs in a separate thread
 
 * gemspec without using git
 * kramdown instead of rdiscount for cross platform
