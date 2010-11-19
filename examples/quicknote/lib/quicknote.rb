@@ -26,19 +26,19 @@ class Quicknote < Autogui::Application
 
   def dialog_about(options={})
     Autogui::EnumerateDesktopWindows.new(options).find do |w| 
-      w.title.match(/About QuickNote/) && (w.pid == pid)
+      w.title.match(/^About QuickNote/) && (w.pid == pid)
     end
   end
 
   def splash(options={})
     Autogui::EnumerateDesktopWindows.new(options).find do |w| 
-      w.title.match(/FormSplash/) && (w.pid == pid)
+      w.title.match(/^FormSplash/) && (w.pid == pid)
     end
   end
 
   def message_dialog_confirm(options={})
     Autogui::EnumerateDesktopWindows.new(options).find do |w| 
-      w.title.match(/Confirm/) && (w.pid == pid)
+      w.title.match(/^Confirm/) && (w.pid == pid)
     end
   end
 
@@ -56,7 +56,7 @@ class Quicknote < Autogui::Application
   # Title and class are the same as dialog_overwrite_confirm
   def file_save_as_dialog(options={})
     Autogui::EnumerateDesktopWindows.new(options).find do |w| 
-      w.title.match(/Text File Save/) && 
+      w.title.match(/^Text File Save/) && 
         (w.pid == pid) &&
         (w.window_class == "#32770") &&
         (w.combined_text.match(/Save \&in:/))
@@ -65,7 +65,7 @@ class Quicknote < Autogui::Application
 
   def file_open_dialog(options={})
     Autogui::EnumerateDesktopWindows.new(options).find do |w| 
-      w.title.match(/Text File Open/) && (w.pid == pid)
+      w.title.match(/^Text File Open/) && (w.pid == pid)
     end
   end
 
