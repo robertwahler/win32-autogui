@@ -13,12 +13,14 @@ Gem::Specification.new do |s|
     if File.directory?('.git') && system('git ls-files bogus-filename')
       files = `git ls-files`
       cached_files = File.exists?(filename) ? File.open(filename, "r") {|f| f.read} : nil
+      # maintain EOL
+      files.gsub!(/\n/, "\r\n") if cached_files.match("\r\n")
       File.open(filename, 'wb') {|f| f.write(files)} if cached_files != files
     else
       files = File.open(filename, "r") {|f| f.read}
     end
     raise "unable to process gemfiles" unless files
-    files
+    files.gsub(/\r\n/, "\n") 
   end
 
   s.name        = "win32-autogui"
@@ -42,7 +44,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "bundler", ">= 1.0.7"
   s.add_development_dependency "rspec", "= 1.3.1"
   s.add_development_dependency "cucumber", ">= 0.9.4"
-  s.add_development_dependency "aruba", ">= 0.2.2"
+  s.add_development_dependency "aruba", "= 0.2.2"
   s.add_development_dependency "rake", ">= 0.8.7"
   s.add_development_dependency "yard", ">= 0.6.2"
 
