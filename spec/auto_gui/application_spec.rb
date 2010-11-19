@@ -110,7 +110,7 @@ describe Autogui::Application do
         it "should copy the edit window" do
           @calculator.set_focus
           type_in("3002")
-          @calculator.edit_window.text.strip.should == "3,002."
+          @calculator.edit_window.text.strip.should match(/3,?002\./)
           @calculator.edit_window.set_focus
           keystroke(VK_CONTROL, VK_C) 
           @calculator.clipboard.text.should == "3002"
@@ -123,7 +123,7 @@ describe Autogui::Application do
           @calculator.clipboard.text = "12345"
           @calculator.edit_window.text.strip.should == "0."
           keystroke(VK_CONTROL, VK_V) 
-          @calculator.edit_window.text.strip.should == "12,345."
+          @calculator.edit_window.text.strip.should match(/12,?345\./)
         end
       end
 
