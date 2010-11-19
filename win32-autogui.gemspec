@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.add_dependency "win32-clipboard", ">= 0.5.2"
   s.add_dependency "log4r", ">= 1.1.9"
 
-  s.add_development_dependency "bundler", ">= 1.0.3"
+  s.add_development_dependency "bundler", ">= 1.0.7"
   s.add_development_dependency "rspec", "= 1.3.1"
   s.add_development_dependency "cucumber", ">= 0.9.4"
   s.add_development_dependency "aruba", ">= 0.2.2"
