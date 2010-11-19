@@ -9,3 +9,4 @@ tags
 tmp/fixtures
 tmp/aruba
 Gemfile.lock
+.gemfiles

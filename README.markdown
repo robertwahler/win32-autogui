@@ -41,9 +41,10 @@ Push up the unchanged BasicGem repo
 
     git push origin master:refs/heads/master
 
-Allow Gemlock.lock to be stored in the repo
+Allow Gemlock.lock and .gemfiles to be stored in the repo
 
     sed -i '/Gemfile\.lock$/d' .gitignore
+    sed -i '/\.gemfiles$/d' .gitignore
 
 Add BasicGem as remote
 
