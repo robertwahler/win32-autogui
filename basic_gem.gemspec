@@ -3,6 +3,24 @@
 #
 
 Gem::Specification.new do |s|
+
+  # wrap 'git' so we can get gem files even on systems without 'git'
+  #
+  # @see spec/gemspec_spec.rb
+  #
+  @gemfiles ||= begin
+    filename = '.gemfiles'
+    # backticks blows up on Windows w/o valid binary, use system instead
+    if File.directory?('.git') && system('git ls-files bogus-filename')
+      files = `git ls-files`
+      File.open(filename, 'wb') {|f| f.write(files)}
+    else
+      files = File.open(filename, "r") {|f| f.read}
+    end
+    raise "unable to process gemfiles" unless files
+    files
+  end
+
   s.name        = "basic_gem"
   s.version     = File.open(File.join(File.dirname(__FILE__), *%w[VERSION]), "r") { |f| f.read } 
   s.platform    = Gem::Platform::RUBY
@@ -17,7 +35,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "bundler", ">= 1.0.3"
   s.add_development_dependency "rspec", "= 1.3.1"
-  s.add_development_dependency "cucumber", ">= 0.9.2"
+  s.add_development_dependency "cucumber", ">= 0.9.4"
   s.add_development_dependency "aruba", ">= 0.2.3"
   s.add_development_dependency "rake", ">= 0.8.7"
   s.add_development_dependency "yard", ">= 0.6.1"
@@ -28,9 +46,9 @@ Gem::Specification.new do |s|
   # tasks will fail.  Kramdown chosen to provide a pure Ruby solution.
   s.add_development_dependency "kramdown", ">= 0.12.0"
 
-  s.files        = `git ls-files`.split("\n")
-  s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
-  s.test_files   = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.files        = @gemfiles.split("\n")
+  s.executables  = @gemfiles.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
+
   s.require_path = 'lib'
 
   s.has_rdoc = 'yard'
