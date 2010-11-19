@@ -9,11 +9,12 @@ Gem::Specification.new do |s|
   # @see spec/gemspec_spec.rb
   #
   @gemfiles ||= begin
-    filename = '.gemfiles'
+    filename  = File.join(File.dirname(__FILE__), '.gemfiles')
     # backticks blows up on Windows w/o valid binary, use system instead
     if File.directory?('.git') && system('git ls-files bogus-filename')
       files = `git ls-files`
-      File.open(filename, 'wb') {|f| f.write(files)}
+      cached_files = File.exists?(filename) ? File.open(filename, "r") {|f| f.read} : nil
+      File.open(filename, 'wb') {|f| f.write(files)} if cached_files != files
     else
       files = File.open(filename, "r") {|f| f.read}
     end
@@ -22,7 +23,7 @@ Gem::Specification.new do |s|
   end
 
   s.name        = "basic_gem"
-  s.version     = File.open(File.join(File.dirname(__FILE__), *%w[VERSION]), "r") { |f| f.read } 
+  s.version     = File.open(File.join(File.dirname(__FILE__), 'VERSION'), "r") { |f| f.read } 
   s.platform    = Gem::Platform::RUBY
   s.authors     = []
   s.email       = []
