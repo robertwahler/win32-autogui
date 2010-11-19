@@ -41,8 +41,7 @@ namespace :doc do
   require 'yard/rake/yardoc_task'
 
   YARD::Rake::YardocTask.new(:generate) do |yt|
-    yt.options = ['--markup-provider', 'rdiscount', 
-                  '--output-dir', doc_destination
+    yt.options = ['--output-dir', doc_destination
                  ] +
                  gemspec.rdoc_options - ['--line-numbers', '--inline-source']
   end
@@ -50,6 +49,11 @@ namespace :doc do
   desc "Remove generated documenation"
   task :clean do
     rm_r doc_destination if File.exists?(doc_destination)
+  end
+  
+  desc "List undocumented objects"
+  task :undocumented do
+    system('yard stats --list-undoc')
   end
 
 end
