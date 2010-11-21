@@ -6,6 +6,16 @@
 require 'rubygems'
 require 'bundler/setup' 
 
+# TODO: remove this once issue corrected
+# Bundler broken up to 1.0.7 on Windows
+module Bundler
+  class GemHelper
+    def self.install_tasks(opts = nil)
+      dir = caller.find{|c| /Rakefile:/}[/^(.*?)\/Rakefile:/, 1]
+      self.new(dir, opts && opts[:name]).install
+    end
+  end
+end
 Bundler::GemHelper.install_tasks
 
 def gemspec
