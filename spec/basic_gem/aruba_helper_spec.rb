@@ -17,8 +17,8 @@ describe BasicGem do
   describe "aruba_helper fullpath('input.txt')" do
 
     it "should return a valid expanded path to 'input.txt'" do
-      path = File.expand_path(File.join(current_dir, 'input.txt'))
-      path.should == fullpath('input.txt')
+      path = fullpath('input.txt')
+      path.should match(/tmp..*aruba/)
       File.exists?(path).should == true
     end
   end
