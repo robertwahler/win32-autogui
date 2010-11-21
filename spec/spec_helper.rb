@@ -24,6 +24,7 @@ def fullpath(filename)
     # match c:/path/to and return c:\\path\\to
     path = path.gsub(/\//, '\\')
   end
+  path
 end
 # @return the contents of "filename" in the aruba tmp folder
 def get_file_contents(filename)
