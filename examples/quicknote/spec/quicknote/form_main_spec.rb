@@ -159,7 +159,7 @@ describe "FormMain" do
 
     it "should do nothing unless modified text" do
       append_to_file(@filename, "sneak in extra content that shouldn't be here")
-      contents = get_file_content(@filename)
+      contents = get_file_contents(@filename)
       contents.should match(/extra content/)
       @application.file_save
       contents.should match(/extra content/)
@@ -177,7 +177,7 @@ describe "FormMain" do
         type_in("foobar")
         @application.edit_window.text.should == "foobar" + "original content"
         @application.file_save
-        get_file_content(@filename).should == "foobar" + "original content"
+        get_file_contents(@filename).should == "foobar" + "original content"
       end
     end
 
@@ -249,9 +249,9 @@ describe "FormMain" do
       @application.main_window.title.downcase.should == "QuickNote - #{fullpath(@saveas_filename)}".downcase
     end
     it "should save the text" do
-      get_file_content(@saveas_filename).should == ''
+      get_file_contents(@saveas_filename).should == ''
       @application.file_save_as(fullpath(@saveas_filename), :overwrite => true)
-      get_file_content(@saveas_filename).should match(/original content/)
+      get_file_contents(@saveas_filename).should match(/original content/)
     end
   end
 

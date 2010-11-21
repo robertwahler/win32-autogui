@@ -71,6 +71,7 @@ spec/applications/calculator.rb
 spec/auto_gui/application_spec.rb
 spec/auto_gui/logging_spec.rb
 spec/auto_gui/window_spec.rb
+spec/basic_gem/aruba_helper_spec.rb
 spec/basic_gem/basic_gem_spec.rb
 spec/basic_gem/gemspec_spec.rb
 spec/spec.opts

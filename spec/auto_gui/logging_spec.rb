@@ -24,36 +24,36 @@ describe Autogui::Logging do
 
   describe "to file" do
     it "should truncate the log on create" do
-      get_file_content(@logfile).should == 'the quick brown fox'
+      get_file_contents(@logfile).should == 'the quick brown fox'
       @application = Calculator.new :logger_logfile => fullpath(@logfile)
-      get_file_content(@logfile).should == ''
+      get_file_contents(@logfile).should == ''
     end
 
     it "should not log unless 'logger.logfile' is set" do
       @application = Calculator.new 
-      get_file_content(@logfile).should == 'the quick brown fox'
+      get_file_contents(@logfile).should == 'the quick brown fox'
       logger.warn "warning message here"
-      get_file_content(@logfile).should == 'the quick brown fox'
+      get_file_contents(@logfile).should == 'the quick brown fox'
       logger.logfile = fullpath(@logfile)
       logger.warn "warning message here"
-      get_file_content(@logfile).should match(/warning message here/)
+      get_file_contents(@logfile).should match(/warning message here/)
     end
 
     it "should log warnings" do
       @application = Calculator.new :logger_logfile => fullpath(@logfile)
-      get_file_content(@logfile).should == ''
+      get_file_contents(@logfile).should == ''
       logger.warn "warning message here"
-      get_file_content(@logfile).should match(/warning message here/)
+      get_file_contents(@logfile).should match(/warning message here/)
     end
 
     it "should log application raised exceptions via 'application.raise_error'" do
-      get_file_content(@logfile).should == 'the quick brown fox'
+      get_file_contents(@logfile).should == 'the quick brown fox'
       begin
         @application = Calculator.new :logger_logfile => fullpath(@logfile), :name => nil
       rescue
         # expected exception
       end
-      get_file_content(@logfile).should match(/application name not set/)
+      get_file_contents(@logfile).should match(/application name not set/)
     end
 
     it "should log debug messages when debug level set" do
@@ -61,12 +61,12 @@ describe Autogui::Logging do
       level_save = logger.level
       begin
         logger.level = Autogui::Logging::WARN
-        get_file_content(@logfile).should == ''
+        get_file_contents(@logfile).should == ''
         logger.debug "debug message here"
-        get_file_content(@logfile).should_not match(/debug message here/)
+        get_file_contents(@logfile).should_not match(/debug message here/)
         logger.level = Autogui::Logging::DEBUG
         logger.debug "debug message here"
-        get_file_content(@logfile).should match(/debug message here/)
+        get_file_contents(@logfile).should match(/debug message here/)
       ensure
         logger.level = level_save
       end
