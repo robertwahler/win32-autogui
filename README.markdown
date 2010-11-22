@@ -13,14 +13,29 @@ and [Cucumber](http://github.com/aslakhellesoy/cucumber).  Examples of
 using both these tools are provided with this gem.
 
 
-Quick Start
------------
-See [examples/skeleton/README.markdown](examples/skeleton/README.markdown) for 
-a template of the file structure needed for jump-starting GUI testing with 
-the Win32-autogui RubyGem.
+Quick Start Options
+-------------------
+See [examples/skeleton/README.markdown](examples/skeleton/README.markdown)
+for a template of the file structure needed for jump-starting GUI testing
+with the Win32-autogui RubyGem.
 
 Read our introduction blog posting here: <http://www.gearheadforhire.com/articles/ruby/win32-autogui/using-ruby-to-drive-windows-applications>
 
+Run Win32-autogui's internal specs and example programs.
+
+    gem install win32-autogui
+    gem install rake bundler win32console cucumber 
+    gem install rspec -v 1.3.1
+
+    cd C:\Ruby187\lib\ruby\gems\1.8\gems\win32-autogui-0.4.0
+    bundle install
+
+    # run the calculator specs and features
+    rake
+
+    # run the example quicknote specs
+    cd examples\quicknote
+    rake
 
 
 Example Usage: Driving Calc.exe
@@ -184,7 +199,12 @@ focus with set_focus."
 System Requirements
 -------------------
 
-Windows OS, version 2000 or higher, testing was done via Cygwin <http://www.cygwin.com/>
+Windows OS, version 2000 or higher 
+
+Testing was done on the following Ruby platforms:
+
+* ruby 1.8.7 (2008-08-11 patchlevel 72) [i386-cygwin]
+* ruby 1.8.7 (2010-08-16 patchlevel 302) [i386-mingw32]
 
 
 Dependencies
@@ -224,6 +244,7 @@ Win32-autogui development was jump-started by cloning [BasicGem](http://github.c
 * Cucumber for functional testing <http://github.com/aslakhellesoy/cucumber>
 * Aruba for CLI testing <http://github.com/aslakhellesoy/aruba>
 * YARD for documentation generation <http://github.com/lsegal/yard>
+* Kramdown for documentation markup processing <https://github.com/gettalong/kramdown>
 
 ### Rake tasks ###
 

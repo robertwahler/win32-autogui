@@ -6,11 +6,12 @@ Most recent changes are at the top
 Changes
 -------
 
-### 0.3.X - 11/10/2010 ###
+### 0.4.0 - 11/22/2010 ###
 
+* Internal specs, features and all examples should run out-of-the-box on both Cygwin and MingW installs
 * EnumerateDesktopWindows now accepts an optional timeout allowing the "find"
   method to continue enumerating windows until the timeout is reached
-* Added static logging constants to Autogui::Logging
+* Added static logging constants to Autogui::Loggting
 
 ### 0.3.0 - 11/08/2010 ###
 
