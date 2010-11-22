@@ -18,9 +18,15 @@ module Log4r
     end
 
     def logfile=(fn)
-      FileOutputter.new(:logfile, :filename => fn, :trunc => true)
-      Outputter[:logfile].formatter = Log4r::PatternFormatter.new(:pattern => "[%5l %d] %M [%t]")
-      add(:logfile)
+      if fn == nil
+        puts "removing log to file"
+        remove(:logfile) if @filename
+      else
+        FileOutputter.new(:logfile, :filename => fn, :trunc => true)
+        Outputter[:logfile].formatter = Log4r::PatternFormatter.new(:pattern => "[%5l %d] %M [%t]")
+        add(:logfile)
+      end
+      @filename = fn
     end
 
   end
