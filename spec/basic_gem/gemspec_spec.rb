@@ -29,7 +29,6 @@ describe BasicGem do
 
         describe 'without a git repo' do
           before(:each) do
-            File.directory?(File.expand_path('../../../.git', __FILE__)).should == true
             File.stub!('directory?').and_return false
             @gemspec = load_gemspec
           end
