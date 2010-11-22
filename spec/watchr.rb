@@ -97,7 +97,6 @@ end
 
 def run_all_specs
   cmd = "spec _1.3.1_ --color --format s #{all_spec_files.join(' ')}"
-  p cmd
   run(cmd)
 end
 
