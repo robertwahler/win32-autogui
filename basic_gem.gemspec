@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
       files = `git ls-files`
       cached_files = File.exists?(filename) ? File.open(filename, "r") {|f| f.read} : nil
       # maintain EOL
-      files.gsub!(/\n/, "\r\n") if cached_files.match("\r\n")
+      files.gsub!(/\n/, "\r\n") if cached_files && cached_files.match("\r\n")
       File.open(filename, 'wb') {|f| f.write(files)} if cached_files != files
     else
       files = File.open(filename, "r") {|f| f.read}
