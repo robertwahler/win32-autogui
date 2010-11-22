@@ -2,6 +2,9 @@
 #
 #
 
+require 'rbconfig'
+WINDOWS = Config::CONFIG['host_os'] =~ /mswin|mingw/i unless defined?(WINDOWS)
+
 Gem::Specification.new do |s|
   # wrap 'git' so we can get gem files even on systems without 'git'
   #
@@ -53,6 +56,8 @@ Gem::Specification.new do |s|
   # Without the development dependency, running yard rake
   # tasks will fail.  Kramdown chosen to provide a pure Ruby solution.
   s.add_development_dependency "kramdown", ">= 0.12.0"
+
+  s.add_development_dependency "win32console", ">= 1.2.0" if WINDOWS
 
   s.files        = @gemfiles.split("\n")
   s.executables  = @gemfiles.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
