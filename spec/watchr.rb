@@ -7,8 +7,19 @@
 #   $ watchr spec/watchr.rb
 
 require 'term/ansicolor'
+require 'rbconfig'
 
-$c = Term::ANSIColor
+WINDOWS = Config::CONFIG['host_os'] =~ /mswin|mingw/i unless defined?(WINDOWS)
+require 'win32/process' if WINDOWS
+
+if WINDOWS
+  begin
+    require 'Win32/Console/ANSI'
+    $c = Term::ANSIColor
+  rescue LoadError
+    STDERR.puts 'WARNING: You must "gem install win32console" (1.2.0 or higher) to get coloured output on MRI/Windows'
+  end
+end
 
 def getch
   state = `stty -g`
@@ -34,15 +45,21 @@ end
 def run(cmd)
 
   pid = fork do
+
     puts "\n"
-    print $c.cyan, cmd, $c.clear, "\n"
+    if $c
+      print $c.cyan, cmd, $c.clear, "\n"
+    else
+      puts cmd 
+    end
+
     exec(cmd)
   end
   Signal.trap('INT') do
     puts "sending KILL to pid: #{pid}"
     Process.kill("KILL", pid)
   end
-  Process.waitpid(pid)
+  Process.waitpid(pid) if (pid > 0)
 
   prompt
 end
@@ -95,7 +112,10 @@ def run_last_spec
 end
 
 def prompt
-  puts "Ctrl-\\ for menu, Ctrl-C to quit"
+  menu = "Ctrl-C to quit"
+  menu = menu + ", Ctrl-\\ for menu" if Signal.list.include?('QUIT')
+
+  puts menu
 end
 
 # init
@@ -120,25 +140,26 @@ watch( '^lib/(.*)'   )   { run_default_spec }
 watch( '^spec/applications/(.*)'   )   { run_default_spec }
 
 # --------------------------------------------------
-# Signal Handling
+# Signal Handling (May not be supported on Windows)
 # --------------------------------------------------
+if Signal.list.include?('QUIT')
+  # Ctrl-\
+  Signal.trap('QUIT') do
 
-# Ctrl-\
-Signal.trap('QUIT') do
+    puts "\n\nMENU: a = all , f = features  s = specs, l = last feature (#{$last_feature ? $last_feature : 'none'}), q = quit\n\n"
+    c = getch
+    puts c.chr
+    if c.chr == "a"
+      run_all
+    elsif c.chr == "f"
+      run_default_cucumber
+    elsif c.chr == "s"
+      run_all_specs
+    elsif c.chr == "q"
+      abort("exiting\n")
+    elsif c.chr == "l"
+      run_last_feature
+    end
 
-  puts "\n\nMENU: a = all , f = features  s = specs, l = last feature (#{$last_feature ? $last_feature : 'none'}), q = quit\n\n"
-  c = getch
-  puts c.chr
-  if c.chr == "a"
-    run_all
-  elsif c.chr == "f"
-    run_default_cucumber
-  elsif c.chr == "s"
-    run_all_specs
-  elsif c.chr == "q"
-    abort("exiting\n")
-  elsif c.chr == "l"
-    run_last_feature
   end
-
 end
