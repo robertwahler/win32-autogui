@@ -17,7 +17,7 @@ if WINDOWS
     require 'Win32/Console/ANSI'
     $c = Term::ANSIColor
   rescue LoadError
-    STDERR.puts 'WARNING: You must "gem install win32console" (1.2.0 or higher) to get coloured output on MRI/Windows'
+    STDERR.puts 'WARNING: You must "gem install win32console" (1.2.0 or higher) to get color output on MRI/Windows'
   end
 end
 
