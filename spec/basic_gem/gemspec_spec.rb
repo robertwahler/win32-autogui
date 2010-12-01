@@ -27,18 +27,6 @@ describe Autogui do
         @gemspec.executables.is_a?(Array).should == true
       end
 
-      describe 'without an existing cache' do
-        before(:each) do
-          File.stub!('exists?').and_return false
-          @gemspec = load_gemspec
-        end
-
-        it "should not blow up" do
-          @gemspec.files.is_a?(Array).should == true
-          @gemspec.files.include?('VERSION').should == true
-        end
-      end
-
       describe 'without a git repo' do
         before(:each) do
           File.stub!('directory?').and_return false
