@@ -7,7 +7,6 @@ describe "FormMain" do
     @debug = false
     @verbose = true
     @application = Quicknote.new
-    FileUtils.rm_rf(current_dir)
     puts "FormMain before(:all)" if @debug
     puts "application:\n#{@application.inspect}\n" if @debug && @verbose
     puts "application.combined_text:\n #{@application.combined_text}\n" if @debug && @verbose
@@ -190,7 +189,9 @@ describe "FormMain" do
       end
       after(:each) do
         # cleanup read-only file
-        FileUtils.rm_rf(current_dir)
+        in_current_dir do
+          FileUtils.rm(@filename)
+        end
       end
 
       it "should show an error dialog with message 'Cannot create file'" do

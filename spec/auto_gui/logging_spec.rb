@@ -8,7 +8,6 @@ describe Autogui::Logging do
     logger.remove(:console)
   end
   before(:each) do
-    FileUtils.rm_rf(current_dir)
     @logfile = "autogui.log"
     create_file(@logfile, "the quick brown fox")
   end

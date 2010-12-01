@@ -8,7 +8,6 @@ logger.level = Autogui::Logging::DEBUG
 describe "FormMain" do
   before(:all) do
     @application = Myapp.new
-    FileUtils.rm_rf(current_dir)
     #logger.debug "FormMain before(:all)" 
     #logger.debug "application:\n#{@application.inspect}\n" 
     #logger.debug "application.combined_text:\n #{@application.combined_text}\n" 
