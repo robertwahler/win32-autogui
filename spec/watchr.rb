@@ -17,7 +17,7 @@ if WINDOWS
     require 'Win32/Console/ANSI'
     $c = Term::ANSIColor
   rescue LoadError
-    STDERR.puts 'WARNING: You must "gem install win32console" (1.2.0 or higher) to get coloured output on MRI/Windows'
+    STDERR.puts 'WARNING: You must "gem install win32console" (1.2.0 or higher) to get color output on MRI/Windows'
   end
 end
 
@@ -97,7 +97,6 @@ end
 
 def run_all_specs
   cmd = "spec _1.3.1_ --color --format s #{all_spec_files.join(' ')}"
-  p cmd
   run(cmd)
 end
 

@@ -1,4 +1,5 @@
 # require all files here
+require 'rbconfig'
 require 'win32/autogui/logging'
 require 'win32/autogui/input'
 require 'win32/autogui/window'
@@ -17,6 +18,12 @@ module Autogui
     File.open(version_info_file, "r") do |f|
       f.read.strip
     end
+  end
+
+  # Platform constants
+  unless defined?(BasicGem::WINDOWS)
+    WINDOWS = Config::CONFIG['host_os'] =~ /mswin|mingw/i
+    CYGWIN = Config::CONFIG['host_os'] =~ /cygwin/i
   end
 
 end
