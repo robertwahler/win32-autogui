@@ -8,7 +8,6 @@ require 'win32/autogui'
 require 'spec'
 require 'spec/autorun'
 require 'aruba/api'
-require 'win32/autogui/aruba'
 
 # applications
 require File.expand_path(File.dirname(__FILE__) + '/applications/calculator')

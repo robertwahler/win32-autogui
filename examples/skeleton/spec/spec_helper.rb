@@ -9,7 +9,6 @@ require 'myapp'
 require 'spec'
 require 'spec/autorun'
 require 'aruba/api'
-require 'win32/autogui/aruba'
 
 Spec::Runner.configure do |config|
    config.include Aruba::Api

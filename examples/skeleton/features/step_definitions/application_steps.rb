@@ -1,7 +1,5 @@
 require 'myapp'
 
-require 'win32/autogui/aruba'
-
 include Autogui::Input
 
 Before('@dry_run') do
