@@ -61,6 +61,7 @@ features/step_definitions/calculator_steps.rb
 features/support/env.rb
 lib/win32/autogui.rb
 lib/win32/autogui/application.rb
+lib/win32/autogui/aruba.rb
 lib/win32/autogui/input.rb
 lib/win32/autogui/logging.rb
 lib/win32/autogui/window.rb
