@@ -30,6 +30,7 @@ examples/quicknote/quicknote.cfg
 examples/quicknote/quicknote.dof
 examples/quicknote/quicknote.dpr
 examples/quicknote/quicknote.res
+examples/quicknote/spec/aruba_helper.rb
 examples/quicknote/spec/quicknote/form_about_spec.rb
 examples/quicknote/spec/quicknote/form_main_spec.rb
 examples/quicknote/spec/quicknote/form_splash_spec.rb
@@ -50,6 +51,7 @@ examples/skeleton/features/step_definitions/.gitignore
 examples/skeleton/features/step_definitions/application_steps.rb
 examples/skeleton/features/support/env.rb
 examples/skeleton/lib/myapp.rb
+examples/skeleton/spec/aruba_helper.rb
 examples/skeleton/spec/myapp/form_about_spec.rb
 examples/skeleton/spec/myapp/form_main_spec.rb
 examples/skeleton/spec/spec.opts
