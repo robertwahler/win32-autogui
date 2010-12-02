@@ -33,13 +33,13 @@ rename skeleton app to 'quicknote'
     git mv spec/myapp spec/quicknote
 
     # MyApp => QuickNote
-    find . -name *.rb -exec sed -i 's/MyApp/QuickNote/' '{}' +
+    find . -name *.rb -exec sed -i -b 's/MyApp/QuickNote/' '{}' +
 
     # Myapp => Quicknote
-    find . -name *.rb -exec sed -i 's/Myapp/Quicknote/' '{}' +
+    find . -name *.rb -exec sed -i -b 's/Myapp/Quicknote/' '{}' +
 
     # myapp => quicknote
-    find . -name *.rb -exec sed -i 's/myapp/quicknote/' '{}' +
+    find . -name *.rb -exec sed -i -b 's/myapp/quicknote/' '{}' +
 
 customize docs
 
