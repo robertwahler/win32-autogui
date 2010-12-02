@@ -295,27 +295,30 @@ rake -T
 
 ### Autotesting with Watchr ###
 
-[Watchr](http://github.com/mynyml/watchr) provides a flexible alternative to Autotest.  A
-jump start script is provided in spec/watchr.rb.
+[Watchr](http://github.com/mynyml/watchr) provides a flexible alternative to Autotest. 
 
-#### Install watchr ###
+**NOTE:** _The following assumes a global setting of 'git config core.autocrlf
+input' and that you want to modify the Delphi 7 source to Quicknote which
+requires CRLF line endings._
+
+Grab the source
+
+    cd ~/workspace
+    git clone http://github.com/robertwahler/win32-autogui -n
+    cd win32-autogui
+    git config core.autocrlf true
+    git checkout
+    
+#### Install Watchr ####
 
     gem install watchr
 
-#### Run watchr ###
+#### Run Watchr on Quicknote ####
 
+    cd examples/quicknote
     watchr spec/watchr.rb
 
-outputs a menu
-
-    Ctrl-\ for menu, Ctrl-C to quit
-
 Watchr will now watch the files defined in 'spec/watchr.rb' and run RSpec or Cucumber, as appropriate.
-The watchr script provides a simple menu.
-
-Ctrl-\
-
-    MENU: a = all , f = features  s = specs, l = last feature (none), q = quit
 
 
 Copyright
