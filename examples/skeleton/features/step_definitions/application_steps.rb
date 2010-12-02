@@ -1,10 +1,8 @@
 require 'myapp'
 
 require 'win32/autogui/aruba'
-require 'win32/autogui/api'
 
 include Autogui::Input
-include Autogui::Api
 
 Before('@dry_run') do
   announce "### dry run ###"
@@ -30,7 +28,7 @@ Given /^the application is running$/ do
 end
 
 When /^I start the application with parameters "([^"]*)"$/ do |parameters|
-  application_start(parameters)
+  application_start(:parameters => parameters)
   @application.should be_running
 end
 
@@ -40,9 +38,9 @@ When /^I start the application$/ do
 end
 
 def application_start(options={})
-  data_folder = cygpath_to_windows_path(File.expand_path(current_dir))
+  data_folder = fullpath(File.expand_path(current_dir))
   parameters = options[:parameters].to_s + " --nosplash --data_folder:#{data_folder}"
-  @application = Myapp.new  :parameters => "{parameters}"
+  @application = Myapp.new  :parameters => parameters
   if @application.dialog_login(:timeout => 5)
     @application.dialog_login.set_focus
     keystroke(VK_RETURN)

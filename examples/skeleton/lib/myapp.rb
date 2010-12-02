@@ -1,5 +1,5 @@
 require 'win32/autogui'
-require 'win32/autogui/aruba'
+require 'aruba/api'
 
 APPNAME="exe\\myapp.exe"  # relative path to app using Windows style path
 
@@ -29,6 +29,7 @@ class Myapp < Autogui::Application
       w.title.match(/^Login$/) && (w.pid == pid)
     end
   end
+
   def dialog_about(options={})
     Autogui::EnumerateDesktopWindows.new(options).find do |w| 
       w.title.match(/^About MyApp$/) && (w.pid == pid)
