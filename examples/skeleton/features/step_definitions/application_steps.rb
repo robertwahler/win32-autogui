@@ -1,12 +1,18 @@
 require 'myapp'
 
-include Autogui::Input
-include Autogui::Logging
+require 'win32/autogui/aruba'
+require 'win32/autogui/api'
 
+include Autogui::Input
+include Autogui::Api
+
+Before('@dry_run') do
+  announce "### dry run ###"
+  @dry_run = true
+end
 After('@application') do
-  if @application && @application.running?
-    @application.dialog_tips.close if @application.dialog_tips
-    @application.dialog_wizard.close if @application.dialog_wizard
+   if @application && @application.running?
+    @application.dialog_information.close if @application.dialog_information
     begin
       @application.close(:wait_for_close => true) if @application.running?
     rescue
@@ -18,20 +24,29 @@ end
 
 Given /^the application is running$/ do 
   unless @application && @application.running?
-    @application = Myapp.new
+    application_start
     @application.should be_running
   end
 end
 
 When /^I start the application with parameters "([^"]*)"$/ do |parameters|
-  @application = Myapp.new  :parameters => parameters
+  application_start(parameters)
   @application.should be_running
 end
 
 When /^I start the application$/ do
-  data_folder = cygpath_to_windows_path(File.expand_path(current_dir))
-  @application = Myapp.new  :parameters => "--nosplash  --data_folder:#{data_folder}"
+  application_start
   @application.should be_running
+end
+
+def application_start(options={})
+  data_folder = cygpath_to_windows_path(File.expand_path(current_dir))
+  parameters = options[:parameters].to_s + " --nosplash --data_folder:#{data_folder}"
+  @application = Myapp.new  :parameters => "{parameters}"
+  if @application.dialog_login(:timeout => 5)
+    @application.dialog_login.set_focus
+    keystroke(VK_RETURN)
+  end
 end
 
 When /^I type in "([^"]*)"$/ do |string|

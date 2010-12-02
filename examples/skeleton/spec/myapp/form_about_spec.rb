@@ -7,6 +7,7 @@ describe "FormAbout" do
 
   before(:all) do
     @application = Myapp.new
+    keystroke(VK_RETURN) if @application.dialog_login(:timeout => 5)
   end
 
   after(:all) do

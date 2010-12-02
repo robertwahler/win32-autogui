@@ -8,6 +8,7 @@ logger.level = Autogui::Logging::DEBUG
 describe "FormMain" do
   before(:all) do
     @application = Myapp.new
+    keystroke(VK_RETURN) if @application.dialog_login(:timeout => 5)
     #logger.debug "FormMain before(:all)" 
     #logger.debug "application:\n#{@application.inspect}\n" 
     #logger.debug "application.combined_text:\n #{@application.combined_text}\n" 
@@ -27,8 +28,8 @@ describe "FormMain" do
   end
   after(:each) do
     if @application.running?
-      keystroke(VK_N) if @application.message_dialog_confirm || @application.dialog_overwrite_confirm
-      keystroke(VK_ESCAPE) if @application.error_dialog
+      keystroke(VK_N) if @application.dialog_confirm || @application.dialog_overwrite_confirm
+      keystroke(VK_ESCAPE) if @application.dialog_error
     end
   end
 
@@ -39,16 +40,9 @@ describe "FormMain" do
   end
 
   describe "file exit (VK_MENU, VK_F, VK_X)" do
-    it "should prompt and save with modified text" do
-      type_in("anything")
+    it "should exit without prompts" do
       keystroke(VK_MENU, VK_F, VK_X) 
-      @application.message_dialog_confirm.should_not be_nil
-      @application.main_window.is_window?.should == true
-      @application.should be_running
-    end
-    it "should not prompt to save with unmodified text" do
-      keystroke(VK_MENU, VK_F, VK_X) 
-      @application.message_dialog_confirm.should be_nil
+      @application.dialog_confirm.should be_nil
       @application.main_window.is_window?.should == false
       @application.should_not be_running
     end
