@@ -7,7 +7,7 @@ GUI testing with the Win32-autogui RubyGem.
 
 Usage Example
 =============
-Create a new Win32 application testing structure for the binary quicknote.exe.  
+Create a new Win32 application testing structure for the binary quicknote.exe.
 
 NOTE: Replace 'quicknote' with the name of your application.
 

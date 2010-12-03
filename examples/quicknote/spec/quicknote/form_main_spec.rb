@@ -19,7 +19,7 @@ describe "FormMain" do
   end
   after(:all) do
     if @application.running?
-      @application.file_exit 
+      @application.file_exit
       # still running? force it to close
       @application.close(:wait_for_close => true)
       @application.should_not be_running
@@ -39,7 +39,7 @@ describe "FormMain" do
       @application.main_window.title.should == "QuickNote - untitled.txt"
     end
     it "should have no text" do
-      @application.edit_window.text.should == '' 
+      @application.edit_window.text.should == ''
     end
   end
 
@@ -54,9 +54,9 @@ describe "FormMain" do
       @application.main_window.title.should == "QuickNote - +untitled.txt"
     end
     it "should change the text" do
-      @application.edit_window.text.should == '' 
+      @application.edit_window.text.should == ''
       type_in("hello")
-      @application.edit_window.text.should == 'hello' 
+      @application.edit_window.text.should == 'hello'
     end
   end
 
@@ -68,22 +68,22 @@ describe "FormMain" do
     end
     after(:each) do
       keystroke(VK_N) if @application.message_dialog_confirm
-      keystroke(VK_ESCAPE) if @application.file_open_dialog 
+      keystroke(VK_ESCAPE) if @application.file_open_dialog
     end
 
     it "should prompt to save with modified text" do
       type_in("foobar")
       @application.main_window.title.should match(/\+/)
-      keystroke(VK_MENU, VK_F, VK_O) 
+      keystroke(VK_MENU, VK_F, VK_O)
       @application.message_dialog_confirm.should_not be_nil
     end
     it "should not prompt to save with unmodified text" do
       @application.main_window.title.should_not match(/\+/)
-      keystroke(VK_MENU, VK_F, VK_O) 
+      keystroke(VK_MENU, VK_F, VK_O)
       @application.message_dialog_confirm.should be_nil
     end
 
-    describe "succeeding" do 
+    describe "succeeding" do
       it "should add the filename to the title" do
         @application.main_window.title.should == "QuickNote - untitled.txt"
         @application.file_open(fullpath(@filename), :save => false)
@@ -91,11 +91,11 @@ describe "FormMain" do
       end
       it "should load the text" do
         @application.file_open(fullpath(@filename), :save => false)
-        @application.edit_window.text.should == 'the quick brown fox' 
+        @application.edit_window.text.should == 'the quick brown fox'
       end
     end
 
-    describe "failing" do 
+    describe "failing" do
       it "should show an error dialog with message 'Cannot open file'" do
         type_in("foobar")
         @application.file_open(fullpath("a_bogus_filename.txt"), :save => false)
@@ -106,7 +106,7 @@ describe "FormMain" do
         type_in("foobar")
         @application.file_open(fullpath("a_bogus_filename.txt"), :save => false)
         @application.error_dialog.should_not be_nil
-        @application.edit_window.text.should == 'foobar' 
+        @application.edit_window.text.should == 'foobar'
       end
     end
   end
@@ -115,13 +115,13 @@ describe "FormMain" do
     it "should prompt to save modified text" do
       type_in("hello")
       @application.main_window.title.should match(/\+/)
-      keystroke(VK_MENU, VK_F, VK_N) 
+      keystroke(VK_MENU, VK_F, VK_N)
       @application.message_dialog_confirm.should_not be_nil
     end
     it "should not prompt to save with unmodified text" do
       @application.file_new(:save => false)
       @application.main_window.title.should_not match(/\+/)
-      keystroke(VK_MENU, VK_F, VK_N) 
+      keystroke(VK_MENU, VK_F, VK_N)
       @application.message_dialog_confirm.should be_nil
     end
     it "should add the filename 'untitled.txt' to the title" do
@@ -140,19 +140,19 @@ describe "FormMain" do
     end
     it "should clear the existing text" do
       type_in("hello")
-      @application.edit_window.text.should match(/hello/) 
+      @application.edit_window.text.should match(/hello/)
       @application.file_new(:save => false)
-      @application.edit_window.text.should == '' 
+      @application.edit_window.text.should == ''
     end
   end
-  
+
   describe "file save (VK_MENU, VK_F, VK_S)" do
     before(:each) do
       @filename = "input_file.txt"
       @file_contents = create_file(@filename, "original content")
       @application.file_open(fullpath(@filename), :save => false)
       @application.main_window.title.downcase.should == "QuickNote - #{fullpath(@filename)}".downcase
-      @application.edit_window.text.should == "original content" 
+      @application.edit_window.text.should == "original content"
       @application.set_focus
     end
 
@@ -165,7 +165,7 @@ describe "FormMain" do
       @application.edit_window.text.should_not match(/extra content/)
     end
 
-    describe "succeeding" do 
+    describe "succeeding" do
       it "should remove the '+' modified flag from the title" do
         type_in("anything")
         @application.main_window.title.should == "QuickNote - +#{fullpath(@filename)}"
@@ -180,7 +180,7 @@ describe "FormMain" do
       end
     end
 
-    describe "failing" do 
+    describe "failing" do
       before(:each) do
         # set read-only to cause save failure
         in_current_dir do
@@ -223,19 +223,19 @@ describe "FormMain" do
     end
     after(:each) do
       keystroke(VK_N) if @application.dialog_overwrite_confirm
-      keystroke(VK_ESCAPE) if @application.file_save_as_dialog 
+      keystroke(VK_ESCAPE) if @application.file_save_as_dialog
     end
 
     it "should prompt for filename" do
-      keystroke(VK_MENU, VK_F, VK_A) 
+      keystroke(VK_MENU, VK_F, VK_A)
       @application.file_save_as_dialog.should_not be_nil
     end
     it "should confirm file overwrites" do
       type_in("anything")
-      keystroke(VK_MENU, VK_F, VK_A) 
+      keystroke(VK_MENU, VK_F, VK_A)
       @application.clipboard.text = fullpath(@saveas_filename)
       keystroke(VK_CONTROL, VK_V)
-      keystroke(VK_RETURN) 
+      keystroke(VK_RETURN)
       File.exists?(fullpath(@saveas_filename)).should be_true
       @application.dialog_overwrite_confirm.should_not be_nil
     end
@@ -259,13 +259,13 @@ describe "FormMain" do
   describe "file exit (VK_MENU, VK_F, VK_X)" do
     it "should prompt and save with modified text" do
       type_in("anything")
-      keystroke(VK_MENU, VK_F, VK_X) 
+      keystroke(VK_MENU, VK_F, VK_X)
       @application.message_dialog_confirm.should_not be_nil
       @application.main_window.is_window?.should == true
       @application.should be_running
     end
     it "should not prompt to save with unmodified text" do
-      keystroke(VK_MENU, VK_F, VK_X) 
+      keystroke(VK_MENU, VK_F, VK_X)
       @application.message_dialog_confirm.should be_nil
       @application.main_window.is_window?.should == false
       @application.should_not be_running
@@ -275,7 +275,7 @@ describe "FormMain" do
   describe "hotkey (VK_CONTROL, VK_X)" do
     it "should should exit the program" do
       @application.main_window.is_window?.should == true
-      keystroke(VK_CONTROL, VK_X) 
+      keystroke(VK_CONTROL, VK_X)
       @application.main_window.is_window?.should == false
       @application.should_not be_running
     end

@@ -6,10 +6,10 @@ A Win32 GUI testing framework packaged as a [RubyGem](http://rubygems.org/).
 
 Overview
 --------
-Win32-autogui provides a framework to enable GUI application testing 
-with Ruby.  This facilitates integration testing of Windows binaries using 
-Ruby based tools like [RSpec](http://github.com/dchelimsky/rspec) 
-and [Cucumber](http://github.com/aslakhellesoy/cucumber).  Examples of 
+Win32-autogui provides a framework to enable GUI application testing
+with Ruby.  This facilitates integration testing of Windows binaries using
+Ruby based tools like [RSpec](http://github.com/dchelimsky/rspec)
+and [Cucumber](http://github.com/aslakhellesoy/cucumber).  Examples of
 using both these tools are provided with this gem.
 
 
@@ -24,7 +24,7 @@ Read our introduction blog posting here: <http://www.gearheadforhire.com/article
 Run Win32-autogui's internal specs and example programs.
 
     gem install win32-autogui
-    gem install rake bundler win32console cucumber 
+    gem install rake bundler win32console cucumber
     gem install rspec -v 1.3.1
 
     cd C:\Ruby187\lib\ruby\gems\1.8\gems\win32-autogui-0.4.0
@@ -41,11 +41,11 @@ Run Win32-autogui's internal specs and example programs.
 Example Usage: Driving Calc.exe
 -------------------------------
 
-Using [RSpec](http://github.com/dchelimsky/rspec) to test drive the stock 
-Window's calculator application.  This example is used as Win32-autogui's 
-internal spec. See [spec/auto_gui/application_spec.rb](spec/auto_gui/application_spec.rb).  
+Using [RSpec](http://github.com/dchelimsky/rspec) to test drive the stock
+Window's calculator application.  This example is used as Win32-autogui's
+internal spec. See [spec/auto_gui/application_spec.rb](spec/auto_gui/application_spec.rb).
 
-A more complete example of testing a Window's Delphi program is presented with 
+A more complete example of testing a Window's Delphi program is presented with
 source and binaries in [examples/quicknote/](examples/quicknote/).
 
 ### Wrap the application to be tested ###
@@ -56,7 +56,7 @@ The first step is to subclass Win32-autogui's application class.
     class Calculator < Autogui::Application
 
       # initialize with the binary name 'calc' and the window title
-      # 'Calculator' used along with the application pid to find the 
+      # 'Calculator' used along with the application pid to find the
       # main application window
       def initialize(options = {})
         defaults = {
@@ -67,18 +67,18 @@ The first step is to subclass Win32-autogui's application class.
         super defaults.merge(options)
       end
 
-      # the calculator's results window 
+      # the calculator's results window
       def edit_window
         main_window.children.find {|w| w.window_class == 'Edit'}
       end
 
       # About dialog, hotkey (VK_MENU, VK_H, VK_A)
       def dialog_about(options = {})
-        Autogui::EnumerateDesktopWindows.new(options).find do |w| 
+        Autogui::EnumerateDesktopWindows.new(options).find do |w|
           w.title.match(/About Calculator/) && (w.pid == pid)
         end
       end
-      
+
       # the 'CE' button
       def clear_entry
         set_focus
@@ -89,7 +89,7 @@ The first step is to subclass Win32-autogui's application class.
 
 
 ### Write specs ###
-The following RSpec code describes driving the Windows calculator for testing. 
+The following RSpec code describes driving the Windows calculator for testing.
 Multiple instances running simultaneously are supported.  See "should control
 focus with set_focus."
 
@@ -152,11 +152,11 @@ focus with set_focus."
           @calculator.set_focus
           keystroke(VK_9)
           @calculator.edit_window.text.strip.should == "9."
-          
+
           calculator2 = Calculator.new
           calculator2.pid.should_not == @calculator.pid
           calculator2.set_focus
-          keystroke(VK_1, VK_0) 
+          keystroke(VK_1, VK_0)
           calculator2.edit_window.text.strip.should == "10."
 
           @calculator.set_focus
@@ -169,7 +169,7 @@ focus with set_focus."
           @calculator.set_focus
           dialog_about = @calculator.dialog_about
           dialog_about.should be_nil
-          keystroke(VK_MENU, VK_H, VK_A) 
+          keystroke(VK_MENU, VK_H, VK_A)
           dialog_about = @calculator.dialog_about
           dialog_about.title.should == "About Calculator"
           dialog_about.combined_text.should match(/Microsoft . Calculator/)
@@ -184,7 +184,7 @@ focus with set_focus."
 
           it "should calculate '2+2=4' using the keystroke method" do
             @calculator.set_focus
-            keystroke(VK_2, VK_ADD, VK_2, VK_RETURN) 
+            keystroke(VK_2, VK_ADD, VK_2, VK_RETURN)
             @calculator.edit_window.text.strip.should == "4."
           end
 
@@ -201,14 +201,14 @@ focus with set_focus."
             @calculator.clipboard.text = ""
             @calculator.clipboard.text.should == ""
           end
-          
+
           describe "copy (VK_CONTROL, VK_C)" do
             it "should copy the edit window" do
               @calculator.set_focus
               type_in("3002")
               @calculator.edit_window.text.strip.should match(/3,?002\./)
               @calculator.edit_window.set_focus
-              keystroke(VK_CONTROL, VK_C) 
+              keystroke(VK_CONTROL, VK_C)
               @calculator.clipboard.text.should == "3002"
             end
           end
@@ -218,7 +218,7 @@ focus with set_focus."
               @calculator.edit_window.set_focus
               @calculator.clipboard.text = "12345"
               @calculator.edit_window.text.strip.should == "0."
-              keystroke(VK_CONTROL, VK_V) 
+              keystroke(VK_CONTROL, VK_V)
               @calculator.edit_window.text.strip.should match(/12,?345\./)
             end
           end
@@ -232,7 +232,7 @@ focus with set_focus."
 System Requirements
 -------------------
 
-Windows OS, version 2000 or higher 
+Windows OS, version 2000 or higher
 
 Testing was done on the following Ruby platforms:
 
@@ -295,7 +295,7 @@ rake -T
 
 ### Autotesting with Watchr ###
 
-[Watchr](http://github.com/mynyml/watchr) provides a flexible alternative to Autotest. 
+[Watchr](http://github.com/mynyml/watchr) provides a flexible alternative to Autotest.
 
 **NOTE:** _The following assumes a global setting of 'git config core.autocrlf
 input' and that you want to modify the Delphi 7 source to Quicknote which
@@ -308,7 +308,7 @@ Grab the source
     cd win32-autogui
     git config core.autocrlf true
     git checkout
-    
+
 #### Install Watchr ####
 
     gem install watchr

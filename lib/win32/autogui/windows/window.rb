@@ -1,4 +1,4 @@
-# Reopen module and supply missing constants and 
+# Reopen module and supply missing constants and
 # functions from windows-pr gem
 #
 # TODO: Fork and send pull request for Windows::Window module, be sure to lock bundle before sending request

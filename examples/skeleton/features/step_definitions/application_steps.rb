@@ -18,7 +18,7 @@ After('@application') do
   end
 end
 
-Given /^the application is running$/ do 
+Given /^the application is running$/ do
   unless @application && @application.running?
     application_start
     @application.should be_running

@@ -69,6 +69,6 @@ Gem::Specification.new do |s|
                          '--title', 'Win32-Autogui Documentation',
                          '--main', 'README.markdown',
                          '--line-numbers',
-                         '--inline-source'                       
+                         '--inline-source'
                        ]
 end

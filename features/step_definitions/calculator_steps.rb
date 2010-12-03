@@ -9,7 +9,7 @@ After('@calculator') do
   end
 end
 
-Given /^a GUI application named calculator$/ do 
+Given /^a GUI application named calculator$/ do
   @calculator = Calculator.new
   @calculator.should be_running
 end

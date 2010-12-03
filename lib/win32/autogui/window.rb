@@ -91,7 +91,7 @@ module Autogui
     def initialize(handle)
       @handle = handle
     end
-    
+
     # enumerable immeadiate child windows
     #
     # @see Children
@@ -100,7 +100,7 @@ module Autogui
       Children.new(self)
     end
 
-    # @return [Object] Window or nil 
+    # @return [Object] Window or nil
     #
     def parent
       h = GetParent(handle)
@@ -115,7 +115,7 @@ module Autogui
     #
     def close(options={})
       PostMessage(handle, WM_SYSCOMMAND, SC_CLOSE, 0)
-      wait_for_close(options) if (options[:wait_for_close] == true) 
+      wait_for_close(options) if (options[:wait_for_close] == true)
     end
 
     # Wait for the window to close
@@ -151,19 +151,19 @@ module Autogui
     end
     alias :title :text
 
-    # Determines whether the specified window handle identifies an existing window 
+    # Determines whether the specified window handle identifies an existing window
     #
     # @return [Boolean]
     #
     def is_window?
       (handle != 0) && (IsWindow(handle) != 0)
     end
-    
-    # Brings the window into the foreground and activates it. 
+
+    # Brings the window into the foreground and activates it.
     # Keyboard input is directed to the window, and various visual cues
     # are changed for the user.
     #
-    # A process can set the foreground window only if one of the following conditions is true: 
+    # A process can set the foreground window only if one of the following conditions is true:
     #
     #    * The process is the foreground process.
     #    * The process was started by the foreground process.
@@ -172,13 +172,13 @@ module Autogui
     #    * The foreground process is being debugged.
     #    * The foreground is not locked.
     #    * The foreground lock time-out has expired.
-    #    * No menus are active. 
+    #    * No menus are active.
     #
     # @return [Number] nonzero number if sucessful, nil or zero if failed
     #
     def set_focus
       if is_window?
-        # if current process was the last to receive input, we can be sure that 
+        # if current process was the last to receive input, we can be sure that
         # SetForegroundWindow will be allowed.  Send the shift key to whatever has
         # the focus now.  This allows IRB to set_focus.
         keystroke(VK_SHIFT)
@@ -207,7 +207,7 @@ module Autogui
       GetWindowThreadProcessId(handle, nil)
     end
 
-    # The window text including all child windows 
+    # The window text including all child windows
     # joined together with newlines. Faciliates matching text.
     # Text from any given window is limited to 2048 characters
     #
@@ -223,7 +223,7 @@ module Autogui
       return unless is_window?
       t = []
       t << text unless text == ''
-      children.each do |w| 
+      children.each do |w|
         t << w.combined_text unless w.combined_text == ''
       end
       t.join("\n")
@@ -233,9 +233,9 @@ module Autogui
     #
     # @return [String] with child window information
     def inspect
-      c = [] 
-      children.each do |w| 
-        c << w.inspect 
+      c = []
+      children.each do |w|
+        c << w.inspect
       end
       s = super + " #{self.class}=<window_class:#{window_class} pid:#{pid} thread_id:#{thread_id} title:\"#{title}\" children=<" + c.join("\n") + ">>"
     end

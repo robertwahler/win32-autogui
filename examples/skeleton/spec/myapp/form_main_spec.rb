@@ -9,9 +9,9 @@ describe "FormMain" do
   before(:all) do
     @application = Myapp.new
     keystroke(VK_RETURN) if @application.dialog_login(:timeout => 5)
-    #logger.debug "FormMain before(:all)" 
-    #logger.debug "application:\n#{@application.inspect}\n" 
-    #logger.debug "application.combined_text:\n #{@application.combined_text}\n" 
+    #logger.debug "FormMain before(:all)"
+    #logger.debug "application:\n#{@application.inspect}\n"
+    #logger.debug "application.combined_text:\n #{@application.combined_text}\n"
   end
   before(:each) do
     @application = Myapp.new unless @application.running?
@@ -20,7 +20,7 @@ describe "FormMain" do
   end
   after(:all) do
     if @application.running?
-      @application.file_exit 
+      @application.file_exit
       # still running? force it to close
       @application.close(:wait_for_close => true)
       @application.should_not be_running
@@ -41,7 +41,7 @@ describe "FormMain" do
 
   describe "file exit (VK_MENU, VK_F, VK_X)" do
     it "should exit without prompts" do
-      keystroke(VK_MENU, VK_F, VK_X) 
+      keystroke(VK_MENU, VK_F, VK_X)
       @application.dialog_confirm.should be_nil
       @application.main_window.is_window?.should == false
       @application.should_not be_running

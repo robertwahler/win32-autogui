@@ -126,7 +126,7 @@ begin
       // form after a short wait
       SplashForm.Timer.Enabled := True;
     end;
-  end;  
+  end;
 
   Reset;
 end;

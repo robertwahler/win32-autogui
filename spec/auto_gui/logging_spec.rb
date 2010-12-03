@@ -31,7 +31,7 @@ describe Autogui::Logging do
     end
 
     it "should not log unless 'logger.logfile' is set" do
-      @application = Calculator.new 
+      @application = Calculator.new
       get_file_contents(@logfile).should == 'the quick brown fox'
       logger.warn "warning message 0"
       get_file_contents(@logfile).should == 'the quick brown fox'

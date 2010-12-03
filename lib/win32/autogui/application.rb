@@ -7,15 +7,15 @@ require "win32/clipboard"
 
 module Autogui
 
-  # Wrapper class for text portion of the RubyGem win32/clipboard 
+  # Wrapper class for text portion of the RubyGem win32/clipboard
   # @see http://github.com/djberg96/win32-clipboard
   class Clipboard
 
     # Clipboard text getter
-    # 
+    #
     # @return [String] clipboard data
     #
-    def text 
+    def text
       Win32::Clipboard.data
     end
 
@@ -29,7 +29,7 @@ module Autogui
 
   end
 
-  # The Application class wraps a binary application so 
+  # The Application class wraps a binary application so
   # that it can be started and controlled via Ruby.  This
   # class is meant to be subclassed.
   #
@@ -51,7 +51,7 @@ module Autogui
   #     end
   #
   #     def dialog_about
-  #       Autogui::EnumerateDesktopWindows.new.find do |w| 
+  #       Autogui::EnumerateDesktopWindows.new.find do |w|
   #         w.title.match(/About Calculator/) && (w.pid == pid)
   #       end
   #     end
@@ -63,19 +63,19 @@ module Autogui
   #   end
   #
   class Application
-    include Windows::Process           
+    include Windows::Process
     include Windows::Synchronize
     include Windows::Handle
     include Autogui::Logging
 
     # @return [String] the executable name of the application
-    attr_accessor :name  
-    
-    # @return [String] the executable application parameters 
-    attr_accessor :parameters  
-    
+    attr_accessor :name
+
+    # @return [String] the executable application parameters
+    attr_accessor :parameters
+
     # @return [String] window title of the application
-    attr_accessor :title  
+    attr_accessor :title
 
     # @return [Number] the process identifier (PID) returned by Process.create
     attr_reader :pid
@@ -85,25 +85,25 @@ module Autogui
 
     # @return [Number] the main_window wait timeout in seconds
     attr_accessor :main_window_timeout
-    
+
     # @return [Number] the wait timeout in seconds used by Process.create
     attr_accessor :create_process_timeout
-    
+
     # @example initialize an application on the path
     #
-    #   app = Application.new :name => "calc"  
+    #   app = Application.new :name => "calc"
     #
     # @example initialize with relative DOS path
     #
-    #   app = Application.new :name => "binaries\\mybinary.exe"  
+    #   app = Application.new :name => "binaries\\mybinary.exe"
     #
     # @example initialize with full DOS path
     #
-    #   app = Application.new :name => "\\windows\\system32\\calc.exe"  
+    #   app = Application.new :name => "\\windows\\system32\\calc.exe"
     #
     # @example initialize with logging to file at the default WARN level  (STDOUT logging is the default)
     #
-    #   app = Application.new :name => "calc", :logger_logfile => 'log/calc.log' 
+    #   app = Application.new :name => "calc", :logger_logfile => 'log/calc.log'
     #
     # @example initialize with logging to file at DEBUG level
     #
@@ -120,7 +120,7 @@ module Autogui
     # @option options [String] :name a valid win32 exe name with optional path
     # @option options [String] :title the application window title, used along with the pid to locate the application main window, defaults to :name
     # @option options [Number] :parameters command line parameters used by Process.create
-    # @option options [Number] :create_process_timeout (10) timeout in seconds to wait for the create_process to return 
+    # @option options [Number] :create_process_timeout (10) timeout in seconds to wait for the create_process to return
     # @option options [Number] :main_window_timeout (10) timeout in seconds to wait for main_window to appear
     # @option options [String] :logger_logfile (nil) initialize logger's output filename
     # @option options [String] :logger_level (Autogui::Logging::WARN) initialize logger's initial level
@@ -142,11 +142,11 @@ module Autogui
       logger.level = options[:logger_level] if options[:logger_level]
 
       # sanity checks
-      raise_error 'application name not set' unless name 
+      raise_error 'application name not set' unless name
 
       start
     end
-    
+
     # Start up the binary application via Process.create and
     # set the window focus to the main_window
     #
@@ -156,7 +156,7 @@ module Autogui
     # @return [Number] the pid
     #
     def start
-      
+
       command_line = name
       command_line = name + ' ' + parameters if parameters
 
@@ -178,12 +178,12 @@ module Autogui
       CloseHandle(process_handle)
       CloseHandle(thread_handle)
 
-      raise_error "start command failed on create_process_timeout" if ret == WAIT_TIMEOUT 
+      raise_error "start command failed on create_process_timeout" if ret == WAIT_TIMEOUT
       raise_error "start command failed while waiting for idle input, reason unknown" unless (ret == 0)
       @pid
     end
 
-    # The application main window found by enumerating windows 
+    # The application main window found by enumerating windows
     # by title and application pid.  This method will keep looking
     # unit main_window_timeout (default: 10s) is exceeded.
     #
@@ -191,7 +191,7 @@ module Autogui
     #
     # @return [Autogui::Window]
     # @see initialize for options
-    # 
+    #
     def main_window
       return @main_window if @main_window
 
@@ -202,10 +202,10 @@ module Autogui
       timeout(main_window_timeout) do
         begin
           # There may be multiple instances, use title and pid to id our main window
-          @main_window = Autogui::EnumerateDesktopWindows.new.find do |w| 
-            w.title.match(title) && w.pid == pid 
+          @main_window = Autogui::EnumerateDesktopWindows.new.find do |w|
+            w.title.match(title) && w.pid == pid
           end
-          sleep 0.1 
+          sleep 0.1
         end until @main_window
       end
 
@@ -238,14 +238,14 @@ module Autogui
     end
 
     # Set the application input focus to the main_window
-    # 
+    #
     # @return [Number] nonzero number if sucess, nil or zero if failed
-    # 
+    #
     def set_focus
-      main_window.set_focus if running? 
+      main_window.set_focus if running?
     end
 
-    # The main_window text including all child windows 
+    # The main_window text including all child windows
     # joined together with newlines. Faciliates matching text.
     #
     # @example partial match of the Window's calulator's about dialog copywrite text
@@ -257,7 +257,7 @@ module Autogui
     # @return [String] with newlines
     #
     def combined_text
-      main_window.combined_text if running? 
+      main_window.combined_text if running?
     end
 
     # @example set the clipboard text and paste it with Control-V
@@ -265,10 +265,10 @@ module Autogui
     #   @calculator.edit_window.set_focus
     #   @calculator.clipboard.text = "12345"
     #   @calculator.edit_window.text.strip.should == "0."
-    #   keystroke(VK_CONTROL, VK_V) 
+    #   keystroke(VK_CONTROL, VK_V)
     #   @calculator.edit_window.text.strip.should == "12,345."
     #
-    # @return [Clipboard] 
+    # @return [Clipboard]
     #
     def clipboard
       @clipboard || Autogui::Clipboard.new

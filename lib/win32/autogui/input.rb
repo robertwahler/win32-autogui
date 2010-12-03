@@ -151,24 +151,24 @@ module Autogui
     #
     # @example send 2+2<CR>
     #
-    #     keystroke(VK_2, VK_ADD, VK_2, VK_RETURN) 
+    #     keystroke(VK_2, VK_ADD, VK_2, VK_RETURN)
     #
     def keystroke(*keys)
       return if keys.empty?
-      
+
       keybd_event keys.first, 0, KEYBD_EVENT_KEYDOWN, 0
       sleep KEYBD_KEYDELAY
       keystroke *keys[1..-1]
       sleep KEYBD_KEYDELAY
-      keybd_event keys.first, 0, KEYBD_EVENT_KEYUP, 0 
+      keybd_event keys.first, 0, KEYBD_EVENT_KEYUP, 0
     end
 
-    # String together keystrokes, simulates the user typing. 
+    # String together keystrokes, simulates the user typing.
     #
     # Note: This method can be slow for large strings.  Consider using
-    # the clipboard instead.  
+    # the clipboard instead.
     #
-    # @see Clipboard 
+    # @see Clipboard
     #
     # @example send 2+2<CR>
     #
@@ -193,7 +193,7 @@ module Autogui
       unless char.size == 1
         raise "virtual keycode conversion is for single characters only"
       end
-      
+
       code = char.unpack('U')[0]
 
       case char
@@ -232,7 +232,7 @@ module Autogui
         else
           raise "No conversion exists for character #{char}"
       end
-    end  
+    end
 
   end
 end

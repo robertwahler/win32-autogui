@@ -19,15 +19,15 @@ describe Autogui::EnumerateDesktopWindows do
 
     describe "with the default timeout of 0" do
       it "should find a valid dialog" do
-        keystroke(VK_MENU, VK_H, VK_A) 
-        dialog_about = Autogui::EnumerateDesktopWindows.new.find do |w| 
+        keystroke(VK_MENU, VK_H, VK_A)
+        dialog_about = Autogui::EnumerateDesktopWindows.new.find do |w|
           w.title.match(/About Calculator/) && (w.pid == @calculator.pid)
         end
         dialog_about.should_not be_nil
         dialog_about.close
       end
       it "should not find an invalid dialog" do
-        dialog_bogus = Autogui::EnumerateDesktopWindows.new.find do |w| 
+        dialog_bogus = Autogui::EnumerateDesktopWindows.new.find do |w|
           w.title.match(/Bogus Window that does not exist/) && (w.pid == @calculator.pid)
         end
         dialog_bogus.should be_nil
@@ -36,11 +36,11 @@ describe Autogui::EnumerateDesktopWindows do
 
     describe "with the timeout of 3 seconds" do
       it "should find a valid dialog in less than 3 seconds" do
-        keystroke(VK_MENU, VK_H, VK_A) 
+        keystroke(VK_MENU, VK_H, VK_A)
         seconds = 3
         dialog_about = nil
         lambda {timeout(seconds) do
-          dialog_about = Autogui::EnumerateDesktopWindows.new(:timeout => seconds).find do |w| 
+          dialog_about = Autogui::EnumerateDesktopWindows.new(:timeout => seconds).find do |w|
             w.title.match(/About Calculator/) && (w.pid == @calculator.pid)
           end
         end}.should_not raise_error
@@ -51,7 +51,7 @@ describe Autogui::EnumerateDesktopWindows do
         seconds = 3
         dialog_bogus = nil
         lambda {timeout(seconds) do
-          dialog_bogus = Autogui::EnumerateDesktopWindows.new(:timeout => seconds).find do |w| 
+          dialog_bogus = Autogui::EnumerateDesktopWindows.new(:timeout => seconds).find do |w|
             w.title.match(/Bogus Window that does not exist/) && (w.pid == @calculator.pid)
           end
         end}.should raise_error

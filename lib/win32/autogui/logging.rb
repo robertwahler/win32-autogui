@@ -49,7 +49,7 @@ module Autogui
 
     # Logging mixin allows simple logging setup
     # to STDOUT and optionally, to one filename.  Logger is a wrapper
-    # for Log4r::Logger it accepts any methods that 
+    # for Log4r::Logger it accepts any methods that
     # Log4r::Logger accepts in addition to the "logfile" filename.
     #
     # @example  simple logging to file setup
@@ -57,7 +57,7 @@ module Autogui
     #   include Autogui::Logging
     #
     #   logger.filename = 'log/autogui.log'
-    #   logger.warn "warning message goes to 'log/autogui.log'" 
+    #   logger.warn "warning message goes to 'log/autogui.log'"
     #
     #   logger.level = Autogui::Logging::DEBUG
     #   logger.debug "this message goes to 'log/autogui.log'"
@@ -69,17 +69,17 @@ module Autogui
 
 
     protected
-    
+
     # Initialize the logger, defaults to log4r::Warn
     def init_logger
       log = Log4r::Logger.new(STANDARD_LOGGER)
 
       # sanity checks since we defined log4r's dynamic levels statically
-      unless (Log4r::DEBUG == DEBUG) && 
-             (Log4r::INFO == INFO) && 
-             (Log4r::WARN == WARN) && 
-             (Log4r::ERROR == ERROR) && 
-             (Log4r::FATAL == FATAL) 
+      unless (Log4r::DEBUG == DEBUG) &&
+             (Log4r::INFO == INFO) &&
+             (Log4r::WARN == WARN) &&
+             (Log4r::ERROR == ERROR) &&
+             (Log4r::FATAL == FATAL)
         raise "Logger levels do not match Log4r levels, levels may have been customized"
       end
 

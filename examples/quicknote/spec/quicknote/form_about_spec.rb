@@ -16,7 +16,7 @@ describe "FormAbout" do
   before(:each) do
     @application.dialog_about.should be_nil
     @application.set_focus
-    keystroke(VK_MENU, VK_H, VK_A) 
+    keystroke(VK_MENU, VK_H, VK_A)
     @dialog_about = @application.dialog_about
     @dialog_about.should_not be_nil
     @dialog_about.is_window?.should == true
@@ -33,7 +33,7 @@ describe "FormAbout" do
 
   it "should close by hitting return" do
     @dialog_about.set_focus
-    keystroke(VK_RETURN) 
+    keystroke(VK_RETURN)
     @application.dialog_about.should be_nil
   end
 
