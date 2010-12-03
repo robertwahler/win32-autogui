@@ -67,8 +67,9 @@ describe Autogui do
       error_messages = []
       @gemfiles.split(@eol).each do |filename|
         filename = File.expand_path(File.join(File.dirname(__FILE__), ["..", "..", filename]))
-        next if filename =~ /\.gitmodules/
+        next if filename =~ /\.gitmodules|\.dfm$/
         next if binary?(filename)
+        puts filename
         error_messages << check_for_tab_characters(filename)
         error_messages << check_for_extra_spaces(filename)
       end
