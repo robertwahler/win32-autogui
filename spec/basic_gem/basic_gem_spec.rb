@@ -15,6 +15,21 @@ describe BasicGem do
   #
   describe "code" do
 
+    before(:each) do
+      @gemfiles_filename = File.expand_path(File.dirname(__FILE__) + '/../../.gemfiles')
+      @gemfiles = File.open(@gemfiles_filename, "r") {|f| f.read}
+      @eol = @gemfiles.match("\r\n") ? "\r\n" : "\n"
+    end
+
+    def binary?(filename)
+      open filename do |f|
+        f.each_byte { |x|
+          x.nonzero? or return true
+        }
+      end
+      false
+    end
+
     def check_for_tab_characters(filename)
       failing_lines = []
       File.readlines(filename).each_with_index do |line,number|
@@ -29,8 +44,8 @@ describe BasicGem do
     def check_for_extra_spaces(filename)
       failing_lines = []
       File.readlines(filename).each_with_index do |line,number|
-        next if line =~ /^\s+#.*\s+\n$/
-        failing_lines << number + 1 if line =~ /\s+\n$/
+        next if line =~ /^\s+#.*\s+#{@eol}$/
+        failing_lines << number + 1 if line =~ /\s+#{@eol}$/
       end
 
       unless failing_lines.empty?
@@ -50,9 +65,10 @@ describe BasicGem do
 
     it "has no malformed whitespace" do
       error_messages = []
-      gemfiles_filename = File.expand_path(File.dirname(__FILE__) + '/../../.gemfiles')
-      files = File.open(gemfiles_filename, "r") {|f| f.read}
-      files.split("\n").each do |filename|
+      @gemfiles.split(@eol).each do |filename|
+        filename = File.expand_path(File.join(File.dirname(__FILE__), ["..", "..", filename]))
+        next if filename =~ /\.gitmodules/
+        next if binary?(filename)
         error_messages << check_for_tab_characters(filename)
         error_messages << check_for_extra_spaces(filename)
       end
