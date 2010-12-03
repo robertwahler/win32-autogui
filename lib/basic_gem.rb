@@ -3,7 +3,7 @@ require 'rbconfig'
 
 # Master namespace
 module BasicGem
-  
+
   # Contents of the VERSION file
   #
   # Example format: 0.0.1

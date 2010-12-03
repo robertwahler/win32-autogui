@@ -1,12 +1,12 @@
 BasicGem
 ========
 
-An opinionated RubyGem structure. BasicGem provides no stand-alone functionality.  Its purpose is 
-to provide a repository for jump-starting a new RubyGem and provide a repository for cloned 
+An opinionated RubyGem structure. BasicGem provides no stand-alone functionality.  Its purpose is
+to provide a repository for jump-starting a new RubyGem and provide a repository for cloned
 applications to pull future enhancements and fixes.
 
 
-Features/Dependencies 
+Features/Dependencies
 ---------------------
 
 * Bundler for dependency management <http://github.com/carlhuda/bundler>
@@ -62,7 +62,7 @@ the content is non-trivial.
     git mv lib/basic_gem.rb lib/mutagem.rb
     git mv basic_gem.gemspec mutagem.gemspec
 
-    # commit renames now 
+    # commit renames now
     git commit -m "rename basic_gem files"
 
     # BasicGem => Mutagem
@@ -99,8 +99,8 @@ Gem should now be functional
 
 Setup git copy-merge
 --------------------
-When we merge future BasicGem changes to our new gem, we want to always ignore 
-some upstream documentation file changes.  
+When we merge future BasicGem changes to our new gem, we want to always ignore
+some upstream documentation file changes.
 
 Set the merge type for the files we want to ignore in .git/info/attributes. You
 could specify .gitattributes instead of .git/info/attributes but then if your
@@ -113,7 +113,7 @@ new gem is forked, your forked repos will miss out on document merges.
     echo "VERSION merge=keep_local_copy" >> .git/info/attributes
 
 
-Setup the copy-merge driver. The "trick" is that the driver, keep_local_copy, is using 
+Setup the copy-merge driver. The "trick" is that the driver, keep_local_copy, is using
 the shell command "true" to return exit code 0.  Basically, the files marked with
 the keep_local_copy merge type will always ignore upstream changes if a merge conflict occurs.
 
@@ -154,7 +154,7 @@ Trusting pull of HEAD
 
 Conflict resolution
 
-*NOTE: Most conflicts can be resolved with 'git mergetool' but 'CONFLICT (delete/modify)' will 
+*NOTE: Most conflicts can be resolved with 'git mergetool' but 'CONFLICT (delete/modify)' will
 need to be resolved by hand.*
 
     git mergetool
