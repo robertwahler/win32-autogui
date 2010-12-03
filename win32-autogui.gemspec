@@ -23,11 +23,11 @@ Gem::Specification.new do |s|
       files = File.open(filename, "r") {|f| f.read}
     end
     raise "unable to process gemfiles" unless files
-    files.gsub(/\r\n/, "\n") 
+    files.gsub(/\r\n/, "\n")
   end
 
   s.name        = "win32-autogui"
-  s.version     = File.open(File.join(File.dirname(__FILE__), 'VERSION'), "r") { |f| f.read } 
+  s.version     = File.open(File.join(File.dirname(__FILE__), 'VERSION'), "r") { |f| f.read }
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Robert Wahler"]
   s.email       = ["robert@gearheadforhire.com"]
@@ -65,10 +65,10 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
 
   s.has_rdoc = 'yard'
-  s.rdoc_options     = [ 
-                         '--title', 'Win32-Autogui Documentation', 
-                         '--main', 'README.markdown', 
+  s.rdoc_options     = [
+                         '--title', 'Win32-Autogui Documentation',
+                         '--main', 'README.markdown',
                          '--line-numbers',
-                         '--inline-source' 
+                         '--inline-source'                       
                        ]
 end

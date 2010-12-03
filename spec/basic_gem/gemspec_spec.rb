@@ -6,7 +6,7 @@ describe Autogui do
     filename = File.expand_path('../../../win32-autogui.gemspec', __FILE__)
     eval(File.read(filename), nil, filename)
   end
-  
+
   describe 'gemspec' do
 
     it "should return the gem VERSION" do
@@ -52,12 +52,12 @@ describe Autogui do
         end
 
         it "should return 'files' from cache" do
-          system('git --version').should == false 
+          system('git --version').should == false
           @gemspec.files.is_a?(Array).should == true
           @gemspec.files.include?('VERSION').should == true
         end
         it "should return 'executables' from cache"  do
-          system('git --version').should == false 
+          system('git --version').should == false
           @gemspec.executables.is_a?(Array).should == true
         end
 

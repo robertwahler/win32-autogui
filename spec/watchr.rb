@@ -50,7 +50,7 @@ def run(cmd)
     if $c
       print $c.cyan, cmd, $c.clear, "\n"
     else
-      puts cmd 
+      puts cmd
     end
 
     exec(cmd)

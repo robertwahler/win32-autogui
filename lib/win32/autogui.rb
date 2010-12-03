@@ -7,7 +7,7 @@ require 'win32/autogui/application'
 
 # Master namespace
 module Autogui
-  
+
   # Contents of the VERSION file
   #
   # Example format: 0.0.1
