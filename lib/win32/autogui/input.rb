@@ -217,6 +217,7 @@ module Autogui
           [VK_OEM_MINUS]
         when '_'
           [VK_SHIFT, VK_OEM_MINUS]
+
         when ';'
           [VK_OEM_1]
         when ':'
@@ -245,6 +246,28 @@ module Autogui
           [VK_OEM_7]
         when '\"'
           [VK_SHIFT, VK_OEM_7]
+
+        when '!'
+          [VK_SHIFT, VK_1]
+        when '@'
+          [VK_SHIFT, VK_2]
+        when '#'
+          [VK_SHIFT, VK_3]
+        when '$'
+          [VK_SHIFT, VK_4]
+        when '%'
+          [VK_SHIFT, VK_5]
+        when '^'
+          [VK_SHIFT, VK_6]
+        when '&'
+          [VK_SHIFT, VK_7]
+        when '*'
+          [VK_SHIFT, VK_8]
+        when '('
+          [VK_SHIFT, VK_9]
+        when ')'
+          [VK_SHIFT, VK_0]
+
         when "\n"
           [VK_RETURN]
         else
