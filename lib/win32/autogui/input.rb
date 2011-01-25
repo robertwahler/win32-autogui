@@ -119,18 +119,18 @@ module Autogui
     VK_LMENU = 0xa4
     VK_RMENU = 0xa5
 
-    VK_OEM_1 = 0xba
+    VK_OEM_1 = 0xba         # US ";:"
     VK_OEM_PLUS = 0xbb
     VK_OEM_COMMA = 0xbc
     VK_OEM_MINUS = 0xbd
     VK_OEM_PERIOD = 0xbe
-    VK_OEM_2 = 0xbf
-    VK_OEM_3 = 0xc0         # US '~' key
-    VK_OEM_4 = 0xdb
-    VK_OEM_5 = 0xdc         # US '\' key
-    VK_OEM_6 = 0xdd
-    VK_OEM_7 = 0xde         # US quotes key
-    VK_OEM_8 = 0xdf
+    VK_OEM_2 = 0xbf         # US "/?"
+    VK_OEM_3 = 0xc0         # US '`~'
+    VK_OEM_4 = 0xdb         # US "[{"
+    VK_OEM_5 = 0xdc         # US '\|'
+    VK_OEM_6 = 0xdd         # US ']}'
+    VK_OEM_7 = 0xde         # US quotes
+    VK_OEM_8 = 0xdf         # none
 
     # delay in seconds between keystrokes
     KEYBD_KEYDELAY = 0.050
@@ -217,16 +217,34 @@ module Autogui
           [VK_OEM_MINUS]
         when '_'
           [VK_SHIFT, VK_OEM_MINUS]
-        when ':'
-          [VK_SHIFT, VK_OEM_1]
         when ';'
           [VK_OEM_1]
+        when ':'
+          [VK_SHIFT, VK_OEM_1]
+        when '/'
+          [VK_OEM_2]
+        when '?'
+          [VK_SHIFT, VK_OEM_2]
+        when '`'
+          [VK_OEM_3]
+        when '~'
+          [VK_SHIFT, VK_OEM_3]
+        when '['
+          [VK_OEM_4]
+        when '{'
+          [VK_SHIFT, VK_OEM_4]
+        when '\\'
+          [VK_OEM_5]
+        when '|'
+          [VK_SHIFT, VK_OEM_5]
+        when ']'
+          [VK_OEM_6]
+        when '}'
+          [VK_SHIFT, VK_OEM_6]
         when '\''
           [VK_OEM_7]
         when '\"'
           [VK_SHIFT, VK_OEM_7]
-        when "\\"
-          [VK_OEM_5]
         when "\n"
           [VK_RETURN]
         else
