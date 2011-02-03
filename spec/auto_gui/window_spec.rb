@@ -2,6 +2,36 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 include Autogui::Input
 
+describe Autogui::Window do
+  before(:all) do
+    @calculator = Calculator.new
+  end
+  before(:each) do
+    @calculator.should be_running
+    @calculator.set_focus
+  end
+  after(:all) do
+    @calculator.close(:wait_for_close => true) if @calculator.running?
+    @calculator.should_not be_running
+  end
+
+  # callback test, sets instance variable
+  def close_calculator
+    @test_callback = true
+    @calculator.close
+  end
+
+  describe "wait_for_close" do
+    it "should run a given block while waiting" do
+      @test_callback.should_not == true
+      @calculator.should be_running
+      @calculator.main_window.wait_for_close(:timeout => 3) { close_calculator }
+      @test_callback.should == true
+      @calculator.should_not be_running
+    end
+  end
+end
+
 describe Autogui::EnumerateDesktopWindows do
 
   describe "finding dialogs" do

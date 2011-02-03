@@ -126,7 +126,10 @@ module Autogui
     def wait_for_close(options={})
       seconds = options[:timeout] || 5
       timeout(seconds) do
-        sleep 0.05 until 0 == IsWindow(handle)
+        begin
+          yield if block_given?
+          sleep 0.05
+        end until 0 == IsWindow(handle)
       end
     end
 
