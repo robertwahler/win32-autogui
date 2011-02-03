@@ -8,6 +8,8 @@ Changes
 
 ### 0.4.1 - 02/03/2011 ###
 
+* Window.wait_for_close yields if a block is given allowing callbacks during
+  long running waits in order to check for error message dialogs, etc.
 * Lock down win32 gem dependencies to known working versions
 * Add input support for shift numeric row
 * Add input support for VK_OEM_1 through VK_OEM_7
