@@ -72,7 +72,7 @@ module Autogui
       while (child_after = FindWindowEx(@parent.handle, child_after, nil, nil)) > 0 do
         window = Window.new child_after
         # immediate children only
-        yield window if (window.parent.handle == @parent.handle)
+        yield window if (window.parent) && (window.parent.handle == @parent.handle)
       end
     end
   end
