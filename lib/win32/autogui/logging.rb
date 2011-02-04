@@ -6,11 +6,22 @@ require 'log4r'
 #
 #   include Autogui::Logging
 #
+#   logger.trunc = false
 #   logger.filename = 'log/autogui.log'
 #   logger.warn "warning message goes to log file"
 #
 module Log4r
   class Logger
+
+    # @return [Boolean] truncate logfile
+    def trunc
+      @trunc.nil? ? true : @trunc
+    end
+
+    def trunc=(value)
+      raise "Setting trunc has no effect since logfile is already initialized" if @filename
+      @trunc = value
+    end
 
     # @return [String] filename of the logfile
     def logfile
@@ -18,11 +29,11 @@ module Log4r
     end
 
     def logfile=(fn)
+      fn = nil if fn == ''
       if fn == nil
-        puts "removing log to file"
         remove(:logfile) if @filename
       else
-        FileOutputter.new(:logfile, :filename => fn, :trunc => true)
+        FileOutputter.new(:logfile, :filename => fn, :trunc => @trunc)
         Outputter[:logfile].formatter = Log4r::PatternFormatter.new(:pattern => "[%5l %d] %M [%t]")
         add(:logfile)
       end
@@ -73,6 +84,7 @@ module Autogui
     # Initialize the logger, defaults to log4r::Warn
     def init_logger
       log = Log4r::Logger.new(STANDARD_LOGGER)
+      log.trunc = true
 
       # sanity checks since we defined log4r's dynamic levels statically
       unless (Log4r::DEBUG == DEBUG) &&

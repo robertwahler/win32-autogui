@@ -16,7 +16,7 @@ describe Autogui::Logging do
       @application.close(:wait_for_close => true) if @application.running?
       @application.should_not be_running
     end
-    logger.remove(:logfile)
+    logger.logfile = nil
   end
   after(:all) do
     logger.add(:console)
@@ -24,10 +24,17 @@ describe Autogui::Logging do
 
   describe "to file" do
 
-    it "should truncate the log on create" do
+    it "should truncate the log on create by default" do
       get_file_contents(@logfile).should == 'the quick brown fox'
       @application = Calculator.new :logger_logfile => fullpath(@logfile)
       get_file_contents(@logfile).should == ''
+    end
+
+    it "should not truncate the log on create if 'logger.trunc' is false" do
+      get_file_contents(@logfile).should == 'the quick brown fox'
+      @application = Calculator.new :logger_logfile => fullpath(@logfile), :logger_trunc => false
+      logger.trunc.should be_false
+      get_file_contents(@logfile).should == 'the quick brown fox'
     end
 
     it "should not log unless 'logger.logfile' is set" do
@@ -45,6 +52,7 @@ describe Autogui::Logging do
 
     it "should log warnings" do
       @application = Calculator.new :logger_logfile => fullpath(@logfile)
+      logger.trunc.should be_true
       get_file_contents(@logfile).should == ''
       logger.warn "warning message here"
       get_file_contents(@logfile).should match(/warning message here/)
@@ -64,6 +72,7 @@ describe Autogui::Logging do
       level_save = logger.level
       begin
         logger.level = Autogui::Logging::WARN
+        logger.trunc.should be_true
         get_file_contents(@logfile).should == ''
         logger.debug "debug message here 1"
         get_file_contents(@logfile).should_not match(/debug message here 1/)

@@ -103,7 +103,7 @@ module Autogui
     #
     # @example initialize with logging to file at the default WARN level  (STDOUT logging is the default)
     #
-    #   app = Application.new :name => "calc", :logger_logfile => 'log/calc.log'
+    #   app = Application.new :name => "calc", :logger_logfile => 'log/calc.log', :logger_trunc => false
     #
     # @example initialize with logging to file at DEBUG level
     #
@@ -122,6 +122,7 @@ module Autogui
     # @option options [Number] :parameters command line parameters used by Process.create
     # @option options [Number] :create_process_timeout (10) timeout in seconds to wait for the create_process to return
     # @option options [Number] :main_window_timeout (10) timeout in seconds to wait for main_window to appear
+    # @option options [String] :logger_trunc (true) truncate the logger logfile at logfile initialization
     # @option options [String] :logger_logfile (nil) initialize logger's output filename
     # @option options [String] :logger_level (Autogui::Logging::WARN) initialize logger's initial level
     #
@@ -138,6 +139,9 @@ module Autogui
       @parameters = options[:parameters]
 
       # logger setup
+      if options.include?(:logger_logfile)
+        logger.trunc = options.include?(:logger_trunc) ? options[:logger_trunc] : true
+      end
       logger.logfile = options[:logger_logfile] if options[:logger_logfile]
       logger.level = options[:logger_level] if options[:logger_level]
 
