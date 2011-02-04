@@ -6,6 +6,10 @@ Most recent changes are at the top
 Changes
 -------
 
+### 0.4.X - 02/04/2011 ###
+
+* Add logger.trunc attribute to control log truncation, defaults to true
+
 ### 0.4.1 - 02/03/2011 ###
 
 * Window.wait_for_close yields if a block is given allowing callbacks during
