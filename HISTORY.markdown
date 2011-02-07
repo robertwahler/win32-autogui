@@ -6,7 +6,7 @@ Most recent changes are at the top
 Changes
 -------
 
-### 0.4.X - 02/04/2011 ###
+### 0.4.2 - 02/07/2011 ###
 
 * Add logger.trunc attribute to control log truncation, defaults to true
 
