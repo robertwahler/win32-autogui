@@ -242,11 +242,10 @@ module Autogui
           [VK_OEM_6]
         when '}'
           [VK_SHIFT, VK_OEM_6]
-        when '\''
+        when "'"
           [VK_OEM_7]
-        when '\"'
+        when '"'
           [VK_SHIFT, VK_OEM_7]
-
         when '!'
           [VK_SHIFT, VK_1]
         when '@'
