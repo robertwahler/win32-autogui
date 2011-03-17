@@ -6,6 +6,11 @@ Most recent changes are at the top
 Changes
 -------
 
+### 0.4.3 - 03/17/2011 ###
+
+* Add test coverage for Autogui::Input using Notepad.exe
+* Fix Autogui::Input broken quote handling (jondot)
+
 ### 0.4.2 - 02/07/2011 ###
 
 * Add logger.trunc attribute to control log truncation, defaults to true

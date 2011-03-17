@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    win32-autogui (0.4.2)
+    win32-autogui (0.4.3)
       log4r (>= 1.1.9)
       win32-clipboard (= 0.5.2)
       win32-process (= 0.6.4)

@@ -68,8 +68,10 @@ lib/win32/autogui/logging.rb
 lib/win32/autogui/window.rb
 lib/win32/autogui/windows/window.rb
 spec/applications/calculator.rb
+spec/applications/notepad.rb
 spec/aruba_helper.rb
 spec/auto_gui/application_spec.rb
+spec/auto_gui/input_spec.rb
 spec/auto_gui/logging_spec.rb
 spec/auto_gui/window_spec.rb
 spec/basic_gem/aruba_helper_spec.rb
