@@ -12,6 +12,7 @@ require 'aruba_helper'
 
 # applications
 require File.expand_path(File.dirname(__FILE__) + '/applications/calculator')
+require File.expand_path(File.dirname(__FILE__) + '/applications/notepad')
 
 Spec::Runner.configure do |config|
    config.include Aruba::Api
