@@ -162,6 +162,14 @@ module Autogui
       (handle != 0) && (IsWindow(handle) != 0)
     end
 
+    # Determines the visibility state of the window
+    #
+    # @return [Boolean]
+    #
+    def visible?
+      is_window? && (IsWindowVisible(handle) != 0)
+    end
+
     # Brings the window into the foreground and activates it.
     # Keyboard input is directed to the window, and various visual cues
     # are changed for the user.
