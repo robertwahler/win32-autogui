@@ -1,27 +1,21 @@
 # -*- encoding: utf-8 -*-
 #
 #
-
 Gem::Specification.new do |s|
 
-  # wrap 'git' so we can get gem files even on systems without 'git'
+  # avoid shelling out to run git every time the gemspec is evaluated
   #
   # @see spec/gemspec_spec.rb
   #
-  @gemfiles ||= begin
-    filename  = File.join(File.dirname(__FILE__), '.gemfiles')
-    # backticks blows up on Windows w/o valid binary, use system instead
-    if File.directory?('.git') && system('git ls-files bogus-filename')
-      files = `git ls-files`
-      cached_files = File.exists?(filename) ? File.open(filename, "r") {|f| f.read} : nil
-      # maintain EOL
-      files.gsub!(/\n/, "\r\n") if cached_files && cached_files.match("\r\n")
-      File.open(filename, 'wb') {|f| f.write(files)} if cached_files != files
-    else
-      files = File.open(filename, "r") {|f| f.read}
-    end
-    raise "unable to process gemfiles" unless files
-    files.gsub(/\r\n/, "\n")
+  gemfiles_cache = File.join(File.dirname(__FILE__), '.gemfiles')
+  if File.exists?(gemfiles_cache)
+    gemfiles = File.open(gemfiles_cache, "r") {|f| f.read}
+    # normalize EOL
+    gemfiles.gsub!(/\r\n/, "\n")
+  else
+    # .gemfiles missing, run 'rake gemfiles' to create it
+    # falling back to 'git ls-files'"
+    gemfiles = `git ls-files`
   end
 
   s.name        = "basic_gem"
@@ -49,8 +43,8 @@ Gem::Specification.new do |s|
   # tasks will fail.  Kramdown chosen to provide a pure Ruby solution.
   s.add_development_dependency "kramdown", ">= 0.12.0"
 
-  s.files        = @gemfiles.split("\n")
-  s.executables  = @gemfiles.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
+  s.files        = gemfiles.split("\n")
+  s.executables  = gemfiles.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
 
   s.require_path = 'lib'
 

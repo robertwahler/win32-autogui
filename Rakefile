@@ -48,3 +48,24 @@ namespace :doc do
   end
 
 end
+
+# put the gemfiles task in the :build dependency chain
+task :build => [:gemfiles]
+
+desc "Generate .gemfiles via 'git ls-files'"
+task :gemfiles do
+  files = `git ls-files`
+
+  filename  = File.join(File.dirname(__FILE__), '.gemfiles')
+  cached_files = File.exists?(filename) ? File.open(filename, "r") {|f| f.read} : nil
+
+  # maintain EOL
+  files.gsub!(/\n/, "\r\n") if cached_files && cached_files.match("\r\n")
+
+  if cached_files != files
+    puts "Updating .gemfiles"
+    File.open(filename, 'wb') {|f| f.write(files)}
+  end
+
+  raise "unable to process gemfiles" unless files
+end
