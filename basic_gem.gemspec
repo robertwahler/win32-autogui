@@ -36,12 +36,12 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
   s.rubyforge_project         = "basic_gem"
 
-  s.add_development_dependency "bundler", ">= 1.0.7"
+  s.add_development_dependency "bundler", ">= 1.0.14"
   s.add_development_dependency "rspec", "= 1.3.1"
   s.add_development_dependency "cucumber", "= 0.9.4"
   s.add_development_dependency "aruba", "= 0.2.2"
   s.add_development_dependency "rake", ">= 0.8.7"
-  s.add_development_dependency "yard", ">= 0.6.2"
+  s.add_development_dependency "yard", ">= 0.6.4"
 
   # Specify a markdown gem for rake doc:generate
   #

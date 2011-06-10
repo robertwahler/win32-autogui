@@ -1,19 +1,8 @@
 # encoding: utf-8
 
-# bundler/setup is managing $LOAD_PATH, any gem needed by this Rakefile must
-# be listed as a development dependency in the gemspec
-
-require 'rubygems'
-require 'bundler/setup'
-
-Bundler::GemHelper.install_tasks
-
-def gemspec
-  @gemspec ||= begin
-    file = File.expand_path('../basic_gem.gemspec', __FILE__)
-    eval(File.read(file), binding, file)
-  end
-end
+# Bundler is managing $LOAD_PATH, any gem needed by this Rakefile must be
+# listed as a development dependency in the gemspec
+require 'bundler/gem_tasks'
 
 require 'spec'
 require 'spec/rake/spectask'
@@ -34,16 +23,18 @@ task :test => [:spec, :features]
 task :default => :test
 
 namespace :doc do
+
+  doc_version = File.open(File.join(File.dirname(__FILE__), 'VERSION'), "r") { |f| f.read }
   project_root = File.expand_path(File.dirname(__FILE__))
   doc_destination = File.join(project_root, 'rdoc')
 
   require 'yard'
-  require 'yard/rake/yardoc_task'
 
   YARD::Rake::YardocTask.new(:generate) do |yt|
-    yt.options = ['--output-dir', doc_destination
-                 ] +
-                 gemspec.rdoc_options - ['--line-numbers', '--inline-source']
+    yt.options = ['--output-dir', doc_destination,
+                  '--title', "BasicGem #{doc_version} Documentation",
+                  '--main', "README.markdown"
+                 ]
   end
 
   desc "Remove generated documenation"
