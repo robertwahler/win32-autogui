@@ -2,6 +2,7 @@
 
 # Bundler is managing $LOAD_PATH, any gem needed by this Rakefile must be
 # listed as a development dependency in the gemspec
+require 'bundler/setup'
 require 'bundler/gem_tasks'
 
 require 'spec'
