@@ -93,8 +93,8 @@ Replace TODO's and update documentation
 Gem should now be functional
 ---------------------------
 
-    rake spec
-    rake features
+    bundle exec rake spec
+    bundle exec rake features
 
 
 Setup git copy-merge
@@ -164,7 +164,7 @@ need to be resolved by hand.*
 Rake tasks
 ----------
 
-rake -T
+bundle exec rake -T
 
     rake build         # Build mutagem-0.0.1.gem into the pkg directory
     rake doc:clean     # Remove generated documenation
