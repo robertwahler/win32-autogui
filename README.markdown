@@ -21,17 +21,16 @@ with the Win32-autogui RubyGem.
 
 Read our introduction blog posting here: <http://www.gearheadforhire.com/articles/ruby/win32-autogui/using-ruby-to-drive-windows-applications>
 
-Run Win32-autogui's internal specs and example programs.
+Run Win32-autogui's internal specs and example programs from the system gem location
 
     gem install win32-autogui
-    gem install rake bundler win32console cucumber
-    gem install rspec -v 1.3.1
+    gem install bundler
 
-    cd C:\Ruby187\lib\ruby\gems\1.8\gems\win32-autogui-0.4.0
+    cd C:\Ruby187\lib\ruby\gems\1.8\gems\win32-autogui-X.X.X
     bundle install
 
     # run the calculator specs and features
-    rake
+    bundle exec rake
 
     # run the example quicknote specs
     cd examples\quicknote
@@ -281,7 +280,7 @@ Win32-autogui development was jump-started by cloning [BasicGem](http://github.c
 
 ### Rake tasks ###
 
-rake -T
+bundle exec rake -T
 
     rake build         # Build win32-autogui-0.0.1.gem into the pkg directory
     rake doc:clean     # Remove generated documenation
@@ -324,4 +323,4 @@ Watchr will now watch the files defined in 'spec/watchr.rb' and run RSpec or Cuc
 Copyright
 ---------
 
-Copyright (c) 2010 GearheadForHire, LLC. See [LICENSE](LICENSE) for details.
+Copyright (c) 2010-2011 GearheadForHire, LLC. See [LICENSE](LICENSE) for details.
