@@ -67,6 +67,10 @@ describe Autogui do
       error_messages = []
       @gemfiles.split(@eol).each do |filename|
         filename = File.expand_path(File.join(File.dirname(__FILE__), ["..", "..", filename]))
+        unless File.exists?(filename)
+          puts "WARNING: .gemfiles out-of-date, #{filename} not found.  Edit .gemfiles or run 'rake gemfiles' after committing changes."
+          next
+        end
         next if filename =~ /\.gitmodules|\.dfm$/
         next if binary?(filename)
         error_messages << check_for_tab_characters(filename)
