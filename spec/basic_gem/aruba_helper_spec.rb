@@ -4,10 +4,10 @@ describe BasicGem do
 
   before(:each) do
     @filename = 'input.txt'
-    create_file(@filename, "the quick brown fox")
+    write_file(@filename, "the quick brown fox")
   end
 
-  describe 'aruba current_dir' do
+  describe 'Aruba::API.current_dir' do
 
     it "should return the current dir as 'tmp/aruba'" do
       current_dir.should match(/^tmp\/aruba$/)

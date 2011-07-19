@@ -44,6 +44,8 @@ end
 
 def run(cmd)
 
+  cmd = 'bundle exec ' + cmd unless cmd.match(/^bundle exec/)
+
   pid = fork do
 
     puts "\n"

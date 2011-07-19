@@ -5,11 +5,10 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__) unless
 
 require 'rubygems'
 require 'basic_gem'
-require 'spec'
-require 'spec/autorun'
+require 'rspec/core'
 require 'aruba/api'
 require 'aruba_helper'
 
-Spec::Runner.configure do |config|
-   config.include Aruba::Api
+RSpec.configure do |config|
+  config.include Aruba::Api
 end
