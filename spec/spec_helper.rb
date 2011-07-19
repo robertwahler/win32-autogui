@@ -5,8 +5,7 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__) unless
 
 require 'rubygems'
 require 'win32/autogui'
-require 'spec'
-require 'spec/autorun'
+require 'rspec/core'
 require 'aruba/api'
 require 'aruba_helper'
 
@@ -14,6 +13,6 @@ require 'aruba_helper'
 require File.expand_path(File.dirname(__FILE__) + '/applications/calculator')
 require File.expand_path(File.dirname(__FILE__) + '/applications/notepad')
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
    config.include Aruba::Api
 end

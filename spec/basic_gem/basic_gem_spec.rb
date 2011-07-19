@@ -53,7 +53,7 @@ describe Autogui do
       end
     end
 
-    Spec::Matchers.define :be_well_formed do
+    RSpec::Matchers.define :be_well_formed do
       failure_message_for_should do |actual|
         actual.join("\n")
       end
