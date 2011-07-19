@@ -4,6 +4,16 @@ QuickNote README
 QuickNote is a stripped down Notepad clone written in Delphi.  It is an example GUI executable with
 source code for the Win32-autogui gem.  It is not fit for any other purpose.
 
+QuickNote specs
+---------------
+install development dependencies
+
+    gem install bundler
+    bundle install
+
+run specs
+
+    bundle exec rake
 
 Modifications to the load paths for use in a real world project
 ----------------------------------------------------------------
@@ -26,4 +36,4 @@ lib/quicknote.rb
 Copyright
 ---------
 
-Copyright (c) 2010 GearheadForHire, LLC. See [LICENSE](LICENSE) for details.
+Copyright (c) 2010-2011 GearheadForHire, LLC. See [LICENSE](LICENSE) for details.

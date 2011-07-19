@@ -1,0 +1,18 @@
+gem "bundler", ">= 1.0.14"
+
+gem "win32-autogui", "= 0.4.3"
+
+# scripting
+gem "mutagem", ">= 0.2.0"
+
+# this gem is only used if ANSICON support is not detected
+gem "win32console", ">= 1.2.0"
+
+# Specs and Features
+#
+# aruba is the limiter here, lock these down tight
+# aruba > 0.2.2 upto 0.4.3 process support not functional on Win32
+gem "aruba", "= 0.2.2"
+gem "rspec", "= 1.3.1"
+gem "cucumber", "= 0.9.4"
+gem "rake", "= 0.8.7"

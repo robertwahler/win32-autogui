@@ -47,8 +47,8 @@ customize docs
 
 test it
 
-    rake spec
-    rake features
+    bundle exec rake spec
+    bundle exec rake features
 
 commit it
 

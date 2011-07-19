@@ -34,7 +34,7 @@ Run Win32-autogui's internal specs and example programs from the system gem loca
 
     # run the example quicknote specs
     cd examples\quicknote
-    rake
+    bundle exec rake
 
 
 Example Usage: Driving Calc.exe
