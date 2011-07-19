@@ -9,7 +9,7 @@ describe Autogui::Logging do
   end
   before(:each) do
     @logfile = "autogui.log"
-    create_file(@logfile, "the quick brown fox")
+    write_file(@logfile, "the quick brown fox")
   end
   after(:each) do
     if @application
