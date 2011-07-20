@@ -37,8 +37,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake", ">= 0.8.7"
 
   # doc generation
-  s.add_development_dependency "yard", ">= 0.6.4"
-  s.add_development_dependency "kramdown", ">= 0.12.0"
+  s.add_development_dependency "yard", ">= 0.7.2"
+  s.add_development_dependency "redcarpet", ">= 1.17.2"
 
   s.files        = gemfiles.split("\n")
   s.executables  = gemfiles.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
