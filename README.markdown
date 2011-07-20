@@ -1,12 +1,13 @@
 BasicGem
 ========
 
-An opinionated RubyGem structure. BasicGem provides no stand-alone functionality.  Its purpose is
-to provide a repository for jump-starting a new RubyGem and provide a repository for cloned
-applications to pull future enhancements and fixes.
+An opinionated basic RubyGem structure. BasicGem provides no stand-alone
+functionality.  Its purpose is to provide a repository for jump-starting a new
+RubyGem and provide a repository for cloned applications to pull future
+enhancements and fixes.
 
 
-Features/Dependencies
+Development dependencies
 ---------------------
 
 * Bundler for dependency management <http://github.com/carlhuda/bundler>
