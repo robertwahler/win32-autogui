@@ -260,23 +260,25 @@ Win32-autogui is available on [RubyGems.org](http://rubygems.org/gems/win32-auto
 References and Alternative Libraries
 ------------------------------------
 
-* Scripted GUI Testing with Ruby by Ian Dees <http://pragprog.com/titles/idgtr/scripted-gui-testing-with-ruby>
+* Scripted GUI Testing with Ruby by Ian Dees
+  <http://pragprog.com/titles/idgtr/scripted-gui-testing-with-ruby>
 * RAA - win32-guitest <http://raa.ruby-lang.org/project/win32-guitest>
 * Updated win32-guitest <http://rubyforge.org/projects/guitest>
 
 
 Development
 -----------
-Win32-autogui development was jump-started by cloning [BasicGem](http://github.com/robertwahler/basic_gem).
+Win32-autogui development was jump-started by cloning
+[BasicGem](http://github.com/robertwahler/basic_gem).
 
 ### Dependencies ###
 
 * Bundler for dependency management <http://github.com/carlhuda/bundler>
-* RSpec for unit testing <http://github.com/dchelimsky/rspec>
-* Cucumber for functional testing <http://github.com/aslakhellesoy/cucumber>
-* Aruba for CLI testing <http://github.com/aslakhellesoy/aruba>
-* YARD for documentation generation <http://github.com/lsegal/yard>
-* Kramdown for documentation markup processing <https://github.com/gettalong/kramdown>
+* Rspec for unit testing <http://github.com/rspec/rspec>
+* Cucumber for functional testing <http://github.com/cucumber/cucumber>
+* Aruba for CLI testing <http://github.com/cucumber/aruba>
+* Yard for documentation generation <http://github.com/lsegal/yard>
+* Redcarpet for documentation markup processing <http://github.com/tanoku/redcarpet>
 
 ### Rake tasks ###
 
@@ -317,7 +319,8 @@ Grab the source
     cd examples/quicknote
     watchr spec/watchr.rb
 
-Watchr will now watch the files defined in 'spec/watchr.rb' and run RSpec or Cucumber, as appropriate.
+Watchr will now watch the files defined in 'spec/watchr.rb' and run RSpec or
+Cucumber, as appropriate.
 
 
 Copyright
