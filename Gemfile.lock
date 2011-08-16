@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    win32-autogui (0.4.3)
+    win32-autogui (0.5.0)
       log4r (>= 1.1.9)
       win32-clipboard (~> 0.5.2)
       win32-process (~> 0.6.5)
@@ -67,7 +67,7 @@ DEPENDENCIES
   aruba (~> 0.4.2)
   bundler (>= 1.0.14)
   cucumber (~> 1.0)
-  rake (>= 0.8.7)
+  rake (>= 0.9.2)
   redcarpet (>= 1.17.2)
   rspec (>= 2.6.0)
   win32-autogui!

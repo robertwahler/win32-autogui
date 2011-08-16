@@ -2,9 +2,12 @@ History
 =======
 Most recent changes are at the top
 
-
 Changes
 -------
+
+### 0.5.0 - 08/16/2011 ###
+
+* Ruby 1.9.2.p290 compatible
 
 ### 0.4.3 - 03/17/2011 ###
 

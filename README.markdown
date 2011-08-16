@@ -237,6 +237,7 @@ Testing was done on the following Ruby platforms:
 
 * ruby 1.8.7 (2008-08-11 patchlevel 72) [i386-cygwin]
 * ruby 1.8.7 (2010-08-16 patchlevel 302) [i386-mingw32]
+* ruby 1.9.2p290 (2011-07-09) [i386-mingw32]
 
 
 Dependencies
