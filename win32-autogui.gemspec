@@ -43,7 +43,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", ">= 2.6.0"
   s.add_development_dependency "cucumber", "~> 1.0"
   s.add_development_dependency "aruba", "~> 0.4.2"
-  s.add_development_dependency "rake", ">= 0.8.7"
+  s.add_development_dependency "rake", ">= 0.9.2"
 
   # doc generation
   s.add_development_dependency "yard", ">= 0.7.2"
