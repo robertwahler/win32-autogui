@@ -76,7 +76,6 @@ describe Autogui::Application do
       keystroke(VK_MENU, VK_H, VK_A)
       dialog_about = @calculator.dialog_about
       dialog_about.title.should == "About Calculator"
-      dialog_about.combined_text.should match(/Microsoft . Calculator/)
       dialog_about.close
       @calculator.dialog_about.should be_nil
     end
