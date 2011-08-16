@@ -33,10 +33,10 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
   s.rubyforge_project         = "win32-autogui"
 
-  s.add_dependency "windows-api", "= 0.4.0"
-  s.add_dependency "windows-pr", "= 1.1.2"
-  s.add_dependency "win32-process", "= 0.6.4"
-  s.add_dependency "win32-clipboard", "= 0.5.2"
+  s.add_dependency "windows-api", "~> 0.4.0"
+  s.add_dependency "windows-pr", "~> 1.2.0"
+  s.add_dependency "win32-process", "~> 0.6.5"
+  s.add_dependency "win32-clipboard", "~> 0.5.2"
   s.add_dependency "log4r", ">= 1.1.9"
 
   s.add_development_dependency "bundler", ">= 1.0.14"

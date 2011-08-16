@@ -243,7 +243,7 @@ Dependencies
 ------------
 Win32-autogui depends on the following RubyGems
 
-* Windows-api <http://github.com/djberg96/win32-api>
+* Windows-api <http://github.com/djberg96/windows-api>
 * Windows-pr  <http://github.com/djberg96/windows-pr>
 * Win32-process <http://github.com/djberg96/win32-process>
 * Win32-clipboard <http://github.com/djberg96/win32-clipboard>
