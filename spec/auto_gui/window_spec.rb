@@ -73,7 +73,7 @@ describe Autogui::EnumerateDesktopWindows do
           dialog_about = Autogui::EnumerateDesktopWindows.new(:timeout => seconds).find do |w|
             w.title.match(/About Calculator/) && (w.pid == @calculator.pid)
           end
-        end}.should_not raise_error
+        end}.should_not raise_exception
         dialog_about.should_not be_nil
         dialog_about.close
       end
@@ -84,7 +84,7 @@ describe Autogui::EnumerateDesktopWindows do
           dialog_bogus = Autogui::EnumerateDesktopWindows.new(:timeout => seconds).find do |w|
             w.title.match(/Bogus Window that does not exist/) && (w.pid == @calculator.pid)
           end
-        end}.should raise_error
+        end}.should raise_exception(Timeout::Error)
         dialog_bogus.should be_nil
       end
     end
