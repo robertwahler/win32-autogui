@@ -14,3 +14,5 @@ general
 * (1.0) add an exception dialog watcher that accepts a block and scans for
   exception dialogs in a separate thread
 * unicode support for window text
+* extract examples/skeleton to a separate cloneable repository or create a Thor
+  generator

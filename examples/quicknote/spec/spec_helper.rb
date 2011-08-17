@@ -11,11 +11,13 @@ $LOAD_PATH.unshift File.expand_path('../../../../lib', __FILE__) unless
 require 'rubygems'
 require 'win32/autogui'
 require 'quicknote'
-require 'spec'
-require 'spec/autorun'
+require 'rspec/core'
 require 'aruba/api'
 require 'aruba_helper'
 
-Spec::Runner.configure do |config|
-   config.include Aruba::Api
+RSpec.configure do |config|
+  config.include Aruba::Api
+  config.filter_run :focus => true
+  config.run_all_when_everything_filtered = true
+  config.treat_symbols_as_metadata_keys_with_true_values = true
 end

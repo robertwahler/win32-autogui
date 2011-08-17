@@ -4,8 +4,8 @@ require 'timeout'
 include Autogui::Input
 
 describe "FormSplash" do
-  after(:all) do
-    if @application.running?
+  after(:each) do
+    if @application && @application.running?
       @application.splash.wait_for_close if @application.splash
       @application.file_exit
       # still running? force it to close
@@ -15,7 +15,7 @@ describe "FormSplash" do
   end
 
   describe "startup with no command line parameters" do
-    before(:all) do
+    before(:each) do
       # --nosplash is the default, turn it back on
       @application = Quicknote.new :parameters => ''
       @application.should be_running

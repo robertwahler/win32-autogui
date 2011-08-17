@@ -63,7 +63,7 @@ describe "FormMain" do
   describe "file open (VK_MENU, VK_F, VK_O)" do
     before(:each) do
       @filename = "input_file.txt"
-      @file_contents = create_file(@filename, "the quick brown fox")
+      @file_contents = write_file(@filename, "the quick brown fox")
       @application.file_new(:save => false)
     end
     after(:each) do
@@ -126,7 +126,7 @@ describe "FormMain" do
     end
     it "should add the filename 'untitled.txt' to the title" do
       filename = "input_file.txt"
-      file_contents = create_file(filename, "the quick brown fox")
+      file_contents = write_file(filename, "the quick brown fox")
       @application.file_open(filename, :save => false)
       @application.main_window.title.downcase.should == "QuickNote - #{fullpath(filename)}".downcase
       @application.file_new(:save => false)
@@ -149,7 +149,7 @@ describe "FormMain" do
   describe "file save (VK_MENU, VK_F, VK_S)" do
     before(:each) do
       @filename = "input_file.txt"
-      @file_contents = create_file(@filename, "original content")
+      @file_contents = write_file(@filename, "original content")
       @application.file_open(fullpath(@filename), :save => false)
       @application.main_window.title.downcase.should == "QuickNote - #{fullpath(@filename)}".downcase
       @application.edit_window.text.should == "original content"
@@ -216,9 +216,9 @@ describe "FormMain" do
   describe "file save as (VK_MENU, VK_F, VK_A)" do
     before(:each) do
       @filename = "original.txt"
-      @file_contents = create_file(@filename, "original content")
+      @file_contents = write_file(@filename, "original content")
       @saveas_filename = "newfile.txt"
-      create_file(@saveas_filename,  "")
+      write_file(@saveas_filename,  "")
       @application.file_open(fullpath(@filename), :save => false)
     end
     after(:each) do
