@@ -275,7 +275,7 @@ module Autogui
     # @return [Clipboard]
     #
     def clipboard
-      @clipboard || Autogui::Clipboard.new
+      @clipboard ||= Autogui::Clipboard.new
     end
 
     private

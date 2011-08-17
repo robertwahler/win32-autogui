@@ -105,6 +105,11 @@ describe Autogui::Application do
         @calculator.clipboard.text.should == ""
       end
 
+      it "should memoize the clipboard object" do
+        clipboard = @calculator.clipboard
+        clipboard.should == @calculator.clipboard
+      end
+
       describe "copy (VK_CONTROL, VK_C)" do
         it "should copy the edit window" do
           @calculator.set_focus
