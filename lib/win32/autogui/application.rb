@@ -24,7 +24,8 @@ module Autogui
     # @param [String] str text to load onto the clipboard
     #
     def text=(str)
-      Win32::Clipboard.set_data(str)
+      data = str.nil? ? "" : str.dup
+      Win32::Clipboard.set_data(data)
     end
 
   end

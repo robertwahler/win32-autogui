@@ -105,6 +105,16 @@ describe Autogui::Application do
         @calculator.clipboard.text.should == ""
       end
 
+      it "should not change the original text data" do
+        original_text = "the cow jumped over the moon"
+        copy_of_text = original_text.dup
+        copy_of_text.should == original_text
+        @calculator.clipboard.text = original_text
+        copy_of_text.should == original_text
+        @calculator.clipboard.text.should == original_text
+        original_text.should == "the cow jumped over the moon"
+      end
+
       it "should memoize the clipboard object" do
         clipboard = @calculator.clipboard
         clipboard.should == @calculator.clipboard
