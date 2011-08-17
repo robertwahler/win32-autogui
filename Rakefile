@@ -58,15 +58,23 @@ task :gemfiles do
   files = `git ls-files`
 
   filename  = File.join(File.dirname(__FILE__), '.gemfiles')
-  cached_files = File.exists?(filename) ? File.open(filename, "r") {|f| f.read} : nil
-
-  # maintain EOL
-  files.gsub!(/\n/, "\r\n") if cached_files && cached_files.match("\r\n")
-
-  if cached_files != files
-    puts "Updating .gemfiles"
-    File.open(filename, 'wb') {|f| f.write(files)}
+  cached_files = nil
+  if File.exists?(filename)
+    puts ".gemfiles exists, reading..."
+    cached_files = File.open(filename, "rb") {|f| f.read}
   end
 
-  raise "unable to process gemfiles" unless files
+  if cached_files && cached_files.match("\r\n")
+    puts ".gemfiles using DOS EOL"
+    files.gsub!(/\n/, "\r\n")
+  end
+
+  if cached_files != files
+    puts ".gemfiles updating"
+    File.open(filename, 'wb') {|f| f.write(files)}
+  else
+    puts ".gemfiles update not required"
+  end
+
+  raise "unable to process .gemfiles" unless files
 end
