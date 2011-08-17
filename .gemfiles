@@ -18,6 +18,8 @@ examples/quicknote/FormMainU.dfm
 examples/quicknote/FormMainU.pas
 examples/quicknote/FormSplashU.dfm
 examples/quicknote/FormSplashU.pas
+examples/quicknote/Gemfile
+examples/quicknote/Gemfile.lock
 examples/quicknote/LICENSE
 examples/quicknote/README.markdown
 examples/quicknote/Rakefile
@@ -34,10 +36,10 @@ examples/quicknote/spec/aruba_helper.rb
 examples/quicknote/spec/quicknote/form_about_spec.rb
 examples/quicknote/spec/quicknote/form_main_spec.rb
 examples/quicknote/spec/quicknote/form_splash_spec.rb
-examples/quicknote/spec/spec.opts
 examples/quicknote/spec/spec_helper.rb
 examples/quicknote/spec/watchr.rb
 examples/skeleton/.gitignore
+examples/skeleton/Gemfile
 examples/skeleton/HISTORY.markdown
 examples/skeleton/LICENSE
 examples/skeleton/README.markdown
@@ -54,7 +56,6 @@ examples/skeleton/lib/myapp.rb
 examples/skeleton/spec/aruba_helper.rb
 examples/skeleton/spec/myapp/form_about_spec.rb
 examples/skeleton/spec/myapp/form_main_spec.rb
-examples/skeleton/spec/spec.opts
 examples/skeleton/spec/spec_helper.rb
 examples/skeleton/spec/watchr.rb
 features/automating_an_application.feature
