@@ -5,6 +5,12 @@ Most recent changes are at the top
 Changes
 -------
 
+### 0.5.1 - 08/20/2011 ###
+
+* Rebuild gem without psych to work-around the 'invalid gemspec date' issue
+  documented in https://github.com/rubygems/rubygems/pull/57.  Fixes issue #4.
+  No code changes.
+
 ### 0.5.0 - 08/16/2011 ###
 
 * Ruby 1.9.2.p290 compatible
