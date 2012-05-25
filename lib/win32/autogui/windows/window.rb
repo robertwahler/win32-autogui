@@ -17,6 +17,7 @@ module Windows
     API.new('SetForegroundWindow', 'L', 'I', 'user32')
     API.new('SendMessageA', 'LIIP', 'I', 'user32')
     API.new('IsWindowVisible', 'L', 'I', 'user32')
+    API.new('GetDlgCtrlID', 'L', 'I', 'user32')
 
   end
 end

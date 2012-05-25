@@ -141,7 +141,7 @@ module Autogui
       length == 0 ? '' : buffer[0..length - 1]
     end
 
-    # Window text (WM_GETTEXT)
+    # Window text (GetWindowText or WM_GETTEXT)
     #
     # @param [Number] max_length (2048)
     #
@@ -149,10 +149,23 @@ module Autogui
     #
     def text(max_length = 2048)
       buffer = "\0" * max_length
-      length = SendMessageA(handle, WM_GETTEXT, buffer.length, buffer)
+      length = if is_control?
+        SendMessageA(handle, WM_GETTEXT, buffer.length, buffer)
+      else
+        GetWindowText(handle, buffer, buffer.length)
+      end
+
       length == 0 ? '' : buffer[0..length - 1]
     end
     alias :title :text
+    
+    # Determines whether the specified window handle identifies a window or a control
+    #
+    # @return [Boolean]
+    #
+    def is_control?
+      (handle != 0) && (GetDlgCtrlID(handle) != 0)
+    end
 
     # Determines whether the specified window handle identifies an existing window
     #
