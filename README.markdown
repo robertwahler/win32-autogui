@@ -34,6 +34,7 @@ Run Win32-autogui's internal specs and example programs from the system gem loca
 
     # run the example quicknote specs
     cd examples\quicknote
+    bundle install
     bundle exec rake
 
 
@@ -327,4 +328,4 @@ Cucumber, as appropriate.
 Copyright
 ---------
 
-Copyright (c) 2010-2011 GearheadForHire, LLC. See [LICENSE](LICENSE) for details.
+Copyright (c) 2010-2012 GearheadForHire, LLC. See [LICENSE](LICENSE) for details.
