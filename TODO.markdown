@@ -4,6 +4,8 @@ TODO
 general
 -------
 
+* refactor application.running? to make sure the pid even exists before
+  looping
 * (1.0) stop changing $LOAD_PATH in specs and features, modify ENV[] in before
   and afters
 * (1.0) implement Application.find and add option to not start application
