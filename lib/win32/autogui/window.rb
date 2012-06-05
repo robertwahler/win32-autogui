@@ -158,7 +158,7 @@ module Autogui
       length == 0 ? '' : buffer[0..length - 1]
     end
     alias :title :text
-    
+
     # Determines whether the specified window handle identifies a window or a control
     #
     # @return [Boolean]
