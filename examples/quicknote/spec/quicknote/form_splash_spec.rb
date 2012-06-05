@@ -6,7 +6,7 @@ include Autogui::Input
 describe "FormSplash" do
   after(:each) do
     if @application && @application.running?
-      @application.splash.wait_for_close if @application.splash
+      @application.splash.wait_for_close if @application.splash(:timeout => 0)
       @application.file_exit
       # still running? force it to close
       @application.close(:wait_for_close => true)
@@ -30,7 +30,7 @@ describe "FormSplash" do
       timeout(seconds) do
         @application.splash.wait_for_close
       end
-      @application.splash.should be_nil
+      @application.splash(:timeout => 0).should be_nil
     end
   end
 
@@ -38,7 +38,7 @@ describe "FormSplash" do
     it "should not show" do
       @application = Quicknote.new :parameters => '--nosplash'
       @application.should be_running
-      @application.splash.should be_nil
+      @application.splash(:timeout => 0).should be_nil
     end
   end
 

@@ -28,8 +28,8 @@ describe "FormMain" do
   end
   after(:each) do
     if @application.running?
-      keystroke(VK_N) if @application.message_dialog_confirm || @application.dialog_overwrite_confirm
-      keystroke(VK_ESCAPE) if @application.error_dialog
+      keystroke(VK_N) if @application.message_dialog_confirm(:timeout => 0) || @application.dialog_overwrite_confirm(:timeout => 0)
+      keystroke(VK_ESCAPE) if @application.error_dialog(:timeout => 0)
     end
     puts "FormMain after(:each)" if @debug
   end
@@ -67,8 +67,14 @@ describe "FormMain" do
       @application.file_new(:save => false)
     end
     after(:each) do
-      keystroke(VK_N) if @application.message_dialog_confirm
-      keystroke(VK_ESCAPE) if @application.file_open_dialog
+      if @application.message_dialog_confirm(:timeout => 0)
+        @application.message_dialog_confirm.set_focus
+        keystroke(VK_N)
+      end
+      if @application.file_open_dialog(:timeout => 0)
+        @application.file_open_dialog.set_focus
+        keystroke(VK_ESCAPE)
+      end
     end
 
     it "should prompt to save with modified text" do
@@ -80,7 +86,7 @@ describe "FormMain" do
     it "should not prompt to save with unmodified text" do
       @application.main_window.title.should_not match(/\+/)
       keystroke(VK_MENU, VK_F, VK_O)
-      @application.message_dialog_confirm.should be_nil
+      @application.message_dialog_confirm(:timeout => 0).should be_nil
     end
 
     describe "succeeding" do
@@ -122,7 +128,7 @@ describe "FormMain" do
       @application.file_new(:save => false)
       @application.main_window.title.should_not match(/\+/)
       keystroke(VK_MENU, VK_F, VK_N)
-      @application.message_dialog_confirm.should be_nil
+      @application.message_dialog_confirm(:timeout => 0).should be_nil
     end
     it "should add the filename 'untitled.txt' to the title" do
       filename = "input_file.txt"
@@ -222,8 +228,8 @@ describe "FormMain" do
       @application.file_open(fullpath(@filename), :save => false)
     end
     after(:each) do
-      keystroke(VK_N) if @application.dialog_overwrite_confirm
-      keystroke(VK_ESCAPE) if @application.file_save_as_dialog
+      keystroke(VK_N) if @application.dialog_overwrite_confirm(:timeout => 0)
+      keystroke(VK_ESCAPE) if @application.file_save_as_dialog(:timeout => 0)
     end
 
     it "should prompt for filename" do
@@ -266,7 +272,7 @@ describe "FormMain" do
     end
     it "should not prompt to save with unmodified text" do
       keystroke(VK_MENU, VK_F, VK_X)
-      @application.message_dialog_confirm.should be_nil
+      @application.message_dialog_confirm(:timeout => 0).should be_nil
       @application.main_window.is_window?.should == false
       @application.should_not be_running
     end

@@ -19,8 +19,14 @@ class Calculator < Autogui::Application
     main_window.children.find {|w| w.window_class == 'Edit'}
   end
 
+  # timeout in seconds to wait for desktop windows to appear
+  def default_window_timeout
+    1
+  end
+
   # About dialog, hotkey (VK_MENU, VK_H, VK_A)
   def dialog_about(options = {})
+    options[:timeout] = default_window_timeout unless options[:timeout]
     Autogui::EnumerateDesktopWindows.new(options).find do |w|
       w.title.match(/About Calculator/) && (w.pid == pid)
     end

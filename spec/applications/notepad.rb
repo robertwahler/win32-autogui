@@ -14,6 +14,11 @@ class Notepad < Autogui::Application
     super defaults.merge(options)
   end
 
+  # timeout in seconds to wait for desktop windows to appear
+  def default_window_timeout
+    1
+  end
+
   # the notepad's results window
   def edit_window
     main_window.children.find {|w| w.window_class == 'Edit'}
@@ -21,12 +26,14 @@ class Notepad < Autogui::Application
 
   # About dialog, hotkey (VK_MENU, VK_H, VK_A)
   def dialog_about(options = {})
+    options[:timeout] = default_window_timeout unless options[:timeout]
     Autogui::EnumerateDesktopWindows.new(options).find do |w|
       w.title.match(/About Notepad/) && (w.pid == pid)
     end
   end
 
   def message_dialog_confirm(options={})
+    options[:timeout] = default_window_timeout unless options[:timeout]
     Autogui::EnumerateDesktopWindows.new(options).find do |w|
       w.title.match(/Notepad/) && (w.pid == pid) && (w.window_class == "#32770")
     end
@@ -36,8 +43,8 @@ class Notepad < Autogui::Application
   def file_exit
     set_focus
     keystroke(VK_MENU, VK_F, VK_X)
-    if message_dialog_confirm
-      keystroke(VK_N) if message_dialog_confirm
+    if message_dialog_confirm(:timeout => 0)
+      keystroke(VK_N)
     end
   end
 
