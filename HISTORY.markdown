@@ -5,6 +5,10 @@ Most recent changes are at the top
 Changes
 -------
 
+### 0.5.2 - 06/01/2012 ###
+
+* Retrieving the text of windows and controls is now more robust. Issue #5. (ebertech)
+
 ### 0.5.1 - 08/20/2011 ###
 
 * Rebuild gem without psych to work-around the 'invalid gemspec date' issue
