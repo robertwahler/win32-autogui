@@ -71,13 +71,13 @@ describe Autogui::Application do
 
     it "should open and close the 'About Calculator' dialog via (VK_MENU, VK_H, VK_A)" do
       @calculator.set_focus
-      dialog_about = @calculator.dialog_about
+      dialog_about = @calculator.dialog_about(:timeout => 0)
       dialog_about.should be_nil
       keystroke(VK_MENU, VK_H, VK_A)
       dialog_about = @calculator.dialog_about
       dialog_about.title.should == "About Calculator"
       dialog_about.close
-      @calculator.dialog_about.should be_nil
+      @calculator.dialog_about(:timeout => 0).should be_nil
     end
 
     describe "calculations" do

@@ -14,7 +14,7 @@ describe "FormAbout" do
   end
 
   before(:each) do
-    @application.dialog_about.should be_nil
+    @application.dialog_about(:timeout => 0).should be_nil
     @application.set_focus
     keystroke(VK_MENU, VK_H, VK_A)
     @dialog_about = @application.dialog_about
@@ -34,7 +34,7 @@ describe "FormAbout" do
   it "should close by hitting return" do
     @dialog_about.set_focus
     keystroke(VK_RETURN)
-    @application.dialog_about.should be_nil
+    @application.dialog_about(:timeout => 0).should be_nil
   end
 
   it "should have the title 'About QuickNote'" do
