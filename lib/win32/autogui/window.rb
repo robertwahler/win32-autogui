@@ -158,6 +158,14 @@ module Autogui
       length == 0 ? '' : buffer[0..length - 1]
     end
     alias :title :text
+    
+    # Determines whether the specified window handle identifies a window or a control
+    #
+    # @return [Boolean]
+    #
+    def is_control?
+      (handle != 0) && (GetDlgCtrlID(handle) != 0)
+    end
 
     # Determines whether the specified window handle identifies a window or a control
     #
