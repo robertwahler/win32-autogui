@@ -47,6 +47,7 @@ customize docs
 
 test it
 
+    bundle install
     bundle exec rake spec
     bundle exec rake features
 
