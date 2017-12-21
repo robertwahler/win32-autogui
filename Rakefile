@@ -23,33 +23,6 @@ task :test => [:spec, :features]
 
 task :default => :test
 
-namespace :doc do
-
-  doc_version = File.open(File.join(File.dirname(__FILE__), 'VERSION'), "r") { |f| f.read }
-  project_root = File.expand_path(File.dirname(__FILE__))
-  doc_destination = File.join(project_root, 'rdoc')
-
-  require 'yard'
-
-  YARD::Rake::YardocTask.new(:generate) do |yt|
-    yt.options = ['--output-dir', doc_destination,
-                  '--title', "Win32-AutoGUI #{doc_version} Documentation",
-                  '--main', "README.markdown"
-                 ]
-  end
-
-  desc "Remove generated documenation"
-  task :clean do
-    rm_r doc_destination if File.exists?(doc_destination)
-  end
-
-  desc "List undocumented objects"
-  task :undocumented do
-    system('yard stats --list-undoc')
-  end
-
-end
-
 # put the gemfiles task in the :build dependency chain
 task :build => [:gemfiles]
 

@@ -37,19 +37,26 @@ Gem::Specification.new do |s|
   s.add_dependency "windows-pr", "~> 1.2.0"
   s.add_dependency "win32-process", "~> 0.6.5"
   s.add_dependency "win32-clipboard", "~> 0.5.2"
-  s.add_dependency "log4r", ">= 1.1.9"
+  s.add_dependency "log4r", "~> 1.1.9"
+
+  # lock down win32 deps to prevent runtime errors
+  s.add_dependency "win32-api", "= 1.4.8"
 
   s.add_development_dependency "bundler", ">= 1.0.14"
-  s.add_development_dependency "rspec", ">= 2.6.0"
-  s.add_development_dependency "cucumber", "~> 1.0"
+  s.add_development_dependency "rspec", "~> 2.6.0"
+  s.add_development_dependency "cucumber", "~> 1.0.2"
   s.add_development_dependency "aruba", "~> 0.4.2"
-  s.add_development_dependency "rake", ">= 0.9.2"
+  s.add_development_dependency "rake", "~> 0.9.2"
 
-  # doc generation
-  s.add_development_dependency "yard", ">= 0.7.2"
-  s.add_development_dependency "redcarpet", ">= 1.17.2"
+  # lock down aruba deps to avoid Ruby 2.0 requirements
+  s.add_development_dependency "childprocess", "~> 0.2.1"
+  s.add_development_dependency "tins", "~> 1.6.0"
+  s.add_development_dependency "term-ansicolor", "~> 1.0.7"
 
-  s.add_development_dependency "win32console", ">= 1.2.0" if WINDOWS
+  # lock down cucumber deps to avoid Ruby 1.9 requirements
+  s.add_development_dependency "json", "~> 1.6.8"
+
+  s.add_development_dependency "win32console", "~> 1.3.0" if WINDOWS
 
   s.files        = gemfiles.split("\n")
   s.executables  = gemfiles.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact

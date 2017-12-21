@@ -1,9 +1,7 @@
 .gemfiles
 .gitattributes
 .gitignore
-.yardopts
 Gemfile
-Gemfile.lock
 HISTORY.markdown
 LICENSE
 README.markdown
@@ -19,7 +17,6 @@ examples/quicknote/FormMainU.pas
 examples/quicknote/FormSplashU.dfm
 examples/quicknote/FormSplashU.pas
 examples/quicknote/Gemfile
-examples/quicknote/Gemfile.lock
 examples/quicknote/LICENSE
 examples/quicknote/README.markdown
 examples/quicknote/Rakefile

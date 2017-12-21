@@ -5,6 +5,11 @@ Most recent changes are at the top
 Changes
 -------
 
+### 0.5.3 - 12/21/2017 ###
+
+* Update and remove dependencies with known security issues
+* Remove Gemfile.lock
+
 ### 0.5.2 - 06/01/2012 ###
 
 * Retrieving the text of windows and controls is now more robust. Issue #5. (ebertech)
